@@ -1,8 +1,26 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Models\User;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin as Admin;
+
+if (App::environment('local')) {
+    Route::get('/login-as/{id}', function ($id) {
+        // Retrieve the user by ID
+        $user = User::find($id);
+        if ($user) {
+            // Log the user in
+            Auth::login($user);
+            // Redirect to the intended route or dashboard
+            return redirect('/admin')->with('status', 'Logged in successfully!');
+        }
+
+        return redirect('/')->with('error', 'User not found');
+    });
+}
 
 Route::get('/', function () {
     return view('layouts.layoutpublic');
@@ -11,6 +29,8 @@ Route::get('/', function () {
 Route::get('/admin', function () {
     return view('layouts.layoutadmin');
 })->name('admin');
+
+
 
 Route::group(['middleware' => ['role:teacher|keyteacher|admin']], function (){
     Route::prefix('admin')->name('admin.')->group(function() {

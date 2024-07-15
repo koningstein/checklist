@@ -39,6 +39,7 @@
                 <table class="w-full whitespace-no-wrap">
                     <thead>
                     <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-50">
+                        <th class="px-4 py-3">Id</th>
                         <th class="px-4 py-3">User</th>
                         <th class="px-4 py-3">Student Number</th>
                         <th class="px-4 py-3">Details</th>
@@ -49,6 +50,7 @@
                     <tbody class="bg-white divide-y">
                     @foreach($students as $student)
                         <tr class="text-gray-700">
+                            <td class="px-4 py-3 text-sm">{{ $student->user->id }}</td>
                             <td class="px-4 py-3 text-sm">{{ $student->user->name }}</td>
                             <td class="px-4 py-3 text-sm">{{ $student->studentNr }}</td>
                             <td class="px-4 py-3 text-sm"><a href="{{ route('admin.students.show', ['student' => $student->id]) }}">Details</a></td>

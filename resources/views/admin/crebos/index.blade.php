@@ -20,7 +20,7 @@
 @section('content')
     <div class="card mt-6">
         <div class="card-header flex flex-row justify-between">
-            <h1 class="h6">Crebos Admin</h1>
+            <h1 class="h6">Crebo Admin</h1>
         </div>
         @if(session('status'))
             <div class="card-body">

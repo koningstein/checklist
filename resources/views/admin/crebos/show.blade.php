@@ -27,6 +27,7 @@
             <h2 class="text-sm font-semibold text-gray-800">Crebo details</h2>
             <p class="py-2 text-sm text-gray-700">Naam:  {{ $crebo->name }}</p>
             <p class="py-2 text-sm text-gray-700">Crebo nr:  {{ $crebo->crebonr }}</p>
+            <p class="py-2 text-sm text-gray-700">Omschrijving: <br> {!! nl2br(e($crebo->description)) !!}</p>
         </div>
     </div>
 @endsection
