@@ -9,9 +9,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class AssignmentStatus extends Model
 {
     use HasFactory;
-
+    protected $table = 'assignment_statuses';
+    protected $fillable = [
+        'name'
+    ];
     public function studentAssignments(): HasMany
     {
-        return $this->hasMany(StudentAssignment::class, 'assignmentstatuses_id');
+        return $this->hasMany(StudentAssignment::class, 'assignment_statuses_id');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Assignment;
 use App\Models\AssignmentStatus;
 use App\Models\ClassAssignment;
 use App\Models\EnrolmentClass;
@@ -20,9 +21,11 @@ class StudentAssignmentFactory extends Factory
      */
     public function definition(): array
     {
+        $isFromClassAssignment = $this->faker->boolean;
         return [
             'enrolment_class_id' => EnrolmentClass::all()->random()->id,
-            'class_assignment_id' => ClassAssignment::all()->random()->id,
+            'class_assignment_id' => $isFromClassAssignment ? ClassAssignment::inRandomOrder()->first()->id : null,
+            'individual_assignment_id' => !$isFromClassAssignment ? Assignment::inRandomOrder()->first()->id : null,
             'duedate' => $this->faker->dateTime,
             'assignment_status_id' => AssignmentStatus::all()->random()->id,
             'marked_by_id' => User::all()->random()->id,

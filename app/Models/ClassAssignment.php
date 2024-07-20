@@ -10,6 +10,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class ClassAssignment extends Model
 {
     use HasFactory;
+    protected $table = 'class_assignments';
+
+    protected $fillable = [
+        'class_year_id',
+        'assignment_id',
+        'duedate',
+    ];
+
+    protected $casts = [
+        'duedate' => 'datetime',
+    ];
 
     public function classYear(): BelongsTo
     {

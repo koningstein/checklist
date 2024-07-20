@@ -9,6 +9,8 @@
     <!-- script -->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts" defer></script>
     <script src="{{ asset('js/scripts.js') }}" defer></script>
+    @livewireStyles
+
     <!-- end script -->
     <title>TCR Checklist</title>
 </head>
@@ -374,6 +376,14 @@
                 duration-500">Assignment admin</a>
                         <a href="{{ route('admin.enrolments.index') }}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out
                 duration-500">Enrolment admin</a>
+                        <a href="{{ route('admin.assignmentstatuses.index') }}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out
+                duration-500">Assignment status admin</a>
+                        <a href="{{ route('admin.classassignments.index') }}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out
+                duration-500">Class assignment admin</a>
+                        <a href="{{ route('admin.enrolmentclasses.index') }}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out
+                duration-500">Enrolment classes admin</a>
+                        <a href="{{ route('admin.studentassignments.index') }}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out
+                duration-500">Student Assignment admin</a>
                 @endhasanyrole
 
                 <!-- links for logedin users -->
@@ -395,10 +405,12 @@
         @yield('topmenu')
         @yield('content')
 
+
     </div>
     <!-- end content -->
 </div>
 <!-- end wrapper -->
+@livewireScripts
 </body>
 </html>
 

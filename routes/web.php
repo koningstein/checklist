@@ -74,6 +74,20 @@ Route::group(['middleware' => ['role:teacher|keyteacher|admin']], function (){
         Route::resource('enrolments', Admin\EnrolmentController::class);
         Route::get('enrolments/{enrolment}/delete', [Admin\EnrolmentController::class, 'delete'])->name('enrolments.delete');
 
+        // Assignment Status routes
+        Route::resource('assignmentstatuses', Admin\AssignmentStatusController::class);
+        Route::get('assignmentstatuses/{assignmentstatus}/delete', [Admin\AssignmentStatusController::class, 'delete'])->name('assignmentstatuses.delete');
+
+        // ClassAssignments routes
+        Route::resource('classassignments', Admin\ClassAssignmentController::class);
+        Route::get('classassignments/{classassignment}/delete', [Admin\ClassAssignmentController::class, 'delete'])->name('classassignments.delete');
+
+        // EnrolmentClass routes
+        Route::resource('enrolmentclasses', Admin\EnrolmentClassController::class);
+        Route::get('enrolmentclasses/{enrolmentclass}/delete', [Admin\EnrolmentClassController::class, 'delete'])->name('enrolmentclasses.delete');
+
+        Route::resource('studentassignments', Admin\StudentAssignmentController::class);
+        Route::get('studentassignments/{studentassignment}/delete', [Admin\StudentAssignmentController::class, 'delete'])->name('studentassignments.delete');
     });
 });
 

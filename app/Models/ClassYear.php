@@ -12,8 +12,8 @@ class ClassYear extends Model
     use HasFactory;
     protected $table = 'class_years';
     protected $fillable = [
-        'schoolclass_id',
-        'schoolyear_id',
+        'school_class_id',
+        'school_year_id',
     ];
 
     public function schoolClass(): BelongsTo

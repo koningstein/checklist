@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class EnrolmentClass extends Model
 {
     use HasFactory;
+    protected $table = 'enrolment_classes';
+    protected $fillable = ['enrolment_id', 'class_year_id'];
 
     public function enrolment(): BelongsTo
     {

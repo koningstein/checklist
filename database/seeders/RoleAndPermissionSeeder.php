@@ -17,7 +17,8 @@ class RoleAndPermissionSeeder extends Seeder
 
         // Define permissions for each resource
         $resources = ['period', 'cohort', 'crebo', 'course', 'module', 'assignment', 'schoolclass',
-            'student', 'enrolment', 'enrolmentstatus', 'schoolyear', 'classyear', 'classassignment', 'assignmentstatus', 'studentassignment'];
+            'student', 'enrolment', 'enrolmentstatus', 'schoolyear', 'classyear', 'classassignment', 'assignmentstatus', 'studentassignment',
+            'enrolmentclass'];
 
         foreach ($resources as $resource) {
             Permission::create(['name' => "index $resource"]);

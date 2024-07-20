@@ -13,6 +13,16 @@ class AssignmentStatusSeeder extends Seeder
      */
     public function run(): void
     {
-        AssignmentStatus::factory(5)->create();
+        //AssignmentStatus::factory(5)->create();
+        $statuses = [
+            ['name' => 'Niet gestart'],  // Assignment not yet started
+            ['name' => 'Ingediend'],     // Assignment submitted by the student
+            ['name' => 'Goedgekeurd'],   // Assignment approved by the teacher
+            ['name' => 'Afgewezen'],     // Assignment rejected by the teacher
+        ];
+
+        foreach ($statuses as $status) {
+            AssignmentStatus::create($status);
+        }
     }
 }

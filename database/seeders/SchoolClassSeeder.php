@@ -13,6 +13,20 @@ class SchoolClassSeeder extends Seeder
      */
     public function run(): void
     {
-        SchoolClass::factory(5)->create();
+        //SchoolClass::factory(5)->create();
+        $schoolClasses = [
+            'SHWVSOD1A',
+            'SHWVSOD1B',
+            'SHWVSOD1C',
+            'SHWVSOD2A',
+            'SHWVSOD2B',
+            'SHWVSOD2C',
+            'SHWVSOD3A',
+            'SHWVSODEINDSTAGE',
+        ];
+
+        foreach ($schoolClasses as $className) {
+            SchoolClass::create(['name' => $className]);
+        }
     }
 }

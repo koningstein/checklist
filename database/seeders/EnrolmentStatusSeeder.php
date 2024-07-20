@@ -13,6 +13,16 @@ class EnrolmentStatusSeeder extends Seeder
      */
     public function run(): void
     {
-        EnrolmentStatus::factory(3)->create();
+        //EnrolmentStatus::factory(3)->create();
+        $statuses = [
+            'intake',
+            'afgemeld',
+            'beeindigd',
+            'definitief',
+        ];
+
+        foreach ($statuses as $status) {
+            EnrolmentStatus::create(['name' => $status]);
+        }
     }
 }
