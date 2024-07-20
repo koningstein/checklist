@@ -11,7 +11,8 @@ class CreboSearch extends Component
 {
     use WithPagination;
 
-    public $search = '';
+    public $searchName = '';
+    public $searchCrebonr = '';
 
     #[On('searchUpdated')]
     public function updatingSearch()
@@ -22,8 +23,13 @@ class CreboSearch extends Component
 
     public function render()
     {
-        $crebos = Crebo::where('name', 'like', '%'.$this->search.'%')
-            ->orWhere('crebonr', 'like', '%'.$this->search.'%')
+        $crebos = Crebo::query()
+            ->when($this->searchName, function ($query) {
+                $query->where('name', 'like', '%'.$this->searchName.'%');
+            })
+            ->when($this->searchCrebonr, function ($query) {
+                $query->where('crebonr', 'like', '%'.$this->searchCrebonr.'%');
+            })
             ->paginate(10);
 //        $crebos = Crebo::search($this->search)->paginate(10);
 
