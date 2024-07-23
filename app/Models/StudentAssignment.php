@@ -21,6 +21,9 @@ class StudentAssignment extends Model
         'completed',
         'marked_at'
     ];
+
+    protected $dates = ['duedate', 'marked_at'];
+
     public function enrolmentClass(): BelongsTo
     {
         return $this->belongsTo(EnrolmentClass::class);

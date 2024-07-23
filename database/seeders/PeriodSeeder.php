@@ -13,6 +13,28 @@ class PeriodSeeder extends Seeder
      */
     public function run(): void
     {
-        Period::factory(16)->create();
+        //Period::factory(16)->create();
+        $periods= [
+            ['period' => 'Periode 01'],
+            ['period' => 'Periode 02'],
+            ['period' => 'Periode 03'],
+            ['period' => 'Periode 04'],
+            ['period' => 'Periode 05'],
+            ['period' => 'Periode 06'],
+            ['period' => 'Periode 07'],
+            ['period' => 'Periode 08'],
+            ['period' => 'Periode 09'],
+            ['period' => 'Periode 10'],
+            ['period' => 'Periode 11'],
+            ['period' => 'Periode 12'],
+            ['period' => 'Periode 13'],
+            ['period' => 'Periode 14'],
+            ['period' => 'Periode 15'],
+            ['period' => 'Periode 16'],
+        ];
+
+        foreach ($periods as $period) {
+            Period::create($period);
+        }
     }
 }

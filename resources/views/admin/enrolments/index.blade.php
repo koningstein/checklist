@@ -34,55 +34,6 @@
                 <div class="bg-red-400 text-red-800 rounded-lg shadow-md p-6 pr-10 mb-8" style="min-width: 240px">{{ session('status-wrong') }}</div>
             </div>
         @endif
-
-        <div class="card-body grid grid-cols-1 gap-6 lg:grid-cols-1">
-            <div class="p-4">
-                <table class="w-full whitespace-no-wrap">
-                    <thead>
-                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-50">
-                        <th class="px-4 py-3">Student</th>
-                        <th class="px-4 py-3">Crebo</th>
-                        <th class="px-4 py-3">Cohort</th>
-                        <th class="px-4 py-3">Date</th>
-                        <th class="px-4 py-3">Status</th>
-                        <th class="px-4 py-3">Details</th>
-                        <th class="px-4 py-3">Edit</th>
-                        <th class="px-4 py-3">Delete</th>
-                    </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y">
-                    @foreach($enrolments as $enrolment)
-                        <tr class="text-gray-700">
-                            <td class="px-4 py-3 text-sm">{{ $enrolment->student->user->name }}</td>
-                            <td class="px-4 py-3 text-sm">{{ $enrolment->crebo->name }}</td>
-                            <td class="px-4 py-3 text-sm">{{ $enrolment->cohort->name }}</td>
-                            <td class="px-4 py-3 text-sm">{{ $enrolment->date }}</td>
-                            <td class="px-4 py-3 text-sm">{{ $enrolment->enrolmentStatus->name }}</td>
-                            <td class="px-4 py-3 text-sm"><a href="{{ route('admin.enrolments.show', ['enrolment' => $enrolment->id]) }}">Details</a></td>
-                            <td class="px-4 py-3">
-                                <div class="flex items-center space-x-4 text-sm">
-                                    <a href="{{ route('admin.enrolments.edit', ['enrolment' => $enrolment->id]) }}">Wijzigen</a>
-                                </div>
-                            </td>
-                            <td>
-                                @can('delete enrolment')
-                                    <div class="flex items-center space-x-4 text-sm">
-                                        <a href="{{ route('admin.enrolments.delete', ['enrolment' => $enrolment->id]) }}">
-                                            Verwijderen</a>
-                                    </div>
-                                @endcan
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="container max-w-4xl mx-auto pb-10 flex justify-between items-center px-3">
-                <div class="text-xs">
-                    {{ $enrolments->links() }}
-                </div>
-            </div>
-        </div>
+        @livewire('enrolment-search')
     </div>
 @endsection

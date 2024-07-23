@@ -2,35 +2,36 @@
 
 namespace App\Livewire;
 
-use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Crebo;
+use App\Models\Course;
 
-class CreboSearch extends Component
+class CourseSearch extends Component
 {
     use WithPagination;
 
     public $searchName = '';
-    public $searchCrebonr = '';
+    public $searchDescription = '';
     public $sortField = 'name';
     public $sortDirection = 'asc';
 
     protected $queryString = ['sortField', 'sortDirection'];
 
-    #[On('searchUpdated')]
-    public function updatingSearch()
+    public function updatingSearchName()
     {
-//        dd('Search is being updated'); // Voeg deze regel toe voor debugging
+        $this->resetPage();
+    }
+
+    public function updatingSearchDescription()
+    {
         $this->resetPage();
     }
 
     public function sortBy($field): void
     {
-        if($this->sortField === $field)
-        {
+        if ($this->sortField === $field) {
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
-        }else{
+        } else {
             $this->sortDirection = 'asc';
         }
         $this->sortField = $field;
@@ -38,19 +39,18 @@ class CreboSearch extends Component
 
     public function render()
     {
-        $crebos = Crebo::query()
+        $courses = Course::query()
             ->when($this->searchName, function ($query) {
                 $query->where('name', 'like', '%'.$this->searchName.'%');
             })
-            ->when($this->searchCrebonr, function ($query) {
-                $query->where('crebonr', 'like', '%'.$this->searchCrebonr.'%');
+            ->when($this->searchDescription, function ($query) {
+                $query->where('description', 'like', '%'.$this->searchDescription.'%');
             })
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate(10);
-//        $crebos = Crebo::search($this->search)->paginate(10);
 
-        return view('livewire.crebo-search', [
-            'crebos' => $crebos,
+        return view('livewire.course-search', [
+            'courses' => $courses,
         ]);
     }
 }

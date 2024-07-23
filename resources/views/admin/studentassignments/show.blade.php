@@ -38,7 +38,7 @@
             </div>
             <div class="mb-4">
                 <h2 class="font-semibold text-xl">Inleverdatum</h2>
-                <p class="text-gray-900">{{ $studentAssignment->duedate ? $studentAssignment->duedate->format('d-m-Y') : 'Geen datum' }}</p>
+                <p class="text-gray-900">{{ $studentAssignment->duedate ? $studentAssignment->duedate : 'Geen datum' }}</p>
             </div>
             <div class="mb-4">
                 <h2 class="font-semibold text-xl">Status</h2>

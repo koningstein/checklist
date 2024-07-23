@@ -36,21 +36,18 @@ class StudentAssignmentController extends Controller implements HasMiddleware
      */
     public function index(): View
     {
-//        $studentAssignments = StudentAssignment::with(['enrolmentClass', 'assignmentStatus', 'markedBy'])->paginate(15);
+        // Laad alle benodigde relaties voor student assignments en pas paginering toe
         $studentAssignments = StudentAssignment::with([
             'enrolmentClass.enrolment.student.user',
             'assignmentStatus',
             'markedBy',
             'individualAssignment',
             'classAssignment.assignment'
-        ])
-            ->get()
-            ->sortBy(function ($studentAssignment) {
-                return $studentAssignment->enrolmentClass->enrolment->student->user->name;
-            })
-            ->paginate(15);
+        ])->paginate(15);
+
         return view('admin.studentassignments.index', ['studentAssignments' => $studentAssignments]);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -106,9 +103,17 @@ class StudentAssignmentController extends Controller implements HasMiddleware
      */
     public function edit(StudentAssignment $studentassignment): View
     {
-        $enrolmentClasses = EnrolmentClass::all();
+        $studentassignment->load([
+            'enrolmentClass.enrolment.student.user',
+            'assignmentStatus',
+            'individualAssignment',
+            'classAssignment.assignment'
+        ]);
+
+        $enrolmentClasses = EnrolmentClass::with('enrolment.student.user', 'classYear.schoolClass')->get();
         $assignmentStatuses = AssignmentStatus::all();
         $assignments = Assignment::all();
+
         return view('admin.studentassignments.edit', [
             'studentAssignment' => $studentassignment,
             'enrolmentClasses' => $enrolmentClasses,
@@ -116,6 +121,7 @@ class StudentAssignmentController extends Controller implements HasMiddleware
             'assignments' => $assignments,
         ]);
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -145,8 +151,19 @@ class StudentAssignmentController extends Controller implements HasMiddleware
      */
     public function delete(StudentAssignment $studentassignment): View
     {
-        return view('admin.studentassignments.delete', ['studentAssignment' => $studentassignment]);
+        $studentassignment->load([
+            'enrolmentClass.enrolment.student.user',
+            'assignmentStatus',
+            'individualAssignment',
+            'classAssignment.assignment'
+        ]);
+
+        return view('admin.studentassignments.delete', [
+            'studentAssignment' => $studentassignment,
+            'removableAssignments' => $studentassignment->where('assignment_status_id', 1)->get()
+        ]);
     }
+
 
     /**
      * Remove the specified resource from storage.

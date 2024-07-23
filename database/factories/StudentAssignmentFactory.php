@@ -7,6 +7,7 @@ use App\Models\AssignmentStatus;
 use App\Models\ClassAssignment;
 use App\Models\EnrolmentClass;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -26,7 +27,7 @@ class StudentAssignmentFactory extends Factory
             'enrolment_class_id' => EnrolmentClass::all()->random()->id,
             'class_assignment_id' => $isFromClassAssignment ? ClassAssignment::inRandomOrder()->first()->id : null,
             'individual_assignment_id' => !$isFromClassAssignment ? Assignment::inRandomOrder()->first()->id : null,
-            'duedate' => $this->faker->dateTime,
+            'duedate' => Carbon::now()->addDays(rand(1, 30)),
             'assignment_status_id' => AssignmentStatus::all()->random()->id,
             'marked_by_id' => User::all()->random()->id,
             'completed' => $this->faker->boolean,

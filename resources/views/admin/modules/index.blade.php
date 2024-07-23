@@ -35,51 +35,6 @@
             </div>
         @endif
 
-        <div class="card-body grid grid-cols-1 gap-6 lg:grid-cols-1">
-            <div class="p-4">
-                <table class="w-full whitespace-no-wrap">
-                    <thead>
-                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-50">
-                        <th class="px-4 py-3">Naam</th>
-                        <th class="px-4 py-3">Beschrijving</th>
-                        <th class="px-4 py-3">Periode</th>
-                        <th class="px-4 py-3">Cursus</th>
-                        <th class="px-4 py-3">Details</th>
-                        <th class="px-4 py-3">Edit</th>
-                        <th class="px-4 py-3">Delete</th>
-                    </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y">
-                    @foreach($modules as $module)
-                        <tr class="text-gray-700">
-                            <td class="px-4 py-3 text-sm">{{ $module->name }}</td>
-                            <td class="px-4 py-3 text-sm">{{ Str::limit($module->description, 50) }}</td>
-                            <td class="px-4 py-3 text-sm">{{ $module->period->period }}</td>
-                            <td class="px-4 py-3 text-sm">{{ $module->course->name }}</td>
-                            <td class="px-4 py-3 text-sm"><a href="{{ route('admin.modules.show', ['module' => $module->id]) }}">Details</a></td>
-                            <td class="px-4 py-3">
-                                <div class="flex items-center space-x-4 text-sm">
-                                    <a href="{{ route('admin.modules.edit', ['module' => $module->id]) }}">Wijzigen</a>
-                                </div>
-                            </td>
-                            <td>
-                                @can('delete module')
-                                    <div class="flex items-center space-x-4 text-sm">
-                                        <a href="{{ route('admin.modules.delete', ['module' => $module->id]) }}">Verwijderen</a>
-                                    </div>
-                                @endcan
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="container max-w-4xl mx-auto pb-10 flex justify-between items-center px-3">
-                <div class="text-xs">
-                    {{ $modules->links() }}
-                </div>
-            </div>
-        </div>
+        @livewire('module-search')
     </div>
 @endsection

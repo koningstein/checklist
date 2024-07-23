@@ -35,47 +35,6 @@
             </div>
         @endif
 
-        <div class="card-body grid grid-cols-1 gap-6 lg:grid-cols-1">
-            <div class="p-4">
-                <table class="w-full whitespace-no-wrap">
-                    <thead>
-                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-50">
-                        <th class="px-4 py-3">Klas</th>
-                        <th class="px-4 py-3">Student</th>
-                        <th class="px-4 py-3">Schooljaar</th>
-                        <th class="px-4 py-3">Details</th>
-                        <th class="px-4 py-3">Edit</th>
-                        <th class="px-4 py-3">Delete</th>
-                    </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y">
-                    @foreach($enrolmentClasses as $enrolmentClass)
-                        <tr class="text-gray-700">
-                            <td class="px-4 py-3 text-sm">{{ $enrolmentClass->classYear->schoolClass->name }}</td>
-                            <td class="px-4 py-3 text-sm">{{ $enrolmentClass->enrolment->student->user->name }}</td>
-                            <td class="px-4 py-3 text-sm">{{ $enrolmentClass->classYear->schoolYear->name }}</td>
-                            <td class="px-4 py-3 text-sm">
-                                <a href="{{ route('admin.enrolmentclasses.show', ['enrolmentclass' => $enrolmentClass->id]) }}">Details</a>
-                            </td>
-                            <td class="px-4 py-3 text-sm">
-                                <a href="{{ route('admin.enrolmentclasses.edit', ['enrolmentclass' => $enrolmentClass->id]) }}">Wijzigen</a>
-                            </td>
-                            <td class="px-4 py-3 text-sm">
-                                @can('delete enrolmentclass')
-                                    <a href="{{ route('admin.enrolmentclasses.delete', ['enrolmentclass' => $enrolmentClass->id]) }}">Verwijderen</a>
-                                @endcan
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="container max-w-4xl mx-auto pb-10 flex justify-between items-center px-3">
-                <div class="text-xs">
-                    {{ $enrolmentClasses->links() }}
-                </div>
-            </div>
-        </div>
+        @livewire('enrolment-class-search')
     </div>
 @endsection

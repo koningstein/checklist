@@ -39,25 +39,33 @@
                     @method('PUT')
                     @csrf
                     <label class="block text-sm">
-                        <span class="text-gray-700">Student</span>
-                        <input type="text" class="bg-gray-200 block rounded w-full p-2 mt-1 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-input" value="{{ $studentAssignment->enrolmentClass->enrolment->student->user->name }}" disabled>
-                    </label>
-                    <label class="block text-sm">
                         <span class="text-gray-700">Klas</span>
-                        <input type="text" class="bg-gray-200 block rounded w-full p-2 mt-1 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-input" value="{{ $studentAssignment->enrolmentClass->classYear->schoolClass->name }}" disabled>
+                        <select name="enrolment_class_id" class="bg-gray-200 block rounded w-full p-2 mt-1 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-select" required>
+                            @foreach($enrolmentClasses as $class)
+                                <option value="{{ $class->id }}" {{ $studentAssignment->enrolment_class_id == $class->id ? 'selected' : '' }}>
+                                    {{ $class->classYear->schoolClass->name }} - {{ $class->enrolment->student->user->name }}
+                                </option>
+                            @endforeach
+                        </select>
                     </label>
                     <label class="block text-sm">
                         <span class="text-gray-700">Opdracht</span>
-                        <input type="text" class="bg-gray-200 block rounded w-full p-2 mt-1 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-input" value="{{ $studentAssignment->individualAssignment ? $studentAssignment->individualAssignment->name : $studentAssignment->classAssignment->assignment->name }}" disabled>
+                        <select name="individual_assignment_id" class="bg-gray-200 block rounded w-full p-2 mt-1 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-select" required>
+                            @foreach($assignments as $assignment)
+                                <option value="{{ $assignment->id }}" {{ $studentAssignment->individual_assignment_id == $assignment->id ? 'selected' : '' }}>
+                                    {{ $assignment->name }}
+                                </option>
+                            @endforeach
+                        </select>
                     </label>
                     <label class="block text-sm">
                         <span class="text-gray-700">Inleverdatum</span>
-                        <input type="date" name="duedate" class="bg-gray-200 block rounded w-full p-2 mt-1 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-input" value="{{ old('duedate', $studentAssignment->duedate ? $studentAssignment->duedate->format('Y-m-d') : '') }}">
+                        <input type="date" name="duedate" class="bg-gray-200 block rounded w-full p-2 mt-1 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-input" value="{{ old('duedate', $studentAssignment->duedate ? \Carbon\Carbon::parse($studentAssignment->duedate)->toDateString() : '') }}" />
                     </label>
                     <label class="block text-sm">
                         <span class="text-gray-700">Status</span>
                         <select name="assignment_status_id" class="bg-gray-200 block rounded w-full p-2 mt-1 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-select" required>
-                            @foreach($statuses as $status)
+                            @foreach($assignmentStatuses as $status)
                                 <option value="{{ $status->id }}" {{ $studentAssignment->assignment_status_id == $status->id ? 'selected' : '' }}>
                                     {{ $status->name }}
                                 </option>
@@ -65,23 +73,16 @@
                         </select>
                     </label>
                     <label class="block text-sm">
-                        <span class="text-gray-700">Beoordeeld door</span>
-                        <select name="marked_by_id" class="bg-gray-200 block rounded w-full p-2 mt-1 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-select">
-                            <option value="">Nog niet beoordeeld</option>
-                            @foreach($teachers as $teacher)
-                                <option value="{{ $teacher->id }}" {{ $studentAssignment->marked_by_id == $teacher->id ? 'selected' : '' }}>
-                                    {{ $teacher->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </label>
-                    <label class="block text-sm">
-                        <span class="text-gray-700">Beoordelingsdatum</span>
-                        <input type="datetime-local" name="marked_at" class="bg-gray-200 block rounded w-full p-2 mt-1 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-input" value="{{ old('marked_at', $studentAssignment->marked_at ? $studentAssignment->marked_at->format('Y-m-d\TH:i') : '') }}">
-                    </label>
-                    <label class="block text-sm">
                         <span class="text-gray-700">Voltooid</span>
                         <input type="checkbox" name="completed" class="form-checkbox" {{ $studentAssignment->completed ? 'checked' : '' }}>
+                    </label>
+                    <label class="block text-sm">
+                        <span class="text-gray-700">Gemarkeerd door</span>
+                        <input type="text" name="marked_by_id" class="bg-gray-200 block rounded w-full p-2 mt-1 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-input" value="{{ old('marked_by_id', $studentAssignment->marked_by_id) }}" />
+                    </label>
+                    <label class="block text-sm">
+                        <span class="text-gray-700">Gemarkeerd op</span>
+                        <input type="datetime-local" name="marked_at" class="bg-gray-200 block rounded w-full p-2 mt-1 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-input" value="{{ old('marked_at', $studentAssignment->marked_at ? \Carbon\Carbon::parse($studentAssignment->marked_at)->format('Y-m-d\TH:i') : '') }}" />
                     </label>
 
                     <button class="mt-2 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">Wijzigen</button>

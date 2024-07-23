@@ -32,46 +32,6 @@
                 <div class="bg-red-400 text-red-800 rounded-lg shadow-md p-6 pr-10 mb-8" style="min-width: 240px">{{ session('status-wrong') }}</div>
             </div>
         @endif
-        <div class="card-body grid grid-cols-1 gap-6 lg:grid-cols-1">
-            <div class="p-4">
-                <table class="w-full whitespace-no-wrap">
-                    <thead>
-                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-50">
-                        <th class="px-4 py-3">Naam</th>
-                        <th class="px-4 py-3">Details</th>
-                        <th class="px-4 py-3">Edit</th>
-                        <th class="px-4 py-3">Delete</th>
-                    </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y">
-                    @foreach($cohorts as $cohort)
-                        <tr class="text-gray-700">
-                            <td class="px-4 py-3 text-sm">{{ $cohort->name }}</td>
-                            <td class="px-4 py-3 text-sm"><a href="{{ route('admin.cohorts.show', ['cohort' => $cohort->id]) }}">Details</a></td>
-                            <td class="px-4 py-3">
-                                <div class="flex items-center space-x-4 text-sm">
-                                    <a href="{{ route('admin.cohorts.edit', ['cohort' => $cohort->id]) }}">Wijzigen</a>
-                                </div>
-                            </td>
-                            <td>
-                                @can('delete cohort')
-                                    <div class="flex items-center space-x-4 text-sm">
-                                        <a href="{{ route('admin.cohorts.delete', ['cohort' => $cohort->id]) }}">
-                                            Verwijderen</a>
-                                    </div>
-                                @endcan
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="container max-w-4xl mx-auto pb-10 flex justify-between items-center px-3">
-                <div class="text-xs">
-                    {{ $cohorts->links() }}
-                </div>
-            </div>
-        </div>
+        @livewire('cohort-search')
     </div>
 @endsection
