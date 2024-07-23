@@ -32,6 +32,13 @@ class DatabaseSeeder extends Seeder
             ClassAssignmentSeeder::class,
             AssignmentStatusSeeder::class,
             StudentAssignmentSeeder::class,
+            LearningLevelSeeder::class,
+            LearningOutcomeSeeder::class,
+            LearningRelatedTechniqueSeeder::class,
+            LearningSuboutcomeSeeder::class,
+            LearningSuboutcomeLevelSeeder::class,
+            LearningSuboutcomeTechniqueSeeder::class,
+            LearningSuboutcomeAssignmentSeeder::class,
         ]);
 
         // User::factory(10)->create();

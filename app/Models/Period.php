@@ -16,4 +16,9 @@ class Period extends Model
     {
         return $this->hasMany(Module::class);
     }
+
+    public function learningSuboutcomeLevels(): HasMany
+    {
+        return $this->hasMany(LearningSuboutcomeLevel::class);
+    }
 }
