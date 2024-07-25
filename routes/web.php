@@ -88,6 +88,20 @@ Route::group(['middleware' => ['role:teacher|keyteacher|admin']], function (){
 
         Route::resource('studentassignments', Admin\StudentAssignmentController::class);
         Route::get('studentassignments/{studentassignment}/delete', [Admin\StudentAssignmentController::class, 'delete'])->name('studentassignments.delete');
+
+        Route::resource('learningoutcomes', Admin\LearningOutcomeController::class);
+        Route::get('learningoutcomes/{learningoutcome}/delete', [Admin\LearningOutcomeController::class, 'delete'])->name('learningoutcomes.delete');
+
+        Route::get('learninglevels/{learninglevel}/delete', [Admin\LearningLevelController::class, 'delete'])->name('learninglevels.delete');
+        Route::resource('learninglevels', Admin\LearningLevelController::class);
+
+        Route::resource('learningrelatedtechniques', Admin\LearningRelatedTechniqueController::class);
+        Route::get('learningrelatedtechniques/{learningrelatedtechnique}/delete', [Admin\LearningRelatedTechniqueController::class, 'delete'])
+            ->name('learningrelatedtechniques.delete');
+
+        Route::resource('learningsuboutcomes', Admin\LearningSuboutcomeController::class);
+        Route::get('learningsuboutcomes/{learningsuboutcome}/delete', [Admin\LearningSuboutcomeController::class, 'delete'])
+            ->name('learningsuboutcomes.delete');
     });
 });
 

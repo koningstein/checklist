@@ -23,7 +23,7 @@
     <!-- logo -->
     <div class="flex-none w-56 flex flex-row items-center">
         <img src="{{ asset('img/logo.png') }}" class="w-10 flex-none">
-        <strong class="capitalize ml-1 flex-1">TCR Checklist</strong>
+        <strong class="ml-1 flex-1">TCR Checklist</strong>
 
         <button id="sliderBtn" class="flex-none text-right text-gray-900 hidden md:block">
             <i class="fad fa-list-ul"></i>
@@ -352,47 +352,55 @@
                 @hasanyrole('teacher|keyteacher|admin')
                 <!-- links for sales & admins -->
                 <p class="uppercase text-xs text-gray-600 mb-4 tracking-wider">Admin</p>
-                <a href="{{ route('admin.periods.index') }}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600
+                <a href="{{ route('admin.periods.index') }}" class="mb-3 font-medium text-sm hover:text-teal-600
                     transition ease-in-out duration-500">Periode admin</a>
-                <a href="{{ route('admin.cohorts.index') }}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out
+                <a href="{{ route('admin.cohorts.index') }}" class="mb-3 font-medium text-sm hover:text-teal-600 transition ease-in-out
                     duration-500">Cohort admin</a>
-                <a href="{{ route('admin.crebos.index') }}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out
+                <a href="{{ route('admin.crebos.index') }}" class="mb-3 font-medium text-sm hover:text-teal-600 transition ease-in-out
                     duration-500">Crebo admin</a>
-                <a href="{{ route('admin.courses.index') }}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out
-                    duration-500">Course admin
-                <a href="{{ route('admin.students.index') }}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out
+                <a href="{{ route('admin.courses.index') }}" class="mb-3  font-medium text-sm hover:text-teal-600 transition ease-in-out
+                    duration-500">Vak admin
+                <a href="{{ route('admin.students.index') }}" class="mb-3 font-medium text-sm hover:text-teal-600 transition ease-in-out
                 duration-500">Student admin</a>
-                    <a href="{{ route('admin.schoolclasses.index') }}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out
-                duration-500">SchoolClass admin
-                        <a href="{{ route('admin.enrolmentstatuses.index') }}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out
-                duration-500">Enrolment status admin</a>
-                        <a href="{{ route('admin.schoolyears.index') }}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out
-                duration-500">School years admin</a>
-                        <a href="{{ route('admin.classyears.index') }}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out
-                duration-500">Class years admin</a>
-                        <a href="{{ route('admin.modules.index') }}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out
+                    <a href="{{ route('admin.schoolclasses.index') }}" class="mb-3  font-medium text-sm hover:text-teal-600 transition ease-in-out
+                duration-500">Klas admin
+                        <a href="{{ route('admin.enrolmentstatuses.index') }}" class="mb-3  font-medium text-sm hover:text-teal-600 transition ease-in-out
+                duration-500">Inschrijving status admin</a>
+                        <a href="{{ route('admin.schoolyears.index') }}" class="mb-3 font-medium text-sm hover:text-teal-600 transition ease-in-out
+                duration-500">Schooljaren admin</a>
+                        <a href="{{ route('admin.classyears.index') }}" class="mb-3  font-medium text-sm hover:text-teal-600 transition ease-in-out
+                duration-500">Klas met schooljaar admin</a>
+                        <a href="{{ route('admin.modules.index') }}" class="mb-3 font-medium text-sm hover:text-teal-600 transition ease-in-out
                 duration-500">Module admin</a>
-                        <a href="{{ route('admin.assignments.index') }}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out
-                duration-500">Assignment admin</a>
-                        <a href="{{ route('admin.enrolments.index') }}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out
-                duration-500">Enrolment admin</a>
-                        <a href="{{ route('admin.assignmentstatuses.index') }}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out
-                duration-500">Assignment status admin</a>
-                        <a href="{{ route('admin.classassignments.index') }}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out
-                duration-500">Class assignment admin</a>
-                        <a href="{{ route('admin.enrolmentclasses.index') }}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out
-                duration-500">Enrolment classes admin</a>
-                        <a href="{{ route('admin.studentassignments.index') }}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out
-                duration-500">Student Assignment admin</a>
+                        <a href="{{ route('admin.assignments.index') }}" class="mb-3  font-medium text-sm hover:text-teal-600 transition ease-in-out
+                duration-500">Opdracht admin</a>
+                        <a href="{{ route('admin.enrolments.index') }}" class="mb-3 font-medium text-sm hover:text-teal-600 transition ease-in-out
+                duration-500">Inschrijving admin</a>
+                        <a href="{{ route('admin.assignmentstatuses.index') }}" class="mb-3  font-medium text-sm hover:text-teal-600 transition ease-in-out
+                duration-500">Opdracht status admin</a>
+                        <a href="{{ route('admin.classassignments.index') }}" class="mb-3 font-medium text-sm hover:text-teal-600 transition ease-in-out
+                duration-500">Klas opdrachten admin</a>
+                        <a href="{{ route('admin.enrolmentclasses.index') }}" class="mb-3  font-medium text-sm hover:text-teal-600 transition ease-in-out
+                duration-500">Student in klas admin</a>
+                        <a href="{{ route('admin.studentassignments.index') }}" class="mb-3 font-medium text-sm hover:text-teal-600 transition ease-in-out
+                duration-500">Student opdracht admin</a>
+                        <a href="{{ route('admin.learningoutcomes.index') }}" class="mb-3  font-medium text-sm hover:text-teal-600 transition ease-in-out
+                duration-500">Leeruitkomst admin</a>
+                        <a href="{{ route('admin.learninglevels.index') }}" class="mb-3 font-medium text-sm hover:text-teal-600 transition ease-in-out
+                duration-500">Leerlevel admin</a>
+                        <a href="{{ route('admin.learningrelatedtechniques.index') }}" class="mb-3 font-medium text-sm hover:text-teal-600 transition ease-in-out
+                duration-500">Leer gerelateerde technieken admin</a>
+                        <a href="{{ route('admin.learningsuboutcomes.index') }}" class="mb-3  font-medium text-sm hover:text-teal-600 transition ease-in-out
+                duration-500">Subleeruitkomst admin</a>
                 @endhasanyrole
 
                 <!-- links for logedin users -->
             @endguest
             <!-- links for every user -->
             <p class="uppercase text-xs text-gray-600 mb-4 mt-4 tracking-wider">Public</p>
-            <a href="" class="mb-3 capitalize font-medium text-sm
+            <a href="" class="mb-3 font-medium text-sm
                 hover:text-teal-600 transition ease-in-out duration-500">Link1</a>
-            <a href="#" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition
+            <a href="#" class="mb-3 e font-medium text-sm hover:text-teal-600 transition
                 ease-in-out duration-500">Link2</a>
         </div>
         <!-- end sidebar content -->

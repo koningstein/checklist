@@ -8,8 +8,8 @@
         </div>
         <x-table>
             <x-slot name="head">
-                <x-table.heading sortable wire:click="sortBy('name')" :direction="$sortField === 'name' ? $sortDirection : null" class="w-4/12">Naam</x-table.heading>
-                <x-table.heading sortable wire:click="sortBy('description')" :direction="$sortField === 'description' ? $sortDirection : null" class="w-5/12">Beschrijving</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('name')" :direction="$sortField === 'name' ? $sortDirection : null" class="w-2/12">Naam</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('description')" :direction="$sortField === 'description' ? $sortDirection : null" class="w-7/12">Beschrijving</x-table.heading>
                 <x-table.heading class="w-1/12">Details</x-table.heading>
                 <x-table.heading class="w-1/12">Edit</x-table.heading>
                 <x-table.heading class="w-1/12">Delete</x-table.heading>
@@ -18,8 +18,8 @@
             <x-slot name="body">
                 @forelse($courses as $course)
                     <x-table.row>
-                        <x-table.cell class="w-4/12">{{ $course->name }}</x-table.cell>
-                        <x-table.cell class="w-5/12">{{ $course->description }}</x-table.cell>
+                        <x-table.cell class="w-3/12">{{ $course->name }}</x-table.cell>
+                        <x-table.cell class="w-3/12">{{ Str::limit(ucfirst($course->description), 100) }}</x-table.cell>
                         <x-table.cell class="w-1/12">
                             @can('show course')
                                 <a href="{{ route('admin.courses.show', ['course' => $course->id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded flex items-center justify-center text-xs w-full">
