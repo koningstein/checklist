@@ -35,35 +35,6 @@
             </div>
         @endif
 
-        <div class="card-body">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead>
-                <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Naam</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Beschrijving</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acties</th>
-                </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                @foreach ($learningLevels as $learningLevel)
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $learningLevel->name }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $learningLevel->description }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <a href="{{ route('admin.learninglevels.show', $learningLevel->id) }}" class="text-blue-600 hover:text-blue-900">Details</a>
-                            <a href="{{ route('admin.learninglevels.edit', $learningLevel->id) }}" class="text-indigo-600 hover:text-indigo-900 ml-2">Bewerken</a>
-                            <form action="{{ route('admin.learninglevels.delete', $learningLevel->id) }}" method="GET" class="inline">
-                                @csrf
-                                <button type="submit" class="text-red-600 hover:text-red-900 ml-2">Verwijderen</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
-            <div class="mt-4">
-                {{ $learningLevels->links() }}
-            </div>
-        </div>
+        @livewire('learning-level-search')
     </div>
 @endsection

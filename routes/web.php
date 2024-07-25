@@ -102,6 +102,18 @@ Route::group(['middleware' => ['role:teacher|keyteacher|admin']], function (){
         Route::resource('learningsuboutcomes', Admin\LearningSuboutcomeController::class);
         Route::get('learningsuboutcomes/{learningsuboutcome}/delete', [Admin\LearningSuboutcomeController::class, 'delete'])
             ->name('learningsuboutcomes.delete');
+
+        Route::resource('learningsuboutcomelevels', Admin\LearningSuboutcomeLevelController::class);
+        Route::get('learningsuboutcomelevels/{learningsuboutcomelevel}/delete', [Admin\LearningSuboutcomeLevelController::class, 'delete'])
+            ->name('learningsuboutcomelevels.delete');
+
+        Route::resource('learningsuboutcometechniques', Admin\LearningSuboutcomeTechniqueController::class);
+        Route::get('learningsuboutcometechniques/{learningsuboutcometechnique}/delete', [Admin\LearningSuboutcomeTechniqueController::class, 'delete'])
+            ->name('learningsuboutcometechniques.delete');
+
+        Route::resource('learningsuboutcomeassignments', Admin\LearningSuboutcomeAssignmentController::class);
+        Route::get('learningsuboutcomeassignments/{learningsuboutcomeassignment}/delete', [Admin\LearningSuboutcomeAssignmentController::class, 'delete'])
+            ->name('learningsuboutcomeassignments.delete');
     });
 });
 

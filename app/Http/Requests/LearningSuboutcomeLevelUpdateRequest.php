@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class LearningSuboutcomeLevelUpdateRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'learning_suboutcome_id' => 'required|exists:learning_suboutcomes,id',
+            'learning_level_id' => 'required|exists:learning_levels,id',
+            'period_id' => 'nullable|exists:periods,id',
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     */
+    public function messages(): array
+    {
+        return [
+            'learning_suboutcome_id.required' => 'Het leeruitkomst veld is verplicht.',
+            'learning_suboutcome_id.exists' => 'De geselecteerde leeruitkomst is ongeldig.',
+            'learning_level_id.required' => 'Het niveau veld is verplicht.',
+            'learning_level_id.exists' => 'De geselecteerde niveau is ongeldig.',
+            'period_id.exists' => 'De geselecteerde periode is ongeldig.',
+        ];
+    }
+}

@@ -392,6 +392,12 @@
                 duration-500">Leer gerelateerde technieken admin</a>
                         <a href="{{ route('admin.learningsuboutcomes.index') }}" class="mb-3  font-medium text-sm hover:text-teal-600 transition ease-in-out
                 duration-500">Subleeruitkomst admin</a>
+                        <a href="{{ route('admin.learningsuboutcomelevels.index') }}" class="mb-3  font-medium text-sm hover:text-teal-600 transition ease-in-out
+                duration-500">Subleeruitkomst Level admin</a>
+                        <a href="{{ route('admin.learningsuboutcometechniques.index') }}" class="mb-3  font-medium text-sm hover:text-teal-600 transition ease-in-out
+                duration-500">Subleeruitkomst Techniek admin</a>
+                        <a href="{{ route('admin.learningsuboutcomeassignments.index') }}" class="mb-3  font-medium text-sm hover:text-teal-600 transition ease-in-out
+                duration-500">Subleeruitkomst Opdracht admin</a>
                 @endhasanyrole
 
                 <!-- links for logedin users -->

@@ -30,43 +30,7 @@
                 </div>
             @endif
 
-            @if($learningOutcomes->isEmpty())
-                <p class="text-gray-900">Geen Learning Outcomes gevonden.</p>
-            @else
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead>
-                        <tr>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nummer</th>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Naam</th>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Beschrijving</th>
-                            <th class="px-6 py-3 bg-gray-50"></th>
-                        </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach($learningOutcomes as $learningoutcome)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $learningoutcome->number }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $learningoutcome->name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $learningoutcome->description }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="{{ route('admin.learningoutcomes.show', ['learningoutcome' => $learningoutcome->id]) }}" class="text-indigo-600 hover:text-indigo-900">Details</a>
-                                    <a href="{{ route('admin.learningoutcomes.edit', ['learningoutcome' => $learningoutcome->id]) }}" class="ml-4 text-indigo-600 hover:text-indigo-900">Wijzigen</a>
-                                    <form action="{{ route('admin.learningoutcomes.destroy', ['learningoutcome' => $learningoutcome->id]) }}" method="POST" class="inline-block">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="ml-4 text-red-600 hover:text-red-900" onclick="return confirm('Weet je zeker dat je deze learning outcome wilt verwijderen?')">Verwijderen</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                <div class="mt-4">
-                    {{ $learningOutcomes->links() }}
-                </div>
-            @endif
+            @livewire('learning-outcome-search')
         </div>
     </div>
 @endsection
