@@ -56,7 +56,7 @@
                         <span class="text-gray-700">Due Date</span>
                         <input class="bg-gray-200 block rounded w-full p-2 mt-1 focus:border-purple-400
                         focus:outline-none focus:shadow-outline-purple form-input"
-                               name="duedate" value="{{ old('duedate', $assignment->duedate) }}" type="datetime-local" required/>
+                               name="duedate" value="{{ old('duedate', \Carbon\Carbon::parse($assignment->duedate)->format('Y-m-d\TH:i')) }}" type="datetime-local" required/>
                     </label>
                     <label class="block text-sm">
                         <span class="text-gray-700">Module</span>

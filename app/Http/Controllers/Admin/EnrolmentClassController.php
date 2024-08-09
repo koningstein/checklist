@@ -25,7 +25,7 @@ class EnrolmentClassController extends Controller implements HasMiddleware
         return [
             new Middleware(PermissionMiddleware::using('index enrolmentclass'), only: ['index']),
             new Middleware(PermissionMiddleware::using('show enrolmentclass'), only: ['show']),
-            new Middleware(PermissionMiddleware::using('create enrolmentclass'), only: ['create', 'store']),
+            new Middleware(PermissionMiddleware::using('create enrolmentclass'), only: ['create', 'store', 'showUnlinkedStudents']),
             new Middleware(PermissionMiddleware::using('edit enrolmentclass'), only: ['edit', 'update']),
             new Middleware(PermissionMiddleware::using('delete enrolmentclass'), only: ['delete', 'destroy']),
         ];
@@ -220,4 +220,11 @@ class EnrolmentClassController extends Controller implements HasMiddleware
         }
         return to_route('admin.enrolmentclasses.index')->with('status', "Enrolment Class deleted successfully.");
     }
+
+    public function showUnlinkedStudents()
+    {
+        // Render alleen de view, aangezien de Livewire-component de rest afhandelt
+        return view('admin.enrolmentclasses.unlinked');
+    }
+
 }

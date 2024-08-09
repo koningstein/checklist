@@ -30,8 +30,6 @@ Route::get('/admin', function () {
     return view('layouts.layoutadmin');
 })->name('admin');
 
-
-
 Route::group(['middleware' => ['role:teacher|keyteacher|admin']], function (){
     Route::prefix('admin')->name('admin.')->group(function() {
         Route::resource('periods', Admin\PeriodController::class);
@@ -47,8 +45,13 @@ Route::group(['middleware' => ['role:teacher|keyteacher|admin']], function (){
         Route::get('courses/{course}/delete', [Admin\CourseController::class, 'delete'])->name('courses.delete');
 
         // Student routes
+        Route::get('students/import', [Admin\StudentController::class, 'importForm'])->name('students.importForm');
+        Route::post('students/import', [Admin\StudentController::class, 'import'])->name('students.import');
+        Route::get('students/confirm-import', [Admin\StudentController::class, 'confirmImport'])->name('students.confirmImport');
+        Route::post('students/store-import', [Admin\StudentController::class, 'storeImportedStudents'])->name('students.storeImport');
         Route::resource('students', Admin\StudentController::class);
         Route::get('students/{student}/delete', [Admin\StudentController::class, 'delete'])->name('students.delete');
+
 
         // SchoolClass routes
         Route::resource('schoolclasses', Admin\SchoolClassController::class);
@@ -83,6 +86,7 @@ Route::group(['middleware' => ['role:teacher|keyteacher|admin']], function (){
         Route::get('classassignments/{classassignment}/delete', [Admin\ClassAssignmentController::class, 'delete'])->name('classassignments.delete');
 
         // EnrolmentClass routes
+        Route::get('enrolmentclasses/unlinked', [Admin\EnrolmentClassController::class, 'showUnlinkedStudents'])->name('enrolmentclasses.unlinked');
         Route::resource('enrolmentclasses', Admin\EnrolmentClassController::class);
         Route::get('enrolmentclasses/{enrolmentclass}/delete', [Admin\EnrolmentClassController::class, 'delete'])->name('enrolmentclasses.delete');
 
@@ -116,6 +120,7 @@ Route::group(['middleware' => ['role:teacher|keyteacher|admin']], function (){
             ->name('learningsuboutcomeassignments.delete');
     });
 });
+
 
 
 Route::get('/dashboard', function () {

@@ -19,8 +19,10 @@ class LearningSuboutcomeTechniqueFactory extends Factory
     public function definition(): array
     {
         return [
-            'learning_suboutcome_id' => LearningSuboutcome::factory(),
-            'learning_related_technique_id' => LearningRelatedTechnique::factory(),
+//            'learning_suboutcome_id' => LearningSuboutcome::factory(),
+//            'learning_related_technique_id' => LearningRelatedTechnique::factory(),
+            'learning_suboutcome_id' => LearningSuboutcome::all()->random()->id,
+            'learning_related_technique_id' => LearningRelatedTechnique::all()->random()->id,
         ];
     }
 }

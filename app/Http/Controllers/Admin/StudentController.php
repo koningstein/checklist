@@ -3,15 +3,23 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Imports\StudentImport;
+use App\Models\Cohort;
+use App\Models\Crebo;
+use App\Models\Enrolment;
+use App\Models\EnrolmentStatus;
 use App\Models\Student;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests\StudentStoreRequest;
 use App\Http\Requests\StudentUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StudentController extends Controller implements HasMiddleware
 {
@@ -123,5 +131,73 @@ class StudentController extends Controller implements HasMiddleware
         }
 
         return to_route('admin.students.index')->with('status', 'Student deleted successfully.');
+    }
+
+    public function importForm()
+    {
+        return view('admin.students.import');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx',
+        ]);
+
+        Excel::import(new StudentImport, $request->file('file'));
+
+        return redirect()->route('admin.students.confirmImport');
+    }
+
+    public function confirmImport()
+    {
+        $students = session('imported_students', []);
+        $cohorts = Cohort::orderBy('name', 'desc')->get();
+        $highestCohort = Cohort::orderBy('name', 'desc')->first();
+        $enrolmentStatuses = EnrolmentStatus::all();
+        $defaultStatus = EnrolmentStatus::where('name', 'definitief')->first();
+
+        return view('admin.students.confirmImport', compact('students', 'cohorts', 'enrolmentStatuses', 'highestCohort', 'defaultStatus'));
+    }
+
+    public function storeImportedStudents(Request $request)
+    {
+        $students = $request->input('students');
+
+        foreach ($students as $studentData) {
+            $user = User::create([
+                'name' => $studentData['name'],
+                'email' => $studentData['email'],
+                'password' => Hash::make('default_password'), // Gebruik een geschikt standaard wachtwoord
+            ]);
+
+            $student = Student::create([
+                'user_id' => $user->id,
+                'studentNr' => $studentData['nummer'],
+            ]);
+
+            $cohort = Cohort::find($studentData['cohort_id']);
+            $startYear = intval(substr($cohort->name, 0, 4));
+            $startDate = Carbon::create($startYear, 8, 1);
+
+            $crebo = Crebo::firstOrCreate([
+                'crebonr' => $studentData['opleiding'],
+            ], [
+                'name' => 'Default Name', // Vervang dit met relevante gegevens
+                'description' => 'Default Description',
+            ]);
+
+            Enrolment::create([
+                'student_id' => $student->id,
+                'crebo_id' => $crebo->id,
+                'cohort_id' => $studentData['cohort_id'],
+                'date' => $startDate,
+                'enrolment_status_id' => $studentData['enrolment_status_id'],
+            ]);
+        }
+
+        session()->forget('imported_students');
+
+        return redirect()->route('admin.students.index')->with('status', 'Students Imported Successfully.');
     }
 }

@@ -19,8 +19,10 @@ class LearningSuboutcomeAssignmentFactory extends Factory
     public function definition(): array
     {
         return [
-            'learning_suboutcome_id' => LearningSuboutcome::factory(),
-            'assignment_id' => Assignment::factory(),
+//            'learning_suboutcome_id' => LearningSuboutcome::factory(),
+//            'assignment_id' => Assignment::factory(),
+            'learning_suboutcome_id' => LearningSuboutcome::all()->random()->id,
+            'assignment_id' => Assignment::all()->random()->id,
         ];
     }
 }

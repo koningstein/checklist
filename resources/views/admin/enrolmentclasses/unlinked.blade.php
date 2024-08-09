@@ -21,21 +21,10 @@
 @section('content')
     <div class="card mt-6">
         <div class="card-header flex flex-row justify-between">
-            <h1 class="h6">Enrolment Class Admin</h1>
+            <h1 class="h6">Niet-Gekoppelde Studenten</h1>
         </div>
-
-        @if(session('status'))
-            <div class="card-body">
-                <div class="bg-green-400 text-green-800 rounded-lg shadow-md p-6 pr-10 mb-8" style="min-width: 240px">{{ session('status') }}</div>
-            </div>
-        @endif
-
-        @if(session('status-wrong'))
-            <div class="card-body">
-                <div class="bg-red-400 text-red-800 rounded-lg shadow-md p-6 pr-10 mb-8" style="min-width: 240px">{{ session('status-wrong') }}</div>
-            </div>
-        @endif
-
-        @livewire('enrolment-class-search')
+        <div class="card-body">
+            @livewire('unlinked-student-search')
+        </div>
     </div>
 @endsection

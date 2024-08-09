@@ -24,7 +24,7 @@ class AssignmentStoreRequest extends FormRequest
         return [
             'name' => 'required|string|max:150',
             'description' => 'nullable|string',
-            'duedate' => 'nullable|date',
+            'duedate' => 'nullable|datetime',
             'module_id' => 'required|exists:modules,id',
         ];
     }

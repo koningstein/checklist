@@ -30,39 +30,7 @@
                 </div>
             @endif
 
-            @if($learningsuboutcomelevels->isEmpty())
-                <p class="text-gray-900">Geen Learning Suboutcome Levels gevonden.</p>
-            @else
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead>
-                        <tr>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Leeruitkomst</th>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Niveau</th>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Periode</th>
-                            <th class="px-6 py-3 bg-gray-50"></th>
-                        </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach($learningsuboutcomelevels as $learningsuboutcomelevel)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $learningsuboutcomelevel->learningSuboutcome->name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $learningsuboutcomelevel->learningLevel->name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $learningsuboutcomelevel->period ? $learningsuboutcomelevel->period->period : 'N/A' }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="{{ route('admin.learningsuboutcomelevels.show', ['learningsuboutcomelevel' => $learningsuboutcomelevel->id]) }}" class="text-indigo-600 hover:text-indigo-900">Details</a>
-                                    <a href="{{ route('admin.learningsuboutcomelevels.edit', ['learningsuboutcomelevel' => $learningsuboutcomelevel->id]) }}" class="ml-4 text-indigo-600 hover:text-indigo-900">Wijzigen</a>
-                                    <a href="{{ route('admin.learningsuboutcomelevels.delete', ['learningsuboutcomelevel' => $learningsuboutcomelevel->id]) }}" class="ml-4 text-red-600 hover:text-red-900">Verwijderen</a>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                <div class="mt-4">
-                    {{ $learningsuboutcomelevels->links() }}
-                </div>
-            @endif
+            @livewire('learning-suboutcome-level-search')
         </div>
     </div>
 @endsection

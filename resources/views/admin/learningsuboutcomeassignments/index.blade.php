@@ -29,38 +29,7 @@
                     {{ session('status') }}
                 </div>
             @endif
-
-            @if($learningSuboutcomeAssignments->isEmpty())
-                <p class="text-gray-900">Geen Learning Suboutcome Assignments gevonden.</p>
-            @else
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead>
-                        <tr>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Learning Suboutcome</th>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assignment</th>
-                            <th class="px-6 py-3 bg-gray-50"></th>
-                        </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach($learningSuboutcomeAssignments as $learningSuboutcomeAssignment)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $learningSuboutcomeAssignment->learningSuboutcome->name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $learningSuboutcomeAssignment->assignment->name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="{{ route('admin.learningsuboutcomeassignments.show', ['learningsuboutcomeassignment' => $learningSuboutcomeAssignment->id]) }}" class="text-indigo-600 hover:text-indigo-900">Details</a>
-                                    <a href="{{ route('admin.learningsuboutcomeassignments.edit', ['learningsuboutcomeassignment' => $learningSuboutcomeAssignment->id]) }}" class="ml-4 text-indigo-600 hover:text-indigo-900">Wijzigen</a>
-                                    <a href="{{ route('admin.learningsuboutcomeassignments.delete', ['learningsuboutcomeassignment' => $learningSuboutcomeAssignment->id]) }}" class="ml-4 text-red-600 hover:text-red-900" onclick="return confirm('Weet je zeker dat je deze learning suboutcome assignment wilt verwijderen?')">Verwijderen</a>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                <div class="mt-4">
-                    {{ $learningSuboutcomeAssignments->links() }}
-                </div>
-            @endif
+            @livewire('learning-suboutcome-assignment-search')
         </div>
     </div>
 @endsection

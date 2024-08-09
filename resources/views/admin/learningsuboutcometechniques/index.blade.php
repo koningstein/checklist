@@ -30,43 +30,7 @@
                 </div>
             @endif
 
-            @if($learningSuboutcomeTechniques->isEmpty())
-                <p class="text-gray-900">Geen Learning Suboutcome Techniques gevonden.</p>
-            @else
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead>
-                        <tr>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Learning Suboutcome</th>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Related Technique</th>
-                            <th class="px-6 py-3 bg-gray-50"></th>
-                        </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach($learningSuboutcomeTechniques as $learningsuboutcometechnique)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $learningsuboutcometechnique->id }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $learningsuboutcometechnique->learningSuboutcome->name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $learningsuboutcometechnique->learningRelatedTechnique->name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="{{ route('admin.learningsuboutcometechniques.show', ['learningsuboutcometechnique' => $learningsuboutcometechnique->id]) }}" class="text-indigo-600 hover:text-indigo-900">Details</a>
-                                    <a href="{{ route('admin.learningsuboutcometechniques.edit', ['learningsuboutcometechnique' => $learningsuboutcometechnique->id]) }}" class="ml-4 text-indigo-600 hover:text-indigo-900">Wijzigen</a>
-                                    <form action="{{ route('admin.learningsuboutcometechniques.destroy', ['learningsuboutcometechnique' => $learningsuboutcometechnique->id]) }}" method="POST" class="inline-block">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="ml-4 text-red-600 hover:text-red-900" onclick="return confirm('Weet je zeker dat je deze learning suboutcome technique wilt verwijderen?')">Verwijderen</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                <div class="mt-4">
-                    {{ $learningSuboutcomeTechniques->links() }}
-                </div>
-            @endif
+            @livewire('learning-suboutcome-technique-search')
         </div>
     </div>
 @endsection

@@ -1,0 +1,47 @@
+<div>
+    <div class="p-4 flex-col space-y-4">
+        <div class="max-w-full px-2 sm:px-6 lg:px-8 mb-3">
+            <div class="flex space-x-2">
+                <input type="text" wire:model.live="search" placeholder="Zoek op naam..." class="form-control mb-3 w-full px-3 py-2 border rounded-md bg-gray-200" />
+            </div>
+        </div>
+        <x-table>
+            <x-slot name="head">
+                <x-table.heading sortable wire:click="sortBy('users.name')" :direction="$sortField === 'users.name' ? $sortDirection : null" class="w-4/12">Student Naam</x-table.heading>
+                <x-table.heading class="w-4/12">Email</x-table.heading>
+                <x-table.heading class="w-2/12">Acties</x-table.heading>
+            </x-slot>
+
+            <x-slot name="body">
+                @forelse($unlinkedStudents as $student)
+                    <x-table.row>
+                        <x-table.cell class="w-4/12">{{ $student->user->name }}</x-table.cell>
+                        <x-table.cell class="w-4/12">{{ $student->user->email }}</x-table.cell>
+                        <x-table.cell class="w-2/12">
+                            <!-- Voeg hier eventuele acties toe, zoals 'Linken' -->
+                        </x-table.cell>
+                    </x-table.row>
+                @empty
+                    <x-table.row>
+                        <x-table.cell colspan="3">
+                            <div class="flex justify-center items-center">
+                                <span class="font-medium py-8 text-gray-500 text-xl">Geen niet-gekoppelde studenten gevonden...</span>
+                            </div>
+                        </x-table.cell>
+                    </x-table.row>
+                @endforelse
+            </x-slot>
+        </x-table>
+
+        <div class="container max-w-full pb-10 flex justify-between items-center px-3">
+            <div class="text-xs text-left">
+                <p>
+                    Showing {{ $unlinkedStudents->firstItem() }} to {{ $unlinkedStudents->lastItem() }} of {{ $unlinkedStudents->total() }} results
+                </p>
+            </div>
+            <div class="text-xs text-right">
+                {{ $unlinkedStudents->links() }}
+            </div>
+        </div>
+    </div>
+</div>

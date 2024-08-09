@@ -11,7 +11,7 @@ class Enrolment extends Model
 {
     use HasFactory;
     protected $table = 'enrolments';
-    protected $fillable = ['students_id', 'crebos_id', 'cohorts_id', 'date', 'enrolment_status_id'];
+    protected $fillable = ['student_id', 'crebo_id', 'cohort_id', 'date', 'enrolment_status_id'];
 
     public function student(): BelongsTo
     {

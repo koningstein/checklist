@@ -20,9 +20,12 @@ class LearningSuboutcomeLevelFactory extends Factory
     public function definition(): array
     {
         return [
-            'learning_suboutcome_id' => LearningSuboutcome::factory(),
-            'learning_level_id' => LearningLevel::factory(),
-            'period_id' => Period::factory(),
+//            'learning_suboutcome_id' => LearningSuboutcome::factory(),
+//            'learning_level_id' => LearningLevel::factory(),
+            //'period_id' => Period::factory(),
+            'learning_suboutcome_id' => LearningSuboutcome::all()->random()->id,
+            'learning_level_id' => LearningLevel::all()->random()->id,
+            'period_id' => Period::all()->random()->id,
         ];
     }
 }

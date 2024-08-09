@@ -22,8 +22,8 @@
             <x-slot name="body">
                 @forelse($modules as $module)
                     <x-table.row>
-                        <x-table.cell class="w-2/12">{{ $module->name }}</x-table.cell>
-                        <x-table.cell class="w-3/12">{{ $module->description }}</x-table.cell>
+                        <x-table.cell class="w-2/12">{{ Str::limit($module->name, 50) }}</x-table.cell>
+                        <x-table.cell class="w-3/12">{{ Str::limit($module->description, 40) }}</x-table.cell>
                         <x-table.cell class="w-2/12">{{ $module->period_period }}</x-table.cell>
                         <x-table.cell class="w-2/12">{{ $module->course_name }}</x-table.cell>
                         <x-table.cell class="w-1/12">

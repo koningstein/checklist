@@ -18,7 +18,8 @@ class LearningSuboutcomeFactory extends Factory
     public function definition(): array
     {
         return [
-            'learning_outcome_id' => LearningOutcome::factory(),
+//            'learning_outcome_id' => LearningOutcome::factory(),
+            'learning_outcome_id' => LearningOutcome::all()->random()->id,
             'name' => $this->faker->sentence(4),
             'description' => $this->faker->paragraph,
         ];
