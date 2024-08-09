@@ -10,8 +10,9 @@
         <x-table>
             <x-slot name="head">
                 <x-table.heading sortable wire:click="sortBy('students.id')" :direction="$sortField === 'students.id' ? $sortDirection : null" class="w-1/12">ID</x-table.heading>
-                <x-table.heading sortable wire:click="sortBy('user_name')" :direction="$sortField === 'user_name' ? $sortDirection : null" class="w-5/12">Naam</x-table.heading>
-                <x-table.heading sortable wire:click="sortBy('students.studentNr')" :direction="$sortField === 'students.studentNr' ? $sortDirection : null" class="w-3/12">StudentNr</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('user_name')" :direction="$sortField === 'user_name' ? $sortDirection : null" class="w-4/12">Naam</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('students.studentNr')" :direction="$sortField === 'students.studentNr' ? $sortDirection : null" class="w-2/12">StudentNr</x-table.heading>
+                <x-table.heading class="w-2/12">Show Results</x-table.heading>
                 <x-table.heading class="w-1/12">Details</x-table.heading>
                 <x-table.heading class="w-1/12">Edit</x-table.heading>
                 <x-table.heading class="w-1/12">Delete</x-table.heading>
@@ -21,8 +22,13 @@
                 @forelse($students as $student)
                     <x-table.row>
                         <x-table.cell class="w-1/12">{{ $student->id }}</x-table.cell>
-                        <x-table.cell class="w-5/12">{{ $student->user->name }}</x-table.cell>
-                        <x-table.cell class="w-3/12">{{ $student->studentNr }}</x-table.cell>
+                        <x-table.cell class="w-4/12">{{ $student->user->name }}</x-table.cell>
+                        <x-table.cell class="w-2/12">{{ $student->studentNr }}</x-table.cell>
+                        <x-table.cell class="w-2/12">
+                            <a href="{{ route('admin.students.showResults', ['studentId' => $student->id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Show Results
+                            </a>
+                        </x-table.cell>
                         <x-table.cell class="w-1/12">
                             @can('show student')
                                 <a href="{{ route('admin.students.show', ['student' => $student->id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded flex items-center justify-center text-xs w-full">

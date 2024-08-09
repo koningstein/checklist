@@ -10,7 +10,7 @@ class Period extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['period'];
 
     public function modules(): HasMany
     {

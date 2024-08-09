@@ -10,7 +10,7 @@ class Crebo extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'crebonr'];
+    protected $fillable = ['name', 'crebonr', 'description'];
 
     public function enrolments(): HasMany
     {

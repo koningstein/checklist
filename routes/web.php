@@ -45,6 +45,7 @@ Route::group(['middleware' => ['role:teacher|keyteacher|admin']], function (){
         Route::get('courses/{course}/delete', [Admin\CourseController::class, 'delete'])->name('courses.delete');
 
         // Student routes
+        Route::get('students/{studentId}/results', [Admin\StudentController::class, 'showResults'])->name('students.showResults');
         Route::get('students/import', [Admin\StudentController::class, 'importForm'])->name('students.importForm');
         Route::post('students/import', [Admin\StudentController::class, 'import'])->name('students.import');
         Route::get('students/confirm-import', [Admin\StudentController::class, 'confirmImport'])->name('students.confirmImport');

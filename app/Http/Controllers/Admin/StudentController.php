@@ -200,4 +200,11 @@ class StudentController extends Controller implements HasMiddleware
 
         return redirect()->route('admin.students.index')->with('status', 'Students Imported Successfully.');
     }
+
+    public function showResults($studentId)
+    {
+        $student = Student::findOrFail($studentId);
+
+        return view('admin.students.student-results', compact('student'));
+    }
 }
