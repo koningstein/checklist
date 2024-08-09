@@ -6,35 +6,69 @@
             <h3 class="text-xl font-semibold mb-2">Inschrijving bij {{ $enrolment->crebo->name }} - Cohort: {{ $enrolment->cohort->name }}</h3>
 
             @foreach($enrolment->enrolmentClasses as $enrolmentClass)
-                <div class="mb-4 ml-4">
-                    <h4 class="text-lg font-semibold mb-1">Klas: {{ $enrolmentClass->classYear->schoolClass->name }}</h4>
+                @php
+                    // Groepeer opdrachten per course
+                    $courses = $enrolmentClass->studentAssignments->groupBy(function($assignment) {
+                        return $assignment->classAssignment
+                            ? $assignment->classAssignment->assignment->module->course->name
+                            : ($assignment->individualAssignment
+                                ? $assignment->individualAssignment->module->course->name
+                                : 'Overig');
+                    });
+                @endphp
 
-                    @foreach($enrolmentClass->studentAssignments as $studentAssignment)
-                        <div class="p-2 border rounded mb-2
-                            @if($studentAssignment->assignmentStatus->name === 'Goedgekeurd') bg-green-100
-                            @elseif($studentAssignment->assignmentStatus->name === 'Afgewezen') bg-red-100
-                            @elseif($studentAssignment->assignmentStatus->name === 'Ingediend') bg-blue-100
-                            @elseif($studentAssignment->assignmentStatus->name === 'Niet gestart') bg-orange-100
-                            @endif">
+                @foreach($courses as $courseName => $assignmentsPerCourse)
+                    <div class="mb-4 ml-4">
+                        <h4 class="text-lg font-semibold mb-1">{{ $courseName }}</h4>
 
-                             Toon de opdrachtnaam afhankelijk van of het een classAssignment of individualAssignment is
-                            @if($studentAssignment->classAssignment && $studentAssignment->classAssignment->assignment)
-                                <p><strong>Opdracht:</strong> {{ $studentAssignment->classAssignment->assignment->name }}</p>
-                            @elseif($studentAssignment->individualAssignment)
-                                <p><strong>Opdracht:</strong> {{ $studentAssignment->individualAssignment->name }}</p>
-                            @else
-                                <p><strong>Opdracht:</strong> Geen opdracht gekoppeld</p>
-                            @endif
+                        <table class="min-w-full bg-white table-fixed">
+                            <thead>
+                            <tr>
+                                <th class="w-1/3 px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                    Module
+                                </th>
+                                <th class="w-2/3 px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                    Voortgang
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @php
+                                // Groepeer opdrachten per module
+                                $modules = $assignmentsPerCourse->groupBy(function($assignment) {
+                                    return $assignment->classAssignment
+                                        ? $assignment->classAssignment->assignment->module->name
+                                        : ($assignment->individualAssignment
+                                            ? $assignment->individualAssignment->module->name
+                                            : 'Overig');
+                                });
+                            @endphp
 
-                            <p><strong>Status:</strong> {{ $studentAssignment->assignmentStatus->name }}</p>
-                            <p><strong>Deadline:</strong> {{ $studentAssignment->duedate }}</p>
-
-                            @if($studentAssignment->marked_by_id)
-                                <p><strong>Beoordeeld door:</strong> {{ $studentAssignment->markedBy->name }}</p>
-                            @endif
-                        </div>
-                    @endforeach
-                </div>
+                            @foreach($modules as $moduleName => $assignments)
+                                <tr>
+                                    <td class="w-1/3 px-6 py-4 whitespace-no-wrap border-b border-gray-300">
+                                        <div class="text-sm leading-5 font-semibold text-gray-900">{{ $moduleName }}</div>
+                                    </td>
+                                    <td class="w-2/3 px-6 py-4 whitespace-no-wrap border-b border-gray-300">
+                                        <div class="flex space-x-1 overflow-x-auto">
+                                            @foreach($assignments as $assignment)
+                                                <div class="flex-shrink-0 w-4 h-4
+                                                        @if($assignment->assignmentStatus->name === 'Goedgekeurd') bg-green-500
+                                                        @elseif($assignment->assignmentStatus->name === 'Afgewezen') bg-red-500
+                                                        @elseif($assignment->assignmentStatus->name === 'Ingediend') bg-blue-500
+                                                        @elseif($assignment->assignmentStatus->name === 'Niet gestart') bg-orange-500
+                                                        @endif">
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <p class="text-sm mt-1">{{ $assignments->where('assignmentStatus.name', 'Goedgekeurd')->count() }}/{{ $assignments->count() }} opdrachten voltooid</p>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endforeach
             @endforeach
         </div>
     @endforeach
