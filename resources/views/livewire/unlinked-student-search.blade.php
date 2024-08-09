@@ -39,7 +39,14 @@
                 </x-slot>
             </x-table>
 
-            <div class="flex justify-end mt-4">
+            <div class="flex justify-end items-center mt-4">
+                <div class="mr-2">
+                    <input type="checkbox" wire:model="assignClassAssignments" id="assignClassAssignments">
+                    <label for="assignClassAssignments" class="text-sm">Voeg class assignments toe aan alle geselecteerde studenten</label>
+                </div>
+            </div>
+
+            <div class="flex justify-end mt-2">
                 <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Koppel Geselecteerde Studenten</button>
             </div>
         </form>
