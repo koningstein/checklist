@@ -8,9 +8,14 @@
 
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v6.1.2/css/pro.min.css">
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-    <title>Checklist</title>
 
+    @livewireStyles
+    <title>Checklist</title>
+    <style>
+        .bg-orange-500 {
+            background-color: #f59e0b; /* Dit is de hex-kleur voor Tailwind's bg-orange-500 */
+        }
+    </style>
 </head>
 <body>
 <!-- header -->
@@ -85,6 +90,9 @@
             <a href="#" class="px-2 md:pl-0 md:mr-3 md:pr-3 text-gray-700 no-underline md:border-r border-gray-300">About Us</a>
             <a href="#" class="px-2 md:pl-0 md:mr-3 md:pr-3 text-gray-700 no-underline md:border-r border-gray-300">News</a>
             <a href="#" class="px-2 md:pl-0 md:mr-3 md:pr-3 text-gray-700 no-underline md:border-r border-gray-300">Contact</a>
+            @hasanyrole('student')
+                <a href="{{ route('student.results') }}" class="px-2 md:pl-0 md:mr-3 md:pr-3 text-gray-700 no-underline md:border-r border-gray-300">Studie voortgang</a>
+            @endhasanyrole
         </div>
         <div class="w-full md:w-1/4 text-center md:text-right pb-4 md:p-0">
             <input type="search" placeholder="Search..." class="bg-gray-200 border text-sm p-1" />
@@ -124,6 +132,6 @@
 </footer>
 <!-- /footer -->
 
-
+@livewireScripts
 </body>
 </html>

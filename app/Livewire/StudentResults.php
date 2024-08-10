@@ -8,6 +8,7 @@ use App\Models\Student;
 class StudentResults extends Component
 {
     public $studentId;
+    public $searchCourseName = '';
 
     public function mount($studentId)
     {
@@ -16,7 +17,6 @@ class StudentResults extends Component
 
     public function render()
     {
-        // Haal de student op met de gerelateerde gegevens
         $student = Student::with([
             'enrolments' => function ($query) {
                 $query->with([
@@ -25,15 +25,14 @@ class StudentResults extends Component
                     'enrolmentStatus',
                     'enrolmentClasses.classYear.schoolClass',
                     'enrolmentClasses.studentAssignments' => function ($q) {
-                        $q->with(['assignmentStatus', 'classAssignment.assignment']);
+                        $q->with(['assignmentStatus', 'classAssignment.assignment.module.course', 'individualAssignment.module.course']);
                     }
                 ]);
             },
         ])->findOrFail($this->studentId);
 
-
         return view('livewire.student-results', [
             'student' => $student,
-        ])->layout('layouts.layoutadmin');
+        ]);
     }
 }

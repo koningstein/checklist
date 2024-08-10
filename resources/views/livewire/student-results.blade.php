@@ -1,19 +1,27 @@
 <div>
     <h2 class="text-2xl font-semibold mb-4">Voortgang van {{ $student->user->name }}</h2>
 
+    <!-- Filteren op course -->
+    <div class="mb-6">
+        <label for="courseSearch" class="block text-sm font-medium text-gray-700">Filter op Vak:</label>
+        <input type="text" id="courseSearch" wire:model.live="searchCourseName" placeholder="Typ vak naam..." class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm rounded-md ">
+    </div>
+
     @foreach($student->enrolments as $enrolment)
         <div class="mb-6">
             <h3 class="text-xl font-semibold mb-2">Inschrijving bij {{ $enrolment->crebo->name }} - Cohort: {{ $enrolment->cohort->name }}</h3>
 
             @foreach($enrolment->enrolmentClasses as $enrolmentClass)
                 @php
-                    // Groepeer opdrachten per course
+                    // Groepeer opdrachten per course en pas filter toe
                     $courses = $enrolmentClass->studentAssignments->groupBy(function($assignment) {
                         return $assignment->classAssignment
                             ? $assignment->classAssignment->assignment->module->course->name
                             : ($assignment->individualAssignment
                                 ? $assignment->individualAssignment->module->course->name
                                 : 'Overig');
+                    })->filter(function($assignments, $courseName) {
+                        return empty($this->searchCourseName) || stripos($courseName, $this->searchCourseName) !== false;
                     });
                 @endphp
 

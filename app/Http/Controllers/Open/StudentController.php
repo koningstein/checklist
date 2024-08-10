@@ -15,6 +15,6 @@ class StudentController extends Controller
         $student = Student::where('user_id', Auth::id())->firstOrFail();
 
         // Geef de resultaten van de student door aan de view
-        return view('student.results', ['student' => $student]);
+        return view('student.results', compact('student'));
     }
 }
