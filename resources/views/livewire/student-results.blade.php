@@ -1,10 +1,27 @@
 <div>
     <h2 class="text-2xl font-semibold mb-4">Voortgang van {{ $student->user->name }}</h2>
 
+    <!-- Periode Filter -->
+    <div class="mb-4 space-y-2">
+        @foreach([1, 2, 3, 4] as $year)
+            <div class="flex items-center space-x-4">
+                <span class="text-sm font-medium text-gray-700">Leerjaar {{ $year }}</span>
+                <div class="grid grid-cols-4 gap-2 flex-1">
+                    @foreach($periods->slice(($year - 1) * 4, 4) as $period)
+                        <button wire:click="setPeriod({{ $period->id }})" class="px-4 py-2 rounded-md text-sm
+                            @if($selectedPeriodId === $period->id) bg-gray-600 text-white @else bg-gray-200 text-gray-700 @endif">
+                            {{ $period->period }}
+                        </button>
+                    @endforeach
+                </div>
+            </div>
+        @endforeach
+    </div>
+
     <!-- Filteren op course -->
     <div class="mb-6">
         <label for="courseSearch" class="block text-sm font-medium text-gray-700">Filter op Vak:</label>
-        <input type="text" id="courseSearch" wire:model.live="searchCourseName" placeholder="Typ vak naam..." class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm rounded-md ">
+        <input type="text" id="courseSearch" wire:model.live="searchCourseName" placeholder="Typ vak naam..." class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm rounded-md">
     </div>
 
     @foreach($student->enrolments as $enrolment)
@@ -13,7 +30,7 @@
 
             @foreach($enrolment->enrolmentClasses as $enrolmentClass)
                 @php
-                    // Groepeer opdrachten per course en pas filter toe
+                    // Groepeer opdrachten per course en pas filters toe
                     $courses = $enrolmentClass->studentAssignments->groupBy(function($assignment) {
                         return $assignment->classAssignment
                             ? $assignment->classAssignment->assignment->module->course->name
@@ -21,7 +38,17 @@
                                 ? $assignment->individualAssignment->module->course->name
                                 : 'Overig');
                     })->filter(function($assignments, $courseName) {
-                        return empty($this->searchCourseName) || stripos($courseName, $this->searchCourseName) !== false;
+                        // Pas course name filter toe
+                        $passesCourseFilter = empty($this->searchCourseName) || stripos($courseName, $this->searchCourseName) !== false;
+                        // Pas periode filter toe
+                        $passesPeriodFilter = empty($this->selectedPeriodId) || $assignments->contains(function($assignment) {
+                            return $assignment->classAssignment
+                                ? $assignment->classAssignment->assignment->module->period_id == $this->selectedPeriodId
+                                : ($assignment->individualAssignment
+                                    ? $assignment->individualAssignment->module->period_id == $this->selectedPeriodId
+                                    : false);
+                        });
+                        return $passesCourseFilter && $passesPeriodFilter;
                     });
                 @endphp
 
