@@ -41,7 +41,7 @@
                         // Pas course name filter toe
                         $passesCourseFilter = empty($this->searchCourseName) || stripos($courseName, $this->searchCourseName) !== false;
 
-                        // Pas periode filter toe
+                        // Pas periode filter toe als een periode is geselecteerd
                         $passesPeriodFilter = empty($this->selectedPeriodId) || $assignments->contains(function($assignment) {
                             $modulePeriodId = $assignment->classAssignment
                                 ? $assignment->classAssignment->assignment->module->period_id
@@ -60,7 +60,7 @@
                         <h4 class="text-lg font-semibold mb-1">{{ $courseName }}</h4>
 
                         @php
-                            // Filter opdrachten per module en periode
+                            // Groepeer opdrachten per module
                             $modules = $assignmentsPerCourse->groupBy(function($assignment) {
                                 return $assignment->classAssignment
                                     ? $assignment->classAssignment->assignment->module->name
@@ -72,13 +72,18 @@
 
                         @foreach($modules as $moduleName => $assignments)
                             @php
-                                // Filter alleen modules die bij de geselecteerde periode horen
+                                // Filter de opdrachten op basis van de geselecteerde periode
                                 $filteredAssignments = $assignments->filter(function($assignment) {
+                                    if (empty($this->selectedPeriodId)) {
+                                        return true; // Toon alles als er geen periode is geselecteerd
+                                    }
+
                                     $modulePeriodId = $assignment->classAssignment
                                         ? $assignment->classAssignment->assignment->module->period_id
                                         : ($assignment->individualAssignment
                                             ? $assignment->individualAssignment->module->period_id
                                             : null);
+
                                     return $modulePeriodId == $this->selectedPeriodId;
                                 });
                             @endphp
