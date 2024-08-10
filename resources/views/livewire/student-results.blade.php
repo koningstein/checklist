@@ -1,5 +1,5 @@
 <div>
-    <h2 class="text-2xl font-semibold mb-4">Resultaten van {{ $student->user->name }}</h2>
+    <h2 class="text-2xl font-semibold mb-4">Voortgang van {{ $student->user->name }}</h2>
 
     @foreach($student->enrolments as $enrolment)
         <div class="mb-6">

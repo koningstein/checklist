@@ -15,7 +15,7 @@ class RoleAndPermissionSeeder extends Seeder
     {
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // Define permissions for each resource
+        // Define permissions for each ADMIN
         $resources = ['period', 'cohort', 'crebo', 'course', 'module', 'assignment', 'schoolclass',
             'student', 'enrolment', 'enrolmentstatus', 'schoolyear', 'classyear', 'classassignment', 'assignmentstatus', 'studentassignment',
             'enrolmentclass', 'learningoutcome', 'learninglevel', 'learningrelatedtechnique', 'learningsuboutcome', 'learningsuboutcomeassignment',
@@ -49,5 +49,9 @@ class RoleAndPermissionSeeder extends Seeder
                 }
             }
         }
+
+        // ANDERE PERMISSIES
+        Permission::create(['name' => 'showStudentResult']);
+
     }
 }

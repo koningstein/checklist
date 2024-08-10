@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin as Admin;
+use App\Http\Controllers\Open as Open;
 
 if (App::environment('local')) {
     Route::get('/login-as/{id}', function ($id) {
@@ -15,7 +16,7 @@ if (App::environment('local')) {
             // Log the user in
             Auth::login($user);
             // Redirect to the intended route or dashboard
-            return redirect('/admin')->with('status', 'Logged in successfully!');
+            return redirect('/')->with('status', 'Logged in successfully!');
         }
 
         return redirect('/')->with('error', 'User not found');
@@ -23,7 +24,7 @@ if (App::environment('local')) {
 }
 
 Route::get('/', function () {
-    return view('layouts.layoutpublic');
+    return view('open.home');
 })->name('home');
 
 Route::get('/admin', function () {
@@ -122,7 +123,12 @@ Route::group(['middleware' => ['role:teacher|keyteacher|admin']], function (){
     });
 });
 
-
+// Routes voor studenten
+Route::group(['middleware' => ['role:student']], function (){
+    Route::prefix('student')->name('student.')->group(function() {
+        Route::get('/voortgang', [Open\StudentController::class, 'showOwnResults'])->name('results');
+    });
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');

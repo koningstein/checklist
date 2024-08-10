@@ -19,6 +19,7 @@ class EnrolmentClassSeeder extends Seeder
         foreach ($enrolments as $enrolment) {
             EnrolmentClass::factory([
                 'enrolment_id' => $enrolment->id,
+                'class_year_id' => 7
             ])->create();
         }
     }
