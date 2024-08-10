@@ -28,7 +28,6 @@ class StudentAssignmentUpdateRequest extends FormRequest
             'duedate' => 'nullable|date',
             'assignment_status_id' => 'required|exists:assignment_statuses,id',
             'marked_by_id' => 'nullable|exists:users,id',
-            'completed' => 'required|boolean',
             'marked_at' => 'nullable|date',
         ];
     }

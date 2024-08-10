@@ -24,6 +24,42 @@ class StudentResults extends Component
         $this->selectedPeriodId = $periodId;
     }
 
+    public function isPeriodFullyApproved($periodId)
+    {
+        $student = Student::with([
+            'enrolments.enrolmentClasses.studentAssignments.assignmentStatus',
+            'enrolments.enrolmentClasses.studentAssignments.classAssignment.assignment.module.period',
+            'enrolments.enrolmentClasses.studentAssignments.individualAssignment.module.period',
+        ])->findOrFail($this->studentId);
+
+        $hasAssignments = false;
+        foreach ($student->enrolments as $enrolment) {
+            foreach ($enrolment->enrolmentClasses as $enrolmentClass) {
+                $assignmentsInPeriod = $enrolmentClass->studentAssignments->filter(function($assignment) use ($periodId) {
+                    $modulePeriodId = $assignment->classAssignment
+                        ? $assignment->classAssignment->assignment->module->period_id
+                        : ($assignment->individualAssignment
+                            ? $assignment->individualAssignment->module->period_id
+                            : null);
+                    return $modulePeriodId == $periodId;
+                });
+
+                if ($assignmentsInPeriod->isNotEmpty()) {
+                    $hasAssignments = true;
+                    $allApproved = $assignmentsInPeriod->every(function($assignment) {
+                        return $assignment->assignmentStatus->name === 'Goedgekeurd';
+                    });
+
+                    if (!$allApproved) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return $hasAssignments ? true : null;
+    }
+
     public function render()
     {
         $student = Student::with([

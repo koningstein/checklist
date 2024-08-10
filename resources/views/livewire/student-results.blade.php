@@ -8,8 +8,15 @@
                 <span class="text-sm font-medium text-gray-700">Leerjaar {{ $year }}</span>
                 <div class="grid grid-cols-4 gap-2 flex-1">
                     @foreach($periods->slice(($year - 1) * 4, 4) as $period)
+                        @php
+                            $periodStatus = $this->isPeriodFullyApproved($period->id);
+                        @endphp
                         <button wire:click="setPeriod({{ $period->id }})" class="px-4 py-2 rounded-md text-sm
-                            @if($selectedPeriodId === $period->id) bg-gray-600 text-white @else bg-gray-200 text-gray-700 @endif">
+                            @if($selectedPeriodId === $period->id && $periodStatus === true) bg-green-700 text-white
+                            @elseif($periodStatus === true) bg-green-500 text-white
+                            @elseif($selectedPeriodId === $period->id) bg-gray-600 text-white
+                            @elseif($periodStatus === null) bg-gray-400 text-gray-700
+                            @else bg-gray-200 text-gray-700 @endif">
                             {{ $period->period }}
                         </button>
                     @endforeach
