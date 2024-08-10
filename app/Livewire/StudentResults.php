@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Livewire;
 
 use Livewire\Component;
@@ -9,11 +10,13 @@ class StudentResults extends Component
 {
     public $studentId;
     public $searchCourseName = '';
-    public $selectedPeriodId = null; // Om de geselecteerde periode bij te houden
+    public $selectedPeriodId = null;
+    public $periods;
 
     public function mount($studentId)
     {
         $this->studentId = $studentId;
+        $this->periods = Period::all(); // Haal alle perioden op
     }
 
     public function setPeriod($periodId)
@@ -34,19 +37,18 @@ class StudentResults extends Component
                         $q->with([
                             'assignmentStatus',
                             'classAssignment.assignment.module.course',
-                            'individualAssignment.module.course'
+                            'individualAssignment.module.course',
+                            'classAssignment.assignment.module.period', // Periode om te filteren
+                            'individualAssignment.module.period', // Periode om te filteren
                         ]);
                     }
                 ]);
             },
         ])->findOrFail($this->studentId);
 
-        // Haal alle perioden op om de knoppen weer te geven
-        $periods = Period::all();
-
         return view('livewire.student-results', [
             'student' => $student,
-            'periods' => $periods,
+            'periods' => $this->periods, // Geef de perioden door aan de view
         ]);
     }
 }
