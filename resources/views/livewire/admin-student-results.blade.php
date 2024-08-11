@@ -136,7 +136,7 @@
     @if($selectedAssignmentId)
         <div class="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
             <div class="bg-white p-6 rounded-lg shadow-lg">
-                <h2 class="text-xl font-semibold mb-4">Update Status</h2>
+                <h2 class="text-xl font-semibold mb-4">Update Status voor: <br> {{ $selectedAssignmentName }}</h2>
                 <select wire:model="selectedStatus" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
                     @foreach($statuses as $key => $value)
                         <option value="{{ $key }}">{{ $value }}</option>

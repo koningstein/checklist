@@ -14,6 +14,7 @@ class AdminStudentResults extends Component
     public $selectedPeriodId = null;
     public $periods;
     public $selectedAssignmentId = null;
+    public $selectedAssignmentName = null;  // Eigenschap voor de naam van de opdracht
     public $selectedStatus = null;
     public $statuses;
 
@@ -74,9 +75,16 @@ class AdminStudentResults extends Component
 
         if ($assignment) {
             $this->selectedStatus = $assignment->assignment_status_id;
+            // Opslaan van de opdrachtnaam
+            $this->selectedAssignmentName = $assignment->classAssignment
+                ? $assignment->classAssignment->assignment->name
+                : ($assignment->individualAssignment
+                    ? $assignment->individualAssignment->name
+                    : 'Onbekende opdracht');
         } else {
             $this->selectedStatus = null;
             $this->selectedAssignmentId = null;
+            $this->selectedAssignmentName = null;
         }
     }
 
@@ -89,7 +97,7 @@ class AdminStudentResults extends Component
             $assignment->save();
 
             // Reset de geselecteerde status en opdracht
-            $this->reset('selectedAssignmentId', 'selectedStatus');
+            $this->reset('selectedAssignmentId', 'selectedStatus', 'selectedAssignmentName');
         } else {
             // Fallback als de assignment niet gevonden wordt
             $this->addError('assignment', 'De geselecteerde opdracht kon niet worden gevonden.');

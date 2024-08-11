@@ -8,8 +8,10 @@
                     <div class="sm:block sm:ml-6">
                         <div class="flex space-x-4">
                             <a href="{{ route('admin.students.index') }}" class="text-gray-800 px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Overzicht Studenten</a>
+                            @hasanyrole('keyteacher|admin')
                             <a href="{{ route('admin.students.create') }}" class="text-gray-800 hover:text-teal-600 transition ease-in-out duration-500 px-3 py-2 rounded-md text-sm font-medium">Student Toevoegen</a>
                             <a href="{{ route('admin.students.import') }}" class="text-gray-800 hover:text-teal-600 transition ease-in-out duration-500 px-3 py-2 rounded-md text-sm font-medium">Import Studenten</a>
+                            @endhasanyrole
                         </div>
                     </div>
                 </div>

@@ -19,7 +19,7 @@
                 @forelse($courses as $course)
                     <x-table.row>
                         <x-table.cell class="w-3/12">{{ $course->name }}</x-table.cell>
-                        <x-table.cell class="w-3/12">{{ Str::limit(ucfirst($course->description), 100) }}</x-table.cell>
+                        <x-table.cell class="w-3/12">{{ Str::limit(ucfirst($course->description), 70) }}</x-table.cell>
                         <x-table.cell class="w-1/12">
                             @can('show course')
                                 <a href="{{ route('admin.courses.show', ['course' => $course->id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded flex items-center justify-center text-xs w-full">
