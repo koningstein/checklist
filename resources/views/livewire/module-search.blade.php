@@ -10,8 +10,8 @@
         </div>
         <x-table>
             <x-slot name="head">
-                <x-table.heading sortable wire:click="sortBy('modules.name')" :direction="$sortField === 'modules.name' ? $sortDirection : null" class="w-2/12">Naam</x-table.heading>
-                <x-table.heading sortable wire:click="sortBy('modules.description')" :direction="$sortField === 'modules.description' ? $sortDirection : null" class="w-3/12">Beschrijving</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('modules.name')" :direction="$sortField === 'modules.name' ? $sortDirection : null" class="w-1/12">Naam</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('modules.description')" :direction="$sortField === 'modules.description' ? $sortDirection : null" class="w-4/12">Beschrijving</x-table.heading>
                 <x-table.heading sortable wire:click="sortBy('periods.period')" :direction="$sortField === 'periods.period' ? $sortDirection : null" class="w-2/12">Periode</x-table.heading>
                 <x-table.heading sortable wire:click="sortBy('courses.name')" :direction="$sortField === 'courses.name' ? $sortDirection : null" class="w-2/12">Cursus Naam</x-table.heading>
                 <x-table.heading class="w-1/12">Details</x-table.heading>
@@ -23,7 +23,7 @@
                 @forelse($modules as $module)
                     <x-table.row>
                         <x-table.cell class="w-2/12">{{ Str::limit($module->name, 50) }}</x-table.cell>
-                        <x-table.cell class="w-3/12">{{ Str::limit($module->description, 40) }}</x-table.cell>
+                        <x-table.cell class="w-3/12">{{ Str::limit($module->description, 30) }}</x-table.cell>
                         <x-table.cell class="w-2/12">{{ $module->period_period }}</x-table.cell>
                         <x-table.cell class="w-2/12">{{ $module->course_name }}</x-table.cell>
                         <x-table.cell class="w-1/12">

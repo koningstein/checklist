@@ -19,7 +19,7 @@
                 @forelse($learningSuboutcomeAssignments as $learningSuboutcomeAssignment)
                     <x-table.row>
                         <x-table.cell class="w-4/12">{{ $learningSuboutcomeAssignment->learningSuboutcome->name }}</x-table.cell>
-                        <x-table.cell class="w-4/12">{{ $learningSuboutcomeAssignment->assignment->name }}</x-table.cell>
+                        <x-table.cell class="w-4/12">{{ Str::limit($learningSuboutcomeAssignment->assignment->name, 50) }}</x-table.cell>
                         <x-table.cell class="w-1/12">
                             @can('show learningsuboutcomeassignment')
                                 <a href="{{ route('admin.learningsuboutcomeassignments.show', ['learningsuboutcomeassignment' => $learningSuboutcomeAssignment->id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded flex items-center justify-center text-xs w-full">

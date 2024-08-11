@@ -21,9 +21,18 @@ class StudentStoreRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'user_id' => 'required|exists:users,id',
+        $rules = [
             'studentNr' => 'required|string|max:10|unique:students,studentNr',
         ];
+
+        if ($this->has('user_id')) {
+            $rules['user_id'] = 'required|exists:users,id|unique:students,user_id';
+        } else {
+            $rules['new_user_name'] = 'required|string|max:255';
+            $rules['new_user_email'] = 'required|string|email|max:255|unique:users,email';
+            $rules['new_user_password'] = 'required|string|min:8';
+        }
+
+        return $rules;
     }
 }

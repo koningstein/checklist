@@ -40,16 +40,23 @@
                 <form id="form" class="shadow-md rounded-lg px-8 pt-6 pb-8 mb-4"
                       action="{{ route('admin.students.store') }}" method="POST">
                     @csrf
-                    <label class="block text-sm">
-                        <span class="text-gray-700">Gebruiker</span>
-                        <select
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight
-                            focus:outline-none focus:shadow-outline" name="users_id" id="users_id">
-                            @foreach($users as $user)
-                                <option value="{{ $user->id }}" @selected($user->id == old('users_id'))>{{ $user->name }}</option>
-                            @endforeach
-                        </select>
-                    </label>
+
+                    <div class="mb-4">
+                        <label class="block text-sm">
+                            <span class="text-gray-700">Zoek bestaande gebruiker</span>
+                        </label>
+                        @livewire('user-search')
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm">
+                            <span class="text-gray-700">Of voeg nieuwe gebruiker toe</span>
+                        </label>
+                        <input type="text" name="new_user_name" placeholder="Naam" class="w-full border rounded px-3 py-2 mb-2 bg-gray-200">
+                        <input type="email" name="new_user_email" placeholder="Email" class="w-full border rounded px-3 py-2 mb-2 bg-gray-200">
+                        <input type="password" name="new_user_password" placeholder="Wachtwoord" class="w-full border rounded px-3 py-2 bg-gray-200">
+                    </div>
+
                     <label class="block text-sm">
                         <span class="text-gray-700">Studentnummer</span>
                         <input class="bg-gray-200 block rounded w-full p-2 mt-1 focus:border-purple-400

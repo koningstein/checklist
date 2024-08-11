@@ -21,7 +21,7 @@
                 @forelse($assignments as $assignment)
                     <x-table.row>
                         <x-table.cell class="w-3/12">{{ $assignment->name }}</x-table.cell>
-                        <x-table.cell class="w-3/12">{{ $assignment->module_name }}</x-table.cell>
+                        <x-table.cell class="w-3/12">{{ Str::limit($assignment->module_name, 50) }}</x-table.cell>
                         <x-table.cell class="w-3/12">{{ $assignment->duedate }}</x-table.cell>
                         <x-table.cell class="w-1/12">
                             @can('show assignment')

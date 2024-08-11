@@ -62,12 +62,30 @@ class StudentController extends Controller implements HasMiddleware
      */
     public function store(StudentStoreRequest $request): RedirectResponse
     {
-        $student = new Student();
-        $student->user_id = $request->user_id;
-        $student->studentNr = $request->studentNr;
-        $student->save();
+        $user = null;
 
-        return to_route('admin.students.index')->with('status', 'Student created successfully.');
+        if ($request->filled('new_user_name')) {
+            // Maak een nieuwe gebruiker aan
+            $user = new User();
+            $user->name = $request->new_user_name;
+            $user->email = $request->new_user_email;
+            $user->password = bcrypt($request->new_user_password);
+            $user->save();
+        } elseif ($request->filled('selected_user_id')) {
+            // Selecteer een bestaande gebruiker
+            $user = User::findOrFail($request->selected_user_id);
+        }
+
+        if ($user) {
+            $student = new Student();
+            $student->user_id = $user->id;
+            $student->studentNr = $request->studentNr;
+            $student->save();
+
+            return to_route('admin.students.index')->with('status', 'Student created successfully.');
+        }
+
+        return back()->withErrors(['user' => 'Please select or create a user.']);
     }
 
     /**

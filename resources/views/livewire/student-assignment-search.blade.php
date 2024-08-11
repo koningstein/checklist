@@ -11,10 +11,10 @@
         </div>
         <x-table>
             <x-slot name="head">
-                <x-table.heading sortable wire:click="sortBy('users.name')" :direction="$sortField === 'users.name' ? $sortDirection : null" class="w-2/12">Student Naam</x-table.heading>
-                <x-table.heading sortable wire:click="sortBy('school_classes.name')" :direction="$sortField === 'school_classes.name' ? $sortDirection : null" class="w-2/12">SchoolClass Naam</x-table.heading>
-                <x-table.heading sortable wire:click="sortBy('assignment_name')" :direction="$sortField === 'assignment_name' ? $sortDirection : null" class="w-2/12">Assignment Naam</x-table.heading>
-                <x-table.heading sortable wire:click="sortBy('assignment_statuses.name')" :direction="$sortField === 'assignment_statuses.name' ? $sortDirection : null" class="w-2/12">Status Naam</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('users.name')" :direction="$sortField === 'users.name' ? $sortDirection : null" class="w-1/12">Student Naam</x-table.heading>
+{{--                <x-table.heading sortable wire:click="sortBy('school_classes.name')" :direction="$sortField === 'school_classes.name' ? $sortDirection : null" class="w-1/12">SchoolClass Naam</x-table.heading>--}}
+                <x-table.heading sortable wire:click="sortBy('assignment_name')" :direction="$sortField === 'assignment_name' ? $sortDirection : null" class="w-5/12">Assignment Naam</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('assignment_statuses.name')" :direction="$sortField === 'assignment_statuses.name' ? $sortDirection : null" class="w-1/12">Status Naam</x-table.heading>
                 <x-table.heading sortable wire:click="sortBy('student_assignments.duedate')" :direction="$sortField === 'student_assignments.duedate' ? $sortDirection : null" class="w-1/12">Einddatum</x-table.heading>
                 <x-table.heading class="w-1/12">Details</x-table.heading>
                 <x-table.heading class="w-1/12">Edit</x-table.heading>
@@ -24,19 +24,19 @@
             <x-slot name="body">
                 @forelse($studentAssignments as $studentAssignment)
                     <x-table.row>
-                        <x-table.cell class="w-2/12">{{ $studentAssignment->student_name }}</x-table.cell>
-                        <x-table.cell class="w-2/12">{{ $studentAssignment->school_class_name }}</x-table.cell>
-                        <x-table.cell class="w-2/12">
+                        <x-table.cell class="w-1/12">{{ $studentAssignment->student_name }}</x-table.cell>
+{{--                        <x-table.cell class="w-1/12">{{ Str::limit($studentAssignment->school_class_name, 35) }}</x-table.cell>--}}
+                        <x-table.cell class="w-5/12">
                             @if($studentAssignment->classAssignment)
-                                {{ $studentAssignment->classAssignment->assignment->name }}
+                                {{ Str::limit($studentAssignment->classAssignment->assignment->name, 35) }}
                             @elseif($studentAssignment->individualAssignment)
-                                {{ $studentAssignment->individualAssignment->name }}
+                                {{ Str::limit($studentAssignment->individualAssignment->name, 35) }}
                             @else
                                 N/A
                             @endif
                         </x-table.cell>
-                        <x-table.cell class="w-2/12">{{ $studentAssignment->assignment_status_name }}</x-table.cell>
-                        <x-table.cell class="w-1/12">{{ $studentAssignment->duedate }}</x-table.cell>
+                        <x-table.cell class="w-1/12">{{ Str::limit($studentAssignment->assignment_status_name, 35) }}</x-table.cell>
+                        <x-table.cell class="w-1/12">{{ \Carbon\Carbon::parse($studentAssignment->duedate)->format('d-m-Y') }}</x-table.cell>
                         <x-table.cell class="w-1/12">
                             @can('show studentassignment')
                                 <a href="{{ route('admin.studentassignments.show', ['studentassignment' => $studentAssignment->id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded flex items-center justify-center text-xs w-full">
