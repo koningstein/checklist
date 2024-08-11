@@ -53,9 +53,13 @@
                                             <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900
                                             focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="">Orders</a>
 
-                                        @hasanyrole('teacher|keyteacher|admin')
+                                        @hasanyrole('keyteacher|admin')
                                         <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900
                                         focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="{{ route('admin.periods.index') }}">Admin</a>
+                                        @endhasanyrole
+                                        @hasanyrole('teacher')
+                                        <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900
+                                        focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="{{ route('admin.students.index') }}">Admin</a>
                                         @endhasanyrole
                                         @endauth
                                         <hr>

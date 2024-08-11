@@ -31,7 +31,7 @@ class RoleAndPermissionSeeder extends Seeder
 
         $rolesPermissions = [
             'student' => [],
-            'teacher' => ['index', 'show'],
+            'teacher' => [],
             'keyteacher' => ['index', 'show', 'create', 'edit', 'delete'],
             'admin' => Permission::all()
         ];
@@ -53,5 +53,8 @@ class RoleAndPermissionSeeder extends Seeder
         // ANDERE PERMISSIES
         Permission::create(['name' => 'showStudentResult']);
 
+        // Specifieke permissies voor de teacher rol
+        $teacherRole = Role::where('name', 'teacher')->first();
+        $teacherRole->givePermissionTo('index student');
     }
 }

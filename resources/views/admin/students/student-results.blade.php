@@ -20,10 +20,8 @@
 
 @section('content')
     <div class="card mt-6">
-        <div class="card-header flex flex-row justify-between">
-        </div>
-        <div class="card-body">
-            @livewire('student-results', ['studentId' => $student->id])
+        <div class="p-6">
+            @livewire('admin-student-results', ['studentId' => $student->id])
         </div>
     </div>
 @endsection

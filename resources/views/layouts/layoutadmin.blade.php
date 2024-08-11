@@ -349,7 +349,7 @@
                     transition ease-in-out duration-500">{{ __('Register') }}</a>
                 @endif
             @else
-                @hasanyrole('teacher|keyteacher|admin')
+                @hasanyrole('keyteacher|admin')
                 <!-- links for sales & admins -->
                 <p class="uppercase text-xs text-gray-600 mb-4 tracking-wider">Admin</p>
                 <a href="{{ route('admin.periods.index') }}" class="mb-3 font-medium text-sm hover:text-teal-600
@@ -399,7 +399,10 @@
                         <a href="{{ route('admin.learningsuboutcomeassignments.index') }}" class="mb-3  font-medium text-sm hover:text-teal-600 transition ease-in-out
                 duration-500">Subleeruitkomst Opdracht admin</a>
                 @endhasanyrole
-
+                @hasanyrole('teacher')
+                        <a href="{{ route('admin.students.index') }}" class="mb-3 font-medium text-sm hover:text-teal-600 transition ease-in-out
+                duration-500">Student admin</a>
+                @endhasanyrole
                 <!-- links for logedin users -->
             @endguest
             <!-- links for every user -->
