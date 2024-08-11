@@ -31,7 +31,7 @@ class StudentAssignment extends Model
 
     public function classAssignment(): BelongsTo
     {
-        return $this->belongsTo(ClassAssignment::class);
+        return $this->belongsTo(ClassAssignment::class, 'class_assignment_id');
     }
 
     public function assignmentStatus(): BelongsTo

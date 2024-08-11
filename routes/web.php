@@ -127,6 +127,7 @@ Route::group(['middleware' => ['role:teacher|keyteacher|admin']], function (){
 Route::group(['middleware' => ['role:student']], function (){
     Route::prefix('student')->name('student.')->group(function() {
         Route::get('/voortgang', [Open\StudentController::class, 'showOwnResults'])->name('results');
+        Route::get('/module/{moduleId}', [Open\StudentController::class, 'showModuleDetails'])->name('module.details');
     });
 });
 

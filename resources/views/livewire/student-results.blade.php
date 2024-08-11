@@ -110,7 +110,15 @@
                                     <tbody>
                                     <tr>
                                         <td class="w-1/3 px-6 py-4 whitespace-no-wrap border-b border-gray-300">
-                                            <div class="text-sm leading-5 font-semibold text-gray-900">{{ $moduleName }}</div>
+                                            <div class="text-sm leading-5 font-semibold text-gray-900">
+                                                @hasanyrole('student')
+                                                <a href="{{ route('student.module.details', $filteredAssignments->first()->classAssignment->assignment->module->id ?? $filteredAssignments->first()->individualAssignment->module->id) }}">
+                                                    {{ $moduleName }}
+                                                </a>
+                                                @else
+                                                    {{ $moduleName }}
+                                                @endhasanyrole
+                                            </div>
                                         </td>
                                         <td class="w-2/3 px-6 py-4 whitespace-no-wrap border-b border-gray-300">
                                             <div class="flex space-x-1 overflow-x-auto">
