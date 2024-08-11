@@ -37,7 +37,6 @@
 
             @foreach($enrolment->enrolmentClasses as $enrolmentClass)
                 @php
-                    // Groepeer opdrachten per course en pas filters toe
                     $courses = $enrolmentClass->studentAssignments->groupBy(function($assignment) {
                         return $assignment->classAssignment
                             ? $assignment->classAssignment->assignment->module->course->name
@@ -45,10 +44,7 @@
                                 ? $assignment->individualAssignment->module->course->name
                                 : 'Overig');
                     })->filter(function($assignments, $courseName) {
-                        // Pas course name filter toe
                         $passesCourseFilter = empty($this->searchCourseName) || stripos($courseName, $this->searchCourseName) !== false;
-
-                        // Pas periode filter toe als een periode is geselecteerd
                         $passesPeriodFilter = empty($this->selectedPeriodId) || $assignments->contains(function($assignment) {
                             $modulePeriodId = $assignment->classAssignment
                                 ? $assignment->classAssignment->assignment->module->period_id
@@ -57,7 +53,6 @@
                                     : null);
                             return $modulePeriodId == $this->selectedPeriodId;
                         });
-
                         return $passesCourseFilter && $passesPeriodFilter;
                     });
                 @endphp
@@ -67,7 +62,6 @@
                         <h4 class="text-lg font-semibold mb-1">{{ $courseName }}</h4>
 
                         @php
-                            // Groepeer opdrachten per module
                             $modules = $assignmentsPerCourse->groupBy(function($assignment) {
                                 return $assignment->classAssignment
                                     ? $assignment->classAssignment->assignment->module->name
@@ -79,10 +73,9 @@
 
                         @foreach($modules as $moduleName => $assignments)
                             @php
-                                // Filter de opdrachten op basis van de geselecteerde periode
                                 $filteredAssignments = $assignments->filter(function($assignment) {
                                     if (empty($this->selectedPeriodId)) {
-                                        return true; // Toon alles als er geen periode is geselecteerd
+                                        return true;
                                     }
 
                                     $modulePeriodId = $assignment->classAssignment
@@ -117,7 +110,7 @@
                                         <td class="w-2/3 px-6 py-4 whitespace-no-wrap border-b border-gray-300">
                                             <div class="flex space-x-1 overflow-x-auto">
                                                 @foreach($filteredAssignments as $assignment)
-                                                    <div class="flex-shrink-0 w-4 h-4
+                                                    <div wire:click="openModal({{ $assignment->id }})" class="cursor-pointer flex-shrink-0 w-4 h-4
                                                             @if($assignment->assignmentStatus->name === 'Goedgekeurd') bg-green-500
                                                             @elseif($assignment->assignmentStatus->name === 'Afgewezen') bg-red-500
                                                             @elseif($assignment->assignmentStatus->name === 'Ingediend') bg-blue-500
@@ -138,4 +131,25 @@
             @endforeach
         </div>
     @endforeach
+
+    <!-- Modal -->
+    @if($selectedAssignmentId)
+        <div class="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold mb-4">Update Status</h2>
+                <select wire:model="selectedStatus" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                    @foreach($statuses as $key => $value)
+                        <option value="{{ $key }}">{{ $value }}</option>
+                    @endforeach
+                </select>
+                @error('assignment')
+                <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
+                @enderror
+                <div class="mt-4">
+                    <button wire:click="updateStatus" class="px-4 py-2 bg-teal-500 text-white rounded">Save</button>
+                    <button wire:click="$set('selectedAssignmentId', null)" class="px-4 py-2 bg-gray-300 text-gray-700 rounded ml-2">Cancel</button>
+                </div>
+            </div>
+        </div>
+    @endif
 </div>

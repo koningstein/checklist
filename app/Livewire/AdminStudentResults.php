@@ -1,10 +1,11 @@
 <?php
-
 namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Student;
 use App\Models\Period;
+use App\Models\StudentAssignment;
+use App\Models\AssignmentStatus;
 
 class AdminStudentResults extends Component
 {
@@ -12,11 +13,15 @@ class AdminStudentResults extends Component
     public $searchCourseName = '';
     public $selectedPeriodId = null;
     public $periods;
+    public $selectedAssignmentId = null;
+    public $selectedStatus = null;
+    public $statuses;
 
     public function mount($studentId)
     {
         $this->studentId = $studentId;
-        $this->periods = Period::all(); // Haal alle perioden op
+        $this->periods = Period::all();
+        $this->statuses = AssignmentStatus::all()->pluck('name', 'id')->toArray();
     }
 
     public function setPeriod($periodId)
@@ -60,6 +65,37 @@ class AdminStudentResults extends Component
         return $hasAssignments ? true : null;
     }
 
+    public function openModal($assignmentId)
+    {
+        $this->selectedAssignmentId = $assignmentId;
+
+        // Controleer of de assignment correct wordt opgehaald
+        $assignment = StudentAssignment::find($assignmentId);
+
+        if ($assignment) {
+            $this->selectedStatus = $assignment->assignment_status_id;
+        } else {
+            $this->selectedStatus = null;
+            $this->selectedAssignmentId = null;
+        }
+    }
+
+    public function updateStatus()
+    {
+        $assignment = StudentAssignment::find($this->selectedAssignmentId);
+
+        if ($assignment) {
+            $assignment->assignment_status_id = $this->selectedStatus;
+            $assignment->save();
+
+            // Reset de geselecteerde status en opdracht
+            $this->reset('selectedAssignmentId', 'selectedStatus');
+        } else {
+            // Fallback als de assignment niet gevonden wordt
+            $this->addError('assignment', 'De geselecteerde opdracht kon niet worden gevonden.');
+        }
+    }
+
     public function render()
     {
         $student = Student::with([
@@ -74,8 +110,8 @@ class AdminStudentResults extends Component
                             'assignmentStatus',
                             'classAssignment.assignment.module.course',
                             'individualAssignment.module.course',
-                            'classAssignment.assignment.module.period', // Periode om te filteren
-                            'individualAssignment.module.period', // Periode om te filteren
+                            'classAssignment.assignment.module.period',
+                            'individualAssignment.module.period',
                         ]);
                     }
                 ]);
@@ -84,7 +120,7 @@ class AdminStudentResults extends Component
 
         return view('livewire.admin-student-results', [
             'student' => $student,
-            'periods' => $this->periods, // Geef de perioden door aan de view
+            'periods' => $this->periods,
         ]);
     }
 }
