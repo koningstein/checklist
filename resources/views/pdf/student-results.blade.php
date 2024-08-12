@@ -6,21 +6,27 @@
     <title>Student Results PDF</title>
     <style>
         body { font-family: sans-serif; }
-        .header { text-align: center; margin-bottom: 20px; }
-        .header img { max-width: 150px; }
         .student-info { margin-bottom: 20px; }
-        .results-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        .results-table th, .results-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        .results-table th { background-color: #f2f2f2; }
-        .status-approved { background-color: #28a745; color: white; } /* Groen */
-        .status-rejected { background-color: #dc3545; color: white; } /* Rood */
-        .status-submitted { background-color: #007bff; color: white; } /* Blauw */
-        .status-not-started { background-color: #fd7e14; color: white; } /* Oranje */
+        .results-table, .module-table, .legend-table { width: 100%; border-collapse: collapse; }
+        .results-table th, .results-table td, .module-table th, .module-table td, .legend-table th, .legend-table td { border: 1px solid #ddd; padding: 8px; }
+        .results-table th, .module-table th, .legend-table th { background-color: #f2f2f2; }
+        .module-table td { text-align: left; } /* Linkslijn de module namen */
+        .legend-table td { text-align: left; }
+        .page-break { page-break-before: always; }
+        .bg-red { background-color: #f87171; }       /* Rood: 0-40% */
+        .bg-orange { background-color: #fb923c; }    /* Oranje: 40-55% */
+        .bg-yellow { background-color: #facc15; }    /* Geel: 55-75% */
+        .bg-light-green { background-color: #a3e635; } /* Lichtgroen: 75-99% */
+        .bg-green { background-color: #16a34a; }     /* Donkergroen: 100% */
+        .assignment-green { background-color: #38a169; }  /* Opdracht groen */
+        .assignment-red { background-color: #e53e3e; }    /* Opdracht rood */
+        .assignment-blue { background-color: #4299e1; }   /* Opdracht blauw */
+        .assignment-orange { background-color: #ed8936; } /* Opdracht oranje */
     </style>
 </head>
 <body>
 <div class="header">
-    <img src="{{ public_path('img/Logo_Techniekcollege_RGB_150_dpi.png') }}" alt="Techniek College Rotterdam">
+    <img src="{{ public_path('img/Logo_Techniekcollege_RGB_150_dpi.png') }}" alt="Techniek College Rotterdam" style="width: 150px;" >
 </div>
 <h1>Resultaten van {{ $student->user->name }}</h1>
 
@@ -37,6 +43,80 @@
 
 <p>Periode: {{ $period->period }}</p>
 
+<!-- Module Overzicht -->
+<h2>Module Overzicht</h2>
+<table class="module-table">
+    <thead>
+    <tr>
+        <th>Module</th>
+        <th>Percentage Goedgekeurd</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach($studentResults as $enrolment)
+        @foreach($enrolment->enrolmentClasses as $enrolmentClass)
+            @foreach($enrolmentClass->studentAssignments->groupBy(function($assignment) {
+                return $assignment->classAssignment->assignment->module->name ?? $assignment->individualAssignment->module->name;
+            }) as $moduleName => $assignments)
+                @php
+                    $totalAssignments = $assignments->count();
+                    $approvedAssignments = $assignments->where('assignmentStatus.name', 'Goedgekeurd')->count();
+                    $percentageApproved = ($totalAssignments > 0) ? ($approvedAssignments / $totalAssignments) * 100 : 0;
+
+                    // Bepaal de kleur op basis van het percentage
+                    if ($percentageApproved <= 40) {
+                        $colorClass = 'bg-red';
+                    } elseif ($percentageApproved <= 55) {
+                        $colorClass = 'bg-orange';
+                    } elseif ($percentageApproved <= 75) {
+                        $colorClass = 'bg-yellow';
+                    } elseif ($percentageApproved < 100) {
+                        $colorClass = 'bg-light-green';
+                    } else {
+                        $colorClass = 'bg-green';
+                    }
+                @endphp
+                <tr>
+                    <td>{{ $moduleName }}</td>
+                    <td class="{{ $colorClass }}">{{ number_format($percentageApproved, 2) }}%</td>
+                </tr>
+            @endforeach
+        @endforeach
+    @endforeach
+    </tbody>
+</table>
+
+<!-- Legenda -->
+<h3>Kleuren Legenda:</h3>
+<table class="legend-table">
+    <tbody>
+    <tr>
+        <td class="bg-red"></td>
+        <td>0-40% Goedgekeurd</td>
+    </tr>
+    <tr>
+        <td class="bg-orange"></td>
+        <td>40-55% Goedgekeurd</td>
+    </tr>
+    <tr>
+        <td class="bg-yellow"></td>
+        <td>55-75% Goedgekeurd</td>
+    </tr>
+    <tr>
+        <td class="bg-light-green"></td>
+        <td>75-99% Goedgekeurd</td>
+    </tr>
+    <tr>
+        <td class="bg-green"></td>
+        <td>100% Goedgekeurd</td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Resultaten Tabel op een nieuwe pagina -->
+<div class="page-break"></div>
+
+<h2>Details per Module</h2>
 <table class="results-table">
     <thead>
     <tr>
@@ -50,18 +130,29 @@
     @foreach($studentResults as $enrolment)
         @foreach($enrolment->enrolmentClasses as $enrolmentClass)
             @foreach($enrolmentClass->studentAssignments as $assignment)
+                @php
+                    // Kleurcode op basis van de status van de opdracht
+                    $statusColorClass = '';
+                    switch($assignment->assignmentStatus->name) {
+                        case 'Goedgekeurd':
+                            $statusColorClass = 'assignment-green';
+                            break;
+                        case 'Afgewezen':
+                            $statusColorClass = 'assignment-red';
+                            break;
+                        case 'Ingediend':
+                            $statusColorClass = 'assignment-blue';
+                            break;
+                        case 'Niet gestart':
+                            $statusColorClass = 'assignment-orange';
+                            break;
+                    }
+                @endphp
                 <tr>
                     <td>{{ $assignment->classAssignment->assignment->module->name ?? $assignment->individualAssignment->module->name }}</td>
                     <td>{{ $assignment->classAssignment->assignment->name ?? $assignment->individualAssignment->name }}</td>
-                    <td class="
-                        @if($assignment->assignmentStatus->name === 'Goedgekeurd') status-approved
-                        @elseif($assignment->assignmentStatus->name === 'Afgewezen') status-rejected
-                        @elseif($assignment->assignmentStatus->name === 'Ingediend') status-submitted
-                        @elseif($assignment->assignmentStatus->name === 'Niet gestart') status-not-started
-                        @endif">
-                        {{ $assignment->assignmentStatus->name }}
-                    </td>
-                    <td>{{ $assignment->duedate ? \Carbon\Carbon::parse($assignment->duedate)->format('d-m-Y') : 'Geen deadline' }}</td>
+                    <td class="{{ $statusColorClass }}">{{ $assignment->assignmentStatus->name }}</td>
+                    <td>{{ \Carbon\Carbon::parse($assignment->duedate)->format('d-m-Y') }}</td>
                 </tr>
             @endforeach
         @endforeach
