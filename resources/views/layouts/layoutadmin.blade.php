@@ -398,6 +398,8 @@
                 duration-500">Subleeruitkomst Techniek admin</a>
                         <a href="{{ route('admin.learningsuboutcomeassignments.index') }}" class="mb-3  font-medium text-sm hover:text-teal-600 transition ease-in-out
                 duration-500">Subleeruitkomst Opdracht admin</a>
+                        <a href="{{ route('admin.class-results.form') }}" class="mb-3  font-medium text-sm hover:text-teal-600 transition ease-in-out
+                duration-500">PDF maken</a>
                 @endhasanyrole
                 @hasanyrole('teacher')
                         <a href="{{ route('admin.students.index') }}" class="mb-3 font-medium text-sm hover:text-teal-600 transition ease-in-out
