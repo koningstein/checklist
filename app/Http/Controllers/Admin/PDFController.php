@@ -8,6 +8,9 @@ use App\Models\ClassYear;
 use App\Models\Period;
 use App\Models\Student;
 use Barryvdh\DomPDF\Facade\Pdf; // Als je Dompdf gebruikt
+use Illuminate\Support\Facades\Storage;
+use ZipArchive;
+use Illuminate\Support\Facades\File;
 
 class PDFController extends Controller
 {
@@ -34,14 +37,37 @@ class PDFController extends Controller
             $query->where('class_year_id', $classYear->id);
         })->get();
 
-        $pdfs = [];
-        foreach ($students as $student) {
-            $pdf = $this->generateStudentPDF($student, $period);
-            $pdfs[] = $pdf;
+        // Map om de PDF-bestanden tijdelijk op te slaan
+        $tempFolder = storage_path('app/temp-pdfs');
+        if (!File::exists($tempFolder)) {
+            File::makeDirectory($tempFolder, 0777, true, true);
         }
 
-        // Download een voorbeeld-PDF
-        return $pdfs[0]->download("class_results_{$classYear->schoolClass->name}_period_{$period->period}.pdf");
+        $zip = new ZipArchive;
+        $zipFileName = "class_results_{$classYear->schoolClass->name}_period_{$period->period}.zip";
+        $zipFilePath = storage_path("app/{$zipFileName}");
+
+        if ($zip->open($zipFilePath, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
+            foreach ($students as $student) {
+                $pdf = $this->generateStudentPDF($student, $period);
+                $pdfFileName = "{$student->user->name}_results.pdf";
+                $pdfFilePath = "{$tempFolder}/{$pdfFileName}";
+
+                // Sla de PDF op en voeg deze toe aan het zip-bestand
+                $pdf->save($pdfFilePath);
+                $zip->addFile($pdfFilePath, $pdfFileName);
+            }
+
+            $zip->close();
+
+            // Verwijder de tijdelijke PDF-bestanden
+            File::deleteDirectory($tempFolder);
+
+            // Download het zip-bestand
+            return response()->download($zipFilePath)->deleteFileAfterSend(true);
+        }
+
+        return back()->with('error', 'Er is iets misgegaan bij het genereren van het zip-bestand.');
     }
 
 

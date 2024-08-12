@@ -6,13 +6,22 @@
     <title>Student Results PDF</title>
     <style>
         body { font-family: sans-serif; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .header img { max-width: 150px; }
         .student-info { margin-bottom: 20px; }
-        .results-table { width: 100%; border-collapse: collapse; }
-        .results-table th, .results-table td { border: 1px solid #ddd; padding: 8px; }
+        .results-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .results-table th, .results-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
         .results-table th { background-color: #f2f2f2; }
+        .status-approved { background-color: #28a745; color: white; } /* Groen */
+        .status-rejected { background-color: #dc3545; color: white; } /* Rood */
+        .status-submitted { background-color: #007bff; color: white; } /* Blauw */
+        .status-not-started { background-color: #fd7e14; color: white; } /* Oranje */
     </style>
 </head>
 <body>
+<div class="header">
+    <img src="{{ public_path('img/Logo_Techniekcollege_RGB_150_dpi.png') }}" alt="Techniek College Rotterdam">
+</div>
 <h1>Resultaten van {{ $student->user->name }}</h1>
 
 {{-- Probeer de klas op te halen via de eerste enrolment en enrolmentClasses --}}
@@ -44,7 +53,14 @@
                 <tr>
                     <td>{{ $assignment->classAssignment->assignment->module->name ?? $assignment->individualAssignment->module->name }}</td>
                     <td>{{ $assignment->classAssignment->assignment->name ?? $assignment->individualAssignment->name }}</td>
-                    <td>{{ $assignment->assignmentStatus->name }}</td>
+                    <td class="
+                        @if($assignment->assignmentStatus->name === 'Goedgekeurd') status-approved
+                        @elseif($assignment->assignmentStatus->name === 'Afgewezen') status-rejected
+                        @elseif($assignment->assignmentStatus->name === 'Ingediend') status-submitted
+                        @elseif($assignment->assignmentStatus->name === 'Niet gestart') status-not-started
+                        @endif">
+                        {{ $assignment->assignmentStatus->name }}
+                    </td>
                     <td>{{ $assignment->duedate ? \Carbon\Carbon::parse($assignment->duedate)->format('d-m-Y') : 'Geen deadline' }}</td>
                 </tr>
             @endforeach
