@@ -28,4 +28,9 @@ class PageController extends Controller
     {
         return view('open.pages.aboutus');
     }
+
+    public function workingSystem(): View
+    {
+        return view('open.pages.workingsystem');
+    }
 }

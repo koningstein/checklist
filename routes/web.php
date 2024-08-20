@@ -27,6 +27,7 @@ Route::get('/', [Open\PageController::class, 'home'])->name('page.home');
 Route::get('/about-us', [Open\PageController::class, 'aboutus'])->name('page.aboutus');
 Route::get('/contact', [Open\PageController::class, 'contact'])->name('page.contact');
 Route::post('/contact', [Open\ContactMessageController::class, 'store'])->name('contact.store');
+Route::get('/working-system', [Open\PageController::class, 'workingSystem'])->name('page.working-system');
 
 Route::get('/news', [Open\NewsController::class, 'index'])->name('news.index');
 Route::get('/news/{news}', [Open\NewsController::class, 'show'])->name('news.show');

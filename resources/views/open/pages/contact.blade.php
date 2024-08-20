@@ -16,7 +16,7 @@
                     <h3 class="text-2xl font-semibold mb-6">Contactgegevens</h3>
                     <p class="mb-4"><i class="fa-solid fa-location-dot text-teal-500 mr-2"></i><strong>Adres:</strong> Schiedamseweg 245, 3118 JB Schiedam</p>
                     <p class="mb-4"><i class="fa-solid fa-phone text-teal-500 mr-2"></i><strong>Telefoon:</strong> +31 88 9454500</p>
-                    <p class="mb-4"><i class="fa-solid fa-envelope text-teal-500 mr-2"></i><strong>E-mail:</strong> m.koningstein@tcrmbo.nl</p>
+{{--                    <p class="mb-4"><i class="fa-solid fa-envelope text-teal-500 mr-2"></i><strong>E-mail:</strong> m.koningstein@tcrmbo.nl</p>--}}
 
                     <!-- Google Maps -->
                     <div class="mt-8">
