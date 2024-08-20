@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\Student;
 use App\Models\User;
+use App\Models\Guardian;
+use App\Models\StudentGuardian;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -81,6 +83,8 @@ class UserSeeder extends Seeder
             ['studentNr' => '9007170', 'firstName' => 'Lars', 'lastName' => 'Zwanenburg'],
         ];
 
+        $guardians = []; // Array om aangemaakte guardians op te slaan
+
         foreach ($students as $studentData) {
             $user = User::create([
                 'name' => $studentData['firstName'] . ' ' . $studentData['lastName'],
@@ -89,10 +93,42 @@ class UserSeeder extends Seeder
             ]);
             $user->assignRole('student');
 
-            Student::create([
+            $studentModel = Student::create([
                 'studentNr' => $studentData['studentNr'],
                 'user_id' => $user->id,
             ]);
+
+            // Bepaal willekeurig of en hoeveel guardians een student krijgt: 0, 1 of 2
+            $guardianCount = rand(0, 2);
+
+            for ($i = 0; $i < $guardianCount; $i++) {
+                // Bepaal of een nieuwe guardian moet worden aangemaakt of een bestaande moet worden gekoppeld
+                if ($i == 0 && !empty($guardians) && rand(0, 1)) {
+                    // Koppel een bestaande guardian aan deze student
+                    $existingGuardian = $guardians[array_rand($guardians)];
+                } else {
+                    // Maak een nieuwe guardian aan
+                    $guardianUser = User::create([
+                        'name' => 'Guardian ' . ($i + 1) . ' of ' . $studentData['firstName'],
+                        'email' => 'guardian' . ($i + 1) . '.' . $studentData['studentNr'] . '@tcrmbo.nl',
+                        'password' => Hash::make('password'),
+                    ]);
+                    $guardianUser->assignRole('guardian');
+
+                    $existingGuardian = Guardian::create([
+                        'user_id' => $guardianUser->id,
+                    ]);
+
+                    // Voeg de nieuwe guardian toe aan de lijst van bestaande guardians
+                    $guardians[] = $existingGuardian;
+                }
+
+                // Koppel de guardian aan de student
+                StudentGuardian::create([
+                    'student_id' => $studentModel->id,
+                    'guardian_id' => $existingGuardian->id,
+                ]);
+            }
         }
     }
 }

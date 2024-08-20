@@ -58,4 +58,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(StudentAssignment::class, 'markedby_id');
     }
+
+    public function guardian(): HasOne
+    {
+        return $this->hasOne(Guardian::class);
+    }
 }

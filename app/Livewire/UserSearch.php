@@ -28,6 +28,8 @@ class UserSearch extends Component
         $this->selectedUser = User::find($userId);
         $this->search = $this->selectedUser->name;
         $this->users = [];
+
+        $this->dispatch('user-selected', ['userId' => $userId]);
     }
 
     public function render()

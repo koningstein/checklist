@@ -9,7 +9,18 @@
             @guest
                 <a href="{{ route('register') }}" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-6 rounded">Begin Nu</a>
             @else
-                <a href="{{ route('admin.periods.index') }}" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-6 rounded">Dashboard</a>
+                @hasanyrole('student')
+                <a href="{{ route('student.results') }}" class="px-2 md:pl-0 md:mr-3 md:pr-3 text-white no-underline md:border-r border-gray-300">Studie voortgang</a>
+                @endhasanyrole
+                @hasanyrole('guardian')
+                <a href="{{ route('guardian.dashboard') }}" class="px-2 md:pl-0 md:mr-3 md:pr-3 text-white no-underline md:border-r border-gray-300">Dashboard</a>
+                @endhasanyrole
+                @hasanyrole('keyteacher|admin')
+                <a class="px-2 md:pl-0 md:mr-3 md:pr-3 text-white no-underline md:border-r border-gray-300" href="{{ route('admin.periods.index') }}">Admin</a>
+                @endhasanyrole
+                @hasanyrole('teacher')
+                <a class="px-2 md:pl-0 md:mr-3 md:pr-3 text-white no-underline md:border-r border-gray-300" href="{{ route('admin.students.index') }}">Admin</a>
+                @endhasanyrole
             @endguest
         </div>
     </section>
@@ -52,14 +63,12 @@
 
     <!-- Call to Action -->
     <section class="w-full bg-teal-500 py-16">
-        <div class="container mx-auto max-w-screen-xl text-center text-white">
-            <h2 class="text-3xl font-bold mb-4">Begin Nu met het Bijhouden van Voortgang</h2>
-            <p class="text-xl mb-8">Meld je vandaag nog aan en krijg direct toegang tot je persoonlijke dashboard.</p>
-            @guest
-                <a href="{{ route('register') }}" class="bg-white hover:bg-gray-200 text-teal-500 font-bold py-3 px-6 rounded">Registreer Nu</a>
-            @else
-                <a href="{{ route('admin.periods.index') }}" class="bg-white hover:bg-gray-200 text-teal-500 font-bold py-3 px-6 rounded">Ga naar Dashboard</a>
-            @endguest
+        <div class="container mx-auto max-w-screen-xl text-center text-gray-800">
+            <h2 class="text-3xl font-bold mb-4">Samen de Voortgang Volgen</h2>
+            <p class="text-xl mb-8">Voor toegang tot je persoonlijke dashboard of om studenten en ouders toe te voegen, neem contact op met je docent.</p>
+            <div class="flex justify-center space-x-4">
+                <a href="{{ route('page.contact') }}" class="bg-white hover:bg-gray-200 text-teal-500 font-bold py-3 px-6 rounded">Neem Contact Op</a>
+            </div>
         </div>
     </section>
 @endsection

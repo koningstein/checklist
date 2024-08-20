@@ -19,7 +19,7 @@ class RoleAndPermissionSeeder extends Seeder
         $resources = ['period', 'cohort', 'crebo', 'course', 'module', 'assignment', 'schoolclass',
             'student', 'enrolment', 'enrolmentstatus', 'schoolyear', 'classyear', 'classassignment', 'assignmentstatus', 'studentassignment',
             'enrolmentclass', 'learningoutcome', 'learninglevel', 'learningrelatedtechnique', 'learningsuboutcome', 'learningsuboutcomeassignment',
-            'learningsuboutcomelevel', 'learningsuboutcometechnique'];
+            'learningsuboutcomelevel', 'learningsuboutcometechnique', 'news', 'comment', 'guardian', 'contactmessage'];
 
         foreach ($resources as $resource) {
             Permission::create(['name' => "index $resource"]);
@@ -31,6 +31,7 @@ class RoleAndPermissionSeeder extends Seeder
 
         $rolesPermissions = [
             'student' => [],
+            'guardian' => [],
             'teacher' => [],
             'keyteacher' => ['index', 'show', 'create', 'edit', 'delete'],
             'admin' => Permission::all()
@@ -56,5 +57,8 @@ class RoleAndPermissionSeeder extends Seeder
         // Specifieke permissies voor de teacher rol
         $teacherRole = Role::where('name', 'teacher')->first();
         $teacherRole->givePermissionTo('index student');
+
+        $guardianRole = Role::where('name', 'guardian')->first();
+        $guardianRole->givePermissionTo('show student');
     }
 }

@@ -23,9 +23,17 @@ if (App::environment('local')) {
     });
 }
 
-Route::get('/', function () {
-    return view('open.home');
-})->name('home');
+Route::get('/', [Open\PageController::class, 'home'])->name('page.home');
+Route::get('/about-us', [Open\PageController::class, 'aboutus'])->name('page.aboutus');
+Route::get('/contact', [Open\PageController::class, 'contact'])->name('page.contact');
+Route::post('/contact', [Open\ContactMessageController::class, 'store'])->name('contact.store');
+
+Route::get('/news', [Open\NewsController::class, 'index'])->name('news.index');
+Route::get('/news/{news}', [Open\NewsController::class, 'show'])->name('news.show');
+Route::middleware('auth')->group(function () {
+    Route::post('/news/{news}/comments', [Open\CommentController::class, 'store'])->name('comments.store');
+});
+
 
 Route::get('/admin', function () {
     return view('layouts.layoutadmin');
@@ -123,6 +131,23 @@ Route::group(['middleware' => ['role:teacher|keyteacher|admin']], function (){
 
         Route::get('class-results', [Admin\PDFController::class, 'showClassResultsForm'])->name('class-results.form');
         Route::post('class-results/generate', [Admin\PDFController::class, 'generateClassResultsPDF'])->name('class-results.generate');
+
+        Route::resource('guardians', Admin\GuardianController::class);
+        Route::post('/guardians/storeNew', [Admin\GuardianController::class, 'storeNew'])->name('guardians.storeNew');
+        Route::get('guardians/{guardian}/delete', [Admin\GuardianController::class, 'delete'])
+            ->name('guardians.delete');
+
+        Route::resource('news', Admin\NewsController::class);
+        Route::get('news/{news}/delete', [Admin\NewsController::class, 'delete'])
+            ->name('news.delete');
+
+        Route::resource('comments', Admin\CommentController::class);
+        Route::get('comments/{comment}/delete', [Admin\CommentController::class, 'delete'])
+            ->name('comments.delete');
+
+        Route::resource('contactmessages', Admin\ContactMessageController::class);
+        Route::get('contactmessages/{contactmessage}/delete', [Admin\ContactMessageController::class, 'delete'])
+            ->name('contactmessages.delete');
     });
 });
 
@@ -131,6 +156,13 @@ Route::group(['middleware' => ['role:student']], function (){
     Route::prefix('student')->name('student.')->group(function() {
         Route::get('/voortgang', [Open\StudentController::class, 'showOwnResults'])->name('results');
         Route::get('/module/{moduleId}', [Open\StudentController::class, 'showModuleDetails'])->name('module.details');
+    });
+});
+
+// Routes voor guardians (ouders)
+Route::group(['middleware' => ['role:guardian']], function (){
+    Route::prefix('guardian')->name('guardian.')->group(function() {
+        Route::get('/dashboard', [Open\GuardianController::class, 'index'])->name('dashboard');
     });
 });
 

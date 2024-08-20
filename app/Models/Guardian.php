@@ -7,24 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Student extends Model
+class Guardian extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'studentNr'];
+
+    protected $fillable = ['user_id'];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function enrolments(): HasMany
-    {
-        return $this->hasMany(Enrolment::class);
-    }
-
-    public function studentAssignments(): HasMany
-    {
-        return $this->hasMany(StudentAssignment::class);
     }
 
     public function studentGuardians(): HasMany
