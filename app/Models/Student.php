@@ -22,10 +22,10 @@ class Student extends Model
         return $this->hasMany(Enrolment::class);
     }
 
-    public function studentAssignments(): HasMany
-    {
-        return $this->hasMany(StudentAssignment::class);
-    }
+//    public function studentAssignments(): HasMany
+//    {
+//        return $this->hasMany(StudentAssignment::class);
+//    }
 
     public function studentGuardians(): HasMany
     {

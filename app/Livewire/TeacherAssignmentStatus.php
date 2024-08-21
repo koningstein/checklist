@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\AssignmentStatus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
@@ -26,10 +27,13 @@ class TeacherAssignmentStatus extends Component
     public $assignments = [];
     public $students = [];
 
+    public $statusOptions = []; // Om de beschikbare statusopties weer te geven
+
     public function mount()
     {
         // Haal alle beschikbare klassen op om mee te beginnen
         $this->classYears = ClassYear::all();
+        $this->statusOptions = AssignmentStatus::all();
     }
 
     public function updatedClassYearId()
@@ -85,66 +89,90 @@ class TeacherAssignmentStatus extends Component
             ->where('class_year_id', $this->classYearId)
             ->first();
 
-        // Log voor debugging
         if (!$classAssignment) {
-            Log::info('Geen class_assignment gevonden voor assignment_id: ' . $this->assignmentId . ' en class_year_id: ' . $this->classYearId);
             return;
         }
 
-        Log::info('Gevonden class_assignment_id: ' . $classAssignment->id);
-
-        // Stap 2: Zoek alle student_assignments met de class_assignment_id
-        $studentAssignments = DB::table('student_assignments')
-            ->where('class_assignment_id', $classAssignment->id)
+        // Stap 2: Zoek de studenten via enrolments, enrolment_classes en student_assignments
+        $this->students = Student::whereHas('enrolments.enrolmentClasses.studentAssignments', function ($query) use ($classAssignment) {
+            $query->where('class_assignment_id', $classAssignment->id);
+        })
+            ->with(['enrolments.enrolmentClasses.studentAssignments' => function ($query) use ($classAssignment) {
+                $query->where('class_assignment_id', $classAssignment->id);
+            }, 'user'])
             ->get();
-
-        // Log voor debugging
-        if ($studentAssignments->isEmpty()) {
-            Log::info('Geen student_assignments gevonden voor class_assignment_id: ' . $classAssignment->id);
-            return;
-        }
-
-        Log::info('Aantal gevonden student_assignments: ' . $studentAssignments->count());
-
-        // Stap 3: Zoek enrolment_classes en enrolments op basis van student_assignments
-        $studentIds = [];
-        foreach ($studentAssignments as $studentAssignment) {
-            $enrolmentClass = DB::table('enrolment_classes')
-                ->where('id', $studentAssignment->enrolment_class_id)
-                ->first();
-
-            if ($enrolmentClass) {
-                $enrolment = DB::table('enrolments')
-                    ->where('id', $enrolmentClass->enrolment_id)
-                    ->first();
-
-                if ($enrolment) {
-                    $studentIds[] = $enrolment->student_id;
-                }
-            }
-        }
-
-        // Log de gevonden student_ids
-        if (empty($studentIds)) {
-            Log::info('Geen studenten gevonden gekoppeld aan de gevonden enrolments.');
-            return;
-        }
-
-        Log::info('Gevonden student_ids: ' . implode(', ', $studentIds));
-
-//        // Stap 4: Zoek studenten op basis van student_ids
-//        $this->students = DB::table('students')
-//            ->whereIn('id', $studentIds)
+//        // Stap 1: Vind de class_assignment_id op basis van assignment_id en class_year_id
+//        $classAssignment = DB::table('class_assignments')
+//            ->where('assignment_id', $this->assignmentId)
+//            ->where('class_year_id', $this->classYearId)
+//            ->first();
+//
+//        // Log voor debugging
+//        if (!$classAssignment) {
+//            Log::info('Geen class_assignment gevonden voor assignment_id: ' . $this->assignmentId . ' en class_year_id: ' . $this->classYearId);
+//            return;
+//        }
+//
+//        Log::info('Gevonden class_assignment_id: ' . $classAssignment->id);
+//
+//        // Stap 2: Zoek alle student_assignments met de class_assignment_id
+//        $studentAssignments = DB::table('student_assignments')
+//            ->where('class_assignment_id', $classAssignment->id)
 //            ->get();
-        // Stap 4: Zoek studenten op basis van student_ids en laad de gerelateerde users
-        $this->students = Student::with('user') // Hier laden we de gekoppelde users
-        ->whereIn('id', $studentIds)
-            ->get();
+//
+//        // Log voor debugging
+//        if ($studentAssignments->isEmpty()) {
+//            Log::info('Geen student_assignments gevonden voor class_assignment_id: ' . $classAssignment->id);
+//            return;
+//        }
+//
+//        Log::info('Aantal gevonden student_assignments: ' . $studentAssignments->count());
+//
+//        // Stap 3: Zoek enrolment_classes en enrolments op basis van student_assignments
+//        $studentIds = [];
+//        foreach ($studentAssignments as $studentAssignment) {
+//            $enrolmentClass = DB::table('enrolment_classes')
+//                ->where('id', $studentAssignment->enrolment_class_id)
+//                ->first();
+//
+//            if ($enrolmentClass) {
+//                $enrolment = DB::table('enrolments')
+//                    ->where('id', $enrolmentClass->enrolment_id)
+//                    ->first();
+//
+//                if ($enrolment) {
+//                    $studentIds[] = $enrolment->student_id;
+//                }
+//            }
+//        }
+//
+//        // Log de gevonden student_ids
+//        if (empty($studentIds)) {
+//            Log::info('Geen studenten gevonden gekoppeld aan de gevonden enrolments.');
+//            return;
+//        }
+//        Log::info('Gevonden student_ids: ' . implode(', ', $studentIds));
+//
+//        // Stap 4: Zoek studenten op basis van student_ids en laad de gerelateerde users
+//        $this->students = Student::with('user') // Hier laden we de gekoppelde users
+//        ->whereIn('id', $studentIds)
+//            ->get();
+//
+//        // Log het aantal gevonden studenten
+//        Log::info('Aantal gevonden studenten: ' . $this->students->count());
+//
+//        // Nu zijn de studenten beschikbaar in $this->students
+    }
 
-        // Log het aantal gevonden studenten
-        Log::info('Aantal gevonden studenten: ' . $this->students->count());
+    public function updateStatus($studentAssignmentId, $newStatus)
+    {
+        $studentAssignment = StudentAssignment::find($studentAssignmentId);
+        if ($studentAssignment) {
+            $studentAssignment->assignment_status_id = $newStatus;
+            $studentAssignment->save();
 
-        // Nu zijn de studenten beschikbaar in $this->students
+            $this->updatedAssignmentId(); // Vernieuw de lijst van studenten
+        }
     }
 
     public function render()

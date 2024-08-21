@@ -50,33 +50,56 @@
             </div>
         @endif
 
+        <!-- Gekozen Opdracht Naam -->
+        @if($assignmentId)
+            <div class="my-4">
+                <h3 class="text-lg font-semibold">
+                    Resultaten van opdracht - {{ $assignments->where('id', $assignmentId)->first()->name }}
+                </h3>
+            </div>
+        @endif
+
         <!-- Studenten Tabel -->
-        @if (!empty($students) && $students->count() > 0)
+        @if(!empty($students))
             <div>
                 <h3>Studenten en Opdracht Status</h3>
                 <table class="table-auto w-full mb-3">
                     <thead>
                     <tr>
-                        <th class="px-4 py-2">Naam</th>
-                        <th class="px-4 py-2">Acties</th>
+                        <th>Naam</th>
+                        <th>Wijzig Status</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($students as $student)
-                        <tr>
-                            <td class="border px-4 py-2">{{ $student->user->name }}</td>
-                            <td class="border px-4 py-2">
-                                <button wire:click="updateStatus({{ $student->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded flex items-center justify-center text-xs">
-                                    Update Status
-                                </button>
-                            </td>
-                        </tr>
+                        @foreach($student->enrolments as $enrolment)
+                            @foreach($enrolment->enrolmentClasses as $enrolmentClass)
+                                @foreach($enrolmentClass->studentAssignments as $assignment)
+                                    <tr class="
+                                        @if($assignment->assignmentStatus->name === 'Goedgekeurd') bg-green-200
+                                        @elseif($assignment->assignmentStatus->name === 'Afgewezen') bg-red-200
+                                        @elseif($assignment->assignmentStatus->name === 'Ingediend') bg-blue-200
+                                        @elseif($assignment->assignmentStatus->name === 'Niet gestart') bg-orange-200
+                                        @endif
+                                    ">
+                                        <td class="border px-4 py-2">{{ $student->user->name }}</td>
+                                        <td class="border px-4 py-2">
+                                            <select wire:change="updateStatus({{ $assignment->id }}, $event.target.value)" class="form-control">
+                                                @foreach($statusOptions as $status)
+                                                    <option value="{{ $status->id }}" {{ $assignment->assignment_status_id == $status->id ? 'selected' : '' }}>
+                                                        {{ $status->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endforeach
+                        @endforeach
                     @endforeach
                     </tbody>
                 </table>
             </div>
-        @else
-            <p>Geen studenten gevonden voor de geselecteerde opdracht.</p>
         @endif
 
     </div>
