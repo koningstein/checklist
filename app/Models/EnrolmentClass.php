@@ -25,6 +25,6 @@ class EnrolmentClass extends Model
 
     public function studentAssignments(): HasMany
     {
-        return $this->hasMany(StudentAssignment::class);
+        return $this->hasMany(StudentAssignment::class, 'enrolment_class_id');
     }
 }

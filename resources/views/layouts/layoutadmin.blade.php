@@ -409,10 +409,14 @@
                 duration-500">Comment admin</a>
                         <a href="{{ route('admin.contactmessages.index') }}" class="mb-3  font-medium text-sm hover:text-teal-600 transition ease-in-out
                 duration-500">Contact messages admin</a>
+                        <a href="{{ route('admin.teacherassignments.index') }}" class="mb-3 font-medium text-sm hover:text-teal-600 transition ease-in-out
+                duration-500">Teacher Assignment admin</a>
                 @endhasanyrole
                 @hasanyrole('teacher')
                         <a href="{{ route('admin.students.index') }}" class="mb-3 font-medium text-sm hover:text-teal-600 transition ease-in-out
                 duration-500">Student admin</a>
+                        <a href="{{ route('admin.teacherassignments.index') }}" class="mb-3 font-medium text-sm hover:text-teal-600 transition ease-in-out
+                duration-500">Teacher Assignment admin</a>
                 @endhasanyrole
                 <!-- links for logedin users -->
             @endguest

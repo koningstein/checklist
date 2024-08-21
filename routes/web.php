@@ -35,6 +35,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/news/{news}/comments', [Open\CommentController::class, 'store'])->name('comments.store');
 });
 
+Route::get('/teacher/assignments', [Admin\TeacherAssignmentController::class, 'index'])->name('admin.teacherassignments.index');
+
 
 Route::get('/admin', function () {
     return view('layouts.layoutadmin');
