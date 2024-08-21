@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('student_assignments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('enrolment_class_id')->constrained('enrolment_classes')->onDelete('restrict');
-            $table->foreignId('class_assignment_id')->constrained('class_assignments')->onDelete('restrict');
+            $table->foreignId('class_assignment_id')->nullable()->constrained('class_assignments')->onDelete('restrict');
+            $table->foreignId('individual_assignment_id')->nullable()->constrained('assignments')->onDelete('restrict');
             $table->dateTime('duedate')->nullable();
             $table->foreignId('assignment_status_id')->constrained('assignment_statuses')->onDelete('restrict');
             $table->foreignId('marked_by_id')->nullable()->constrained('users')->onDelete('restrict');

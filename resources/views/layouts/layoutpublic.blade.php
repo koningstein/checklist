@@ -13,9 +13,11 @@
     <title>Checklist</title>
     <style>
         .bg-orange-500 {
-            background-color: #f59e0b; /* Dit is de hex-kleur voor Tailwind's bg-orange-500 */
+            background-color: #f59e0b;
         }
     </style>
+    <!-- Alpine.js -->
+{{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.2/alpine.js" defer></script>--}}
 </head>
 <body>
 <!-- header -->
@@ -32,47 +34,86 @@
                 @endif
                 <a href="{{ route('login') }}" class="inline-block no-underline bg-black text-white text-sm py-2 px-3">Login</a>
             @else
-                <div class="w-full text-gray-700 bg-white ">
-                    <div x-data="{ open: false }" class="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
-                        <nav :class="{'flex': open, 'hidden': !open}" class="flex-col flex-grow pb-4 md:pb-0 hidden md:flex md:justify-end md:flex-row">
-                            <div @click.away="open = false" class="relative" x-data="{ open: false }">
-                                <button @click="open = !open" class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 md:w-auto md:inline md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
-                                    <div class="w-8 h-8 overflow-hidden rounded-full inline-block">
-                                        <img class="w-full h-full object-cover" src="{{ asset('img/user.svg') }}" >
-                                    </div>
-                                    <span class="text-center align-text-bottom w-16 h-8 overflow-hidden inline-block">{{ Auth::user()->name }}</span>
-                                    <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline-block w-4 h-4 mt-1 transition-transform duration-200 transform md:-mt-1"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                                </button>
-                                <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg md:w-48 z-10">
-                                    <div class="px-2 py-2 bg-white rounded-md shadow dark-mode:bg-gray-800 ">
-{{--                                        <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">edit my profile</a>--}}
-{{--                                        <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">my inbox</a>--}}
-{{--                                        <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">tasks</a>--}}
-{{--                                        <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">chats</a>--}}
+                <div class="flex items-center justify-end space-x-6">
+                    <!-- Notification Dropdown -->
+                    <div class="relative" x-data="{ open: false }">
+                        <button @click="open = !open" class="relative text-gray-500 focus:outline-none focus:text-gray-900">
+                            <i class="fad fa-bells text-lg"></i>
+                            @if($unreadNotifications->count() > 0)
+                                <span class="absolute top-0 right-0 block h-2 w-2 bg-red-600 rounded-full ring-2 ring-white"></span>
+                            @endif
+                        </button>
 
-                                        @hasanyrole('keyteacher|admin')
-                                        <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900
-                                        focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="{{ route('admin.periods.index') }}">Admin</a>
-                                        @endhasanyrole
-                                        @hasanyrole('teacher')
-                                        <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900
-                                        focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="{{ route('admin.students.index') }}">Admin</a>
-                                        @endhasanyrole
-                                        <hr>
-                                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                                           class="px-4 py-2 block capitalize font-medium text-sm tracking-wide bg-white hover:bg-gray-200 hover:text-gray-900
-                                           transition-all duration-300 ease-in-out" >
-                                            <i class="fad fa-user-times text-xs mr-1"></i>
-                                            log out
-                                        </a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            @csrf
-                                        </form>
-                                    </div>
-                                </div>
+                        <!-- Dropdown -->
+                        <div x-show="open" @click.away="open = false" x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                             x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
+                             x-transition:leave-end="opacity-0 scale-95"
+                             class="absolute right-0 mt-2 w-80 bg-white rounded-md shadow-lg z-20">
+
+                            <!-- Header -->
+                            <div class="py-3 px-4 border-b bg-gray-50">
+                                <span class="text-sm font-semibold">Notificaties</span>
+                                <span class="ml-2 text-xs text-gray-500">({{ $unreadNotifications->count() }})</span>
                             </div>
-                        </nav>
+
+                            <!-- Notificaties -->
+                            <div class="max-h-64 overflow-y-auto">
+                                @forelse($unreadNotifications as $notification)
+                                    <a href="#" class="block px-4 py-3 text-sm text-gray-800 hover:bg-gray-50">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center">
+                                                <i class="fas fa-exclamation-circle text-teal-600"></i>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm font-semibold">{{ $notification->data['message'] ?? 'Nieuwe notificatie' }}</p>
+                                                <p class="text-xs text-gray-500">Opdracht: {{ $notification->data['assignment_name'] ?? 'Onbekend' }}</p>
+                                                <p class="text-xs text-gray-500">Inleverdatum: {{ $notification->data['duedate'] ?? 'Onbekend' }}</p>
+                                                <p class="text-xs text-gray-500">Status: {{ $notification->data['status'] ?? 'Onbekend' }}</p>
+                                                <p class="text-xs text-gray-400">{{ $notification->created_at->diffForHumans() }}</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                @empty
+                                    <p class="px-4 py-3 text-sm text-gray-500">Geen nieuwe notificaties.</p>
+                                @endforelse
+                            </div>
+
+                            <!-- Footer -->
+                            <div class="py-2 px-4 border-t bg-gray-50">
+                                <a href="#" class="block text-center text-sm text-teal-600 hover:underline">Bekijk alle notificaties</a>
+                            </div>
+                        </div>
                     </div>
+                    <!-- End Notification Dropdown -->
+
+                    <!-- User Menu -->
+                    <div class="relative" x-data="{ open: false }">
+                        <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
+                            <img src="{{ asset('img/user.svg') }}" alt="{{ Auth::user()->name }}" class="w-8 h-8 rounded-full object-cover">
+                            <span>{{ Auth::user()->name }}</span>
+                            <svg fill="currentColor" viewBox="0 0 20 20" class="w-5 h-5 transition-transform duration-200 transform" :class="{ 'rotate-180': open }">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+
+                        <!-- Dropdown -->
+                        <div x-show="open" @click.away="open = false" x-transition class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-xl z-20">
+                            @hasanyrole('keyteacher|admin')
+                            <a href="{{ route('admin.periods.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Admin</a>
+                            @endhasanyrole
+                            @hasanyrole('teacher')
+                            <a href="{{ route('admin.students.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Admin</a>
+                            @endhasanyrole
+                            <hr>
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Log out</a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </div>
+                    </div>
+                    <!-- End User Menu -->
                 </div>
             @endguest
         </div>
@@ -90,14 +131,14 @@
             <a href="{{ route('news.index') }}" class="px-2 md:pl-0 md:mr-3 md:pr-3 text-gray-700 no-underline md:border-r border-gray-300">Nieuws</a>
             <a href="{{ route('page.contact') }}" class="px-2 md:pl-0 md:mr-3 md:pr-3 text-gray-700 no-underline md:border-r border-gray-300">Contact</a>
             @hasanyrole('student')
-                <a href="{{ route('student.results') }}" class="px-2 md:pl-0 md:mr-3 md:pr-3 text-gray-700 no-underline md:border-r border-gray-300">Studie voortgang</a>
+            <a href="{{ route('student.results') }}" class="px-2 md:pl-0 md:mr-3 md:pr-3 text-gray-700 no-underline md:border-r border-gray-300">Studie voortgang</a>
             @endhasanyrole
             @hasanyrole('guardian')
             <a href="{{ route('guardian.dashboard') }}" class="px-2 md:pl-0 md:mr-3 md:pr-3 text-gray-700 no-underline md:border-r border-gray-300">Dashboard</a>
             @endhasanyrole
         </div>
         <div class="w-full md:w-1/4 text-center md:text-right pb-4 md:p-0">
-{{--            <input type="search" placeholder="Search..." class="bg-gray-200 border text-sm p-1" />--}}
+            {{--            <input type="search" placeholder="Search..." class="bg-gray-200 border text-sm p-1" />--}}
         </div>
     </div>
 </nav>
