@@ -18,6 +18,7 @@ class AssignmentFactory extends Factory
     public function definition(): array
     {
         return [
+            'number' => $this->faker->unique()->numberBetween(1, 100),
             'name' => $this->faker->word,
             'description' => $this->faker->sentence,
             'duedate' => $this->faker->dateTime,

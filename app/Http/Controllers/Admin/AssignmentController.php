@@ -57,6 +57,7 @@ class AssignmentController extends Controller implements HasMiddleware
     public function store(AssignmentStoreRequest $request): RedirectResponse
     {
         $assignment = new Assignment();
+        $assignment->number = $request->number;
         $assignment->name = $request->name;
         $assignment->description = $request->description;
         $assignment->duedate = $request->duedate;
@@ -95,6 +96,7 @@ class AssignmentController extends Controller implements HasMiddleware
      */
     public function update(AssignmentUpdateRequest $request, Assignment $assignment): RedirectResponse
     {
+        $assignment->number = $request->number;
         $assignment->name = $request->name;
         $assignment->description = $request->description;
         $assignment->duedate = $request->duedate;

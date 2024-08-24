@@ -2,6 +2,7 @@
     <div class="p-4 flex-col space-y-4">
         <div class="max-w-full px-2 sm:px-6 lg:px-8 mb-3">
             <div class="flex space-x-2">
+                <input type="text" wire:model.live="searchNumber" placeholder="Zoek op Nummer..." class="form-control mb-3 w-full px-3 py-2 border rounded-md bg-gray-200" />
                 <input type="text" wire:model.live="searchName" placeholder="Zoek op Naam..." class="form-control mb-3 w-full px-3 py-2 border rounded-md bg-gray-200" />
                 <input type="text" wire:model.live="searchModuleName" placeholder="Zoek op Module Naam..." class="form-control mb-3 w-full px-3 py-2 border rounded-md bg-gray-200" />
                 <input type="text" wire:model.live="searchDuedate" placeholder="Zoek op Einddatum..." class="form-control mb-3 w-full px-3 py-2 border rounded-md bg-gray-200" />
@@ -9,9 +10,10 @@
         </div>
         <x-table>
             <x-slot name="head">
+                <x-table.heading sortable wire:click="sortBy('assignments.number')" :direction="$sortField === 'assignments.number' ? $sortDirection : null" class="w-2/12">Nummer</x-table.heading>
                 <x-table.heading sortable wire:click="sortBy('assignments.name')" :direction="$sortField === 'assignments.name' ? $sortDirection : null" class="w-3/12">Naam</x-table.heading>
-                <x-table.heading sortable wire:click="sortBy('module_name')" :direction="$sortField === 'module_name' ? $sortDirection : null" class="w-3/12">Module Naam</x-table.heading>
-                <x-table.heading sortable wire:click="sortBy('assignments.duedate')" :direction="$sortField === 'assignments.duedate' ? $sortDirection : null" class="w-3/12">Einddatum</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('module_name')" :direction="$sortField === 'module_name' ? $sortDirection : null" class="w-2/12">Module Naam</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('assignments.duedate')" :direction="$sortField === 'assignments.duedate' ? $sortDirection : null" class="w-2/12">Einddatum</x-table.heading>
                 <x-table.heading class="w-1/12">Details</x-table.heading>
                 <x-table.heading class="w-1/12">Edit</x-table.heading>
                 <x-table.heading class="w-1/12">Delete</x-table.heading>
@@ -20,9 +22,10 @@
             <x-slot name="body">
                 @forelse($assignments as $assignment)
                     <x-table.row>
-                        <x-table.cell class="w-3/12">{{ $assignment->name }}</x-table.cell>
-                        <x-table.cell class="w-3/12">{{ Str::limit($assignment->module_name, 50) }}</x-table.cell>
-                        <x-table.cell class="w-3/12">{{ $assignment->duedate }}</x-table.cell>
+                        <x-table.cell class="w-2/12">{{ $assignment->number }}</x-table.cell>
+                        <x-table.cell class="w-3/12">{{ Str::limit($assignment->name, 40) }}</x-table.cell>
+                        <x-table.cell class="w-2/12">{{ Str::limit($assignment->module_name, 40) }}</x-table.cell>
+                        <x-table.cell class="w-2/12">{{ $assignment->duedate }}</x-table.cell>
                         <x-table.cell class="w-1/12">
                             @can('show assignment')
                                 <a href="{{ route('admin.assignments.show', ['assignment' => $assignment->id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded flex items-center justify-center text-xs w-full">

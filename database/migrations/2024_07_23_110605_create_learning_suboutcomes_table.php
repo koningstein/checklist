@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('learning_suboutcomes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('learning_outcome_id')->constrained()->onDelete('cascade');
+            $table->string('number', 10); // Nieuwe kolom voor het nummer met een maximum van 10 tekens
             $table->string('name', 255);
             $table->text('description');
             $table->timestamps();

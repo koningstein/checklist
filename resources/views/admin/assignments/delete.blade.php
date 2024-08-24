@@ -40,6 +40,12 @@
                     @method('DELETE')
                     @csrf
                     <label class="block text-sm">
+                        <span class="text-gray-700">Nummer</span>
+                        <input class="bg-gray-200 block rounded w-full p-2 mt-1 focus:border-purple-400
+                        focus:outline-none focus:shadow-outline-purple form-input"
+                               name="number" value="{{ $assignment->number }}" type="text" disabled/>
+                    </label>
+                    <label class="block text-sm">
                         <span class="text-gray-700">Naam</span>
                         <input class="bg-gray-200 block rounded w-full p-2 mt-1 focus:border-purple-400
                         focus:outline-none focus:shadow-outline-purple form-input"

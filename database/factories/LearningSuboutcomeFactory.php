@@ -20,6 +20,7 @@ class LearningSuboutcomeFactory extends Factory
         return [
 //            'learning_outcome_id' => LearningOutcome::factory(),
             'learning_outcome_id' => LearningOutcome::all()->random()->id,
+            'number' => $this->faker->unique()->numerify('LNOC####'),
             'name' => $this->faker->sentence(4),
             'description' => $this->faker->paragraph,
         ];

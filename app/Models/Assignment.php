@@ -12,6 +12,7 @@ class Assignment extends Model
     use HasFactory;
     protected $table = 'assignments';
     protected $fillable = [
+        'number',
         'name',
         'description',
         'duedate',

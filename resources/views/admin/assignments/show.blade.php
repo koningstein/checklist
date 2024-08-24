@@ -25,6 +25,7 @@
 
         <div class="py-4 px-6">
             <h2 class="text-sm font-semibold text-gray-800">Assignment details</h2>
+            <p class="py-2 text-sm text-gray-700">Nummer: {{ $assignment->number }}</p> <!-- New Field -->
             <p class="py-2 text-sm text-gray-700">Naam: {{ $assignment->name }}</p>
             <p class="py-2 text-sm text-gray-700">Beschrijving: {{ $assignment->description }}</p>
             <p class="py-2 text-sm text-gray-700">Due Date: {{ $assignment->duedate }}</p>

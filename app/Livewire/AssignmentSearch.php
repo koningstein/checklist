@@ -13,6 +13,7 @@ class AssignmentSearch extends Component
     public $searchName = '';
     public $searchModuleName = '';
     public $searchDuedate = '';
+    public $searchNumber = ''; // Add search for number
     public $sortField = 'assignments.name';
     public $sortDirection = 'asc';
 
@@ -29,6 +30,11 @@ class AssignmentSearch extends Component
     }
 
     public function updatingSearchDuedate()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingSearchNumber() // Add function to reset pagination when searchNumber changes
     {
         $this->resetPage();
     }
@@ -56,6 +62,9 @@ class AssignmentSearch extends Component
             })
             ->when($this->searchDuedate, function ($query) {
                 $query->where('assignments.duedate', 'like', '%'.$this->searchDuedate.'%');
+            })
+            ->when($this->searchNumber, function ($query) {
+                $query->where('assignments.number', 'like', '%'.$this->searchNumber.'%');
             })
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate(10);

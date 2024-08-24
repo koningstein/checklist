@@ -13,6 +13,6 @@ class LearningSuboutcomeAssignmentSeeder extends Seeder
      */
     public function run(): void
     {
-        LearningSuboutcomeAssignment::factory()->count(15)->create();
+        //LearningSuboutcomeAssignment::factory()->count(15)->create();
     }
 }
