@@ -3,27 +3,42 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Models\Assignment;
 use App\Models\LearningSuboutcome;
 use App\Models\LearningSuboutcomeAssignment;
 
 class LearningSuboutcomeAssignmentForm extends Component
 {
+    use WithPagination;
+
     public $searchAssignment = '';
-    public $selectedAssignment = null;
     public $searchSuboutcome = '';
+    public $selectedAssignment = null;
     public $selectedSuboutcomes = [];
+
+    protected $paginationTheme = 'tailwind';
+
+    public function updatingSearchAssignment()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingSearchSuboutcome()
+    {
+        $this->resetPage();
+    }
 
     public function selectAssignment($assignmentId)
     {
         $this->selectedAssignment = Assignment::find($assignmentId);
+        $this->searchAssignment = '';  // Clear the search field after selection
     }
 
     public function selectSuboutcome($suboutcomeId)
     {
         $suboutcome = LearningSuboutcome::find($suboutcomeId);
 
-        // Check if suboutcome is already selected
         if (!in_array($suboutcome, $this->selectedSuboutcomes)) {
             $this->selectedSuboutcomes[] = $suboutcome;
         }
@@ -31,7 +46,6 @@ class LearningSuboutcomeAssignmentForm extends Component
 
     public function removeSuboutcome($suboutcomeId)
     {
-        // Filter out the suboutcome that should be removed
         $this->selectedSuboutcomes = array_filter($this->selectedSuboutcomes, function($suboutcome) use ($suboutcomeId) {
             return $suboutcome->id != $suboutcomeId;
         });
@@ -55,15 +69,17 @@ class LearningSuboutcomeAssignmentForm extends Component
 
         // Reset form
         $this->selectedAssignment = null;
-        $this->selectedSuboutcomes = collect();
+        $this->selectedSuboutcomes = [];
         $this->searchAssignment = '';
         $this->searchSuboutcome = '';
+        $this->resetPage();
     }
 
     public function render()
     {
         $assignments = Assignment::where('name', 'like', '%'.$this->searchAssignment.'%')->get();
-        $learningSuboutcomes = LearningSuboutcome::where('name', 'like', '%'.$this->searchSuboutcome.'%')->get();
+        $learningSuboutcomes = LearningSuboutcome::where('name', 'like', '%'.$this->searchSuboutcome.'%')
+            ->paginate(10);
 
         return view('livewire.learning-suboutcome-assignment-form', [
             'assignments' => $assignments,
