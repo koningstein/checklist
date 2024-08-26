@@ -6,19 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class LearningSuboutcomeAssignment extends Model
+class LearningSuboutcomeLevelAssignment extends Model
 {
     use HasFactory;
-    protected $table = 'learning_suboutcome_assignments';
+    protected $table = 'learning_suboutcome_level_assignments';
 
     protected $fillable = [
-        'learning_suboutcome_id',
+        'learning_suboutcome_level_id',
         'assignment_id',
     ];
 
-    public function learningSuboutcome(): BelongsTo
+    public function learningSuboutcomeLevel(): BelongsTo
     {
-        return $this->belongsTo(LearningSuboutcome::class);
+        return $this->belongsTo(LearningSuboutcomeLevel::class);
     }
 
     public function assignment(): BelongsTo

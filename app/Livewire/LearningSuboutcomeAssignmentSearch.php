@@ -4,7 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\LearningSuboutcomeAssignment;
+use App\Models\LearningSuboutcomeLevelAssignment;
 
 class LearningSuboutcomeAssignmentSearch extends Component
 {
@@ -39,7 +39,7 @@ class LearningSuboutcomeAssignmentSearch extends Component
 
     public function render()
     {
-        $learningSuboutcomeAssignments = LearningSuboutcomeAssignment::query()
+        $learningSuboutcomeAssignments = LearningSuboutcomeLevelAssignment::query()
             ->when($this->searchSuboutcomeName, function ($query) {
                 $query->whereHas('learningSuboutcome', function ($query) {
                     $query->where('name', 'like', '%'.$this->searchSuboutcomeName.'%');

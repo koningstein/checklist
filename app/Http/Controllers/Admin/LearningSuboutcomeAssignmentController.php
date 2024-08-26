@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\LearningSuboutcomeAssignment;
+use App\Models\LearningSuboutcomeLevelAssignment;
 use App\Models\LearningSuboutcome;
 use App\Models\Assignment;
 use Illuminate\Http\Request;
@@ -36,7 +36,7 @@ class LearningSuboutcomeAssignmentController extends Controller implements HasMi
      */
     public function index(): View
     {
-        $learningSuboutcomeAssignments = LearningSuboutcomeAssignment::with(['learningSuboutcome', 'assignment'])->paginate(15);
+        $learningSuboutcomeAssignments = LearningSuboutcomeLevelAssignment::with(['learningSuboutcome', 'assignment'])->paginate(15);
         return view('admin.learningsuboutcomeassignments.index', ['learningSuboutcomeAssignments' => $learningSuboutcomeAssignments]);
     }
 
@@ -61,7 +61,7 @@ class LearningSuboutcomeAssignmentController extends Controller implements HasMi
      */
     public function store(LearningSuboutcomeAssignmentStoreRequest $request): RedirectResponse
     {
-        $learningSuboutcomeAssignment = new LearningSuboutcomeAssignment();
+        $learningSuboutcomeAssignment = new LearningSuboutcomeLevelAssignment();
         $learningSuboutcomeAssignment->learning_suboutcome_id = $request->learning_suboutcome_id;
         $learningSuboutcomeAssignment->assignment_id = $request->assignment_id;
         $learningSuboutcomeAssignment->save();
@@ -71,20 +71,20 @@ class LearningSuboutcomeAssignmentController extends Controller implements HasMi
 
     /**
      * Display the specified resource.
-     * @param  LearningSuboutcomeAssignment  $learningsuboutcomeassignment
+     * @param  LearningSuboutcomeLevelAssignment  $learningsuboutcomeassignment
      * @return View
      */
-    public function show(LearningSuboutcomeAssignment $learningsuboutcomeassignment): View
+    public function show(LearningSuboutcomeLevelAssignment $learningsuboutcomeassignment): View
     {
         return view('admin.learningsuboutcomeassignments.show', ['learningSuboutcomeAssignment' => $learningsuboutcomeassignment]);
     }
 
     /**
      * Show the form for editing the specified resource.
-     * @param  LearningSuboutcomeAssignment  $learningsuboutcomeassignment
+     * @param  LearningSuboutcomeLevelAssignment  $learningsuboutcomeassignment
      * @return View
      */
-    public function edit(LearningSuboutcomeAssignment $learningsuboutcomeassignment): View
+    public function edit(LearningSuboutcomeLevelAssignment $learningsuboutcomeassignment): View
     {
         $learningSuboutcomes = LearningSuboutcome::all();
         $assignments = Assignment::all();
@@ -98,10 +98,10 @@ class LearningSuboutcomeAssignmentController extends Controller implements HasMi
     /**
      * Update the specified resource in storage.
      * @param  LearningSuboutcomeAssignmentUpdateRequest  $request
-     * @param  LearningSuboutcomeAssignment  $learningsuboutcomeassignment
+     * @param  LearningSuboutcomeLevelAssignment  $learningsuboutcomeassignment
      * @return RedirectResponse
      */
-    public function update(LearningSuboutcomeAssignmentUpdateRequest $request, LearningSuboutcomeAssignment $learningsuboutcomeassignment): RedirectResponse
+    public function update(LearningSuboutcomeAssignmentUpdateRequest $request, LearningSuboutcomeLevelAssignment $learningsuboutcomeassignment): RedirectResponse
     {
         $learningsuboutcomeassignment->learning_suboutcome_id = $request->learning_suboutcome_id;
         $learningsuboutcomeassignment->assignment_id = $request->assignment_id;
@@ -112,20 +112,20 @@ class LearningSuboutcomeAssignmentController extends Controller implements HasMi
 
     /**
      * Show the form for deleting the specified resource.
-     * @param  LearningSuboutcomeAssignment  $learningsuboutcomeassignment
+     * @param  LearningSuboutcomeLevelAssignment  $learningsuboutcomeassignment
      * @return View
      */
-    public function delete(LearningSuboutcomeAssignment $learningsuboutcomeassignment): View
+    public function delete(LearningSuboutcomeLevelAssignment $learningsuboutcomeassignment): View
     {
         return view('admin.learningsuboutcomeassignments.delete', ['learningSuboutcomeAssignment' => $learningsuboutcomeassignment]);
     }
 
     /**
      * Remove the specified resource from storage.
-     * @param  LearningSuboutcomeAssignment  $learningsuboutcomeassignment
+     * @param  LearningSuboutcomeLevelAssignment  $learningsuboutcomeassignment
      * @return RedirectResponse
      */
-    public function destroy(LearningSuboutcomeAssignment $learningsuboutcomeassignment): RedirectResponse
+    public function destroy(LearningSuboutcomeLevelAssignment $learningsuboutcomeassignment): RedirectResponse
     {
         try {
             $learningsuboutcomeassignment->delete();

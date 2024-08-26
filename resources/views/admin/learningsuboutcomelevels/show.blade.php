@@ -28,7 +28,7 @@
                 <ul class="list-disc list-inside">
                     <li><strong>Leeruitkomst:</strong> {{ $learningSuboutcomeLevel->learningSuboutcome->name }}</li>
                     <li><strong>Niveau:</strong> {{ $learningSuboutcomeLevel->learningLevel->name }}</li>
-                    <li><strong>Periode:</strong> {{ $learningSuboutcomeLevel->period ? $learningSuboutcomeLevel->period->name : 'Geen' }}</li>
+                    <li><strong>Beschrijving:</strong> {{ $learningSuboutcomeLevel->description }}</li>
                 </ul>
             </div>
         </div>

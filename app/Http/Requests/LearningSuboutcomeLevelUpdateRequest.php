@@ -24,7 +24,7 @@ class LearningSuboutcomeLevelUpdateRequest extends FormRequest
         return [
             'learning_suboutcome_id' => 'required|exists:learning_suboutcomes,id',
             'learning_level_id' => 'required|exists:learning_levels,id',
-            'period_id' => 'nullable|exists:periods,id',
+            'description' => 'nullable|string',
         ];
     }
 
@@ -38,7 +38,6 @@ class LearningSuboutcomeLevelUpdateRequest extends FormRequest
             'learning_suboutcome_id.exists' => 'De geselecteerde leeruitkomst is ongeldig.',
             'learning_level_id.required' => 'Het niveau veld is verplicht.',
             'learning_level_id.exists' => 'De geselecteerde niveau is ongeldig.',
-            'period_id.exists' => 'De geselecteerde periode is ongeldig.',
         ];
     }
 }

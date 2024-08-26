@@ -6,7 +6,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Assignment;
 use App\Models\LearningSuboutcome;
-use App\Models\LearningSuboutcomeAssignment;
+use App\Models\LearningSuboutcomeLevelAssignment;
 
 class LearningSuboutcomeAssignmentForm extends Component
 {
@@ -59,7 +59,7 @@ class LearningSuboutcomeAssignmentForm extends Component
         ]);
 
         foreach ($this->selectedSuboutcomes as $suboutcome) {
-            LearningSuboutcomeAssignment::create([
+            LearningSuboutcomeLevelAssignment::create([
                 'learning_suboutcome_id' => $suboutcome->id,
                 'assignment_id' => $this->selectedAssignment->id,
             ]);

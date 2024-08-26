@@ -4,14 +4,12 @@
             <div class="flex space-x-2">
                 <input type="text" wire:model.live="searchSuboutcomeName" placeholder="Zoek op Suboutcome Naam..." class="form-control mb-3 w-full px-3 py-2 border rounded-md bg-gray-200" />
                 <input type="text" wire:model.live="searchLevelName" placeholder="Zoek op Level Naam..." class="form-control mb-3 w-full px-3 py-2 border rounded-md bg-gray-200" />
-                <input type="text" wire:model.live="searchPeriodName" placeholder="Zoek op Periode Naam..." class="form-control mb-3 w-full px-3 py-2 border rounded-md bg-gray-200" />
             </div>
         </div>
         <x-table>
             <x-slot name="head">
-                <x-table.heading sortable wire:click="sortBy('learning_suboutcome_id')" :direction="$sortField === 'learning_suboutcome_id' ? $sortDirection : null" class="w-3/12">Suboutcome Naam</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('learning_suboutcome_id')" :direction="$sortField === 'learning_suboutcome_id' ? $sortDirection : null" class="w-6/12">Suboutcome Naam</x-table.heading>
                 <x-table.heading sortable wire:click="sortBy('learning_level_id')" :direction="$sortField === 'learning_level_id' ? $sortDirection : null" class="w-3/12">Level Naam</x-table.heading>
-                <x-table.heading sortable wire:click="sortBy('period_id')" :direction="$sortField === 'period_id' ? $sortDirection : null" class="w-3/12">Periode Naam</x-table.heading>
                 <x-table.heading class="w-1/12">Details</x-table.heading>
                 <x-table.heading class="w-1/12">Edit</x-table.heading>
                 <x-table.heading class="w-1/12">Delete</x-table.heading>
@@ -20,9 +18,8 @@
             <x-slot name="body">
                 @forelse($learningSuboutcomeLevels as $learningSuboutcomeLevel)
                     <x-table.row>
-                        <x-table.cell class="w-3/12">{{ $learningSuboutcomeLevel->learningSuboutcome->name }}</x-table.cell>
+                        <x-table.cell class="w-6/12">{{ $learningSuboutcomeLevel->learningSuboutcome->name }}</x-table.cell>
                         <x-table.cell class="w-3/12">{{ $learningSuboutcomeLevel->learningLevel->name }}</x-table.cell>
-                        <x-table.cell class="w-3/12">{{ $learningSuboutcomeLevel->period ? $learningSuboutcomeLevel->period->period : 'N/A' }}</x-table.cell>
                         <x-table.cell class="w-1/12">
                             @can('show learningsuboutcomelevel')
                                 <a href="{{ route('admin.learningsuboutcomelevels.show', ['learningsuboutcomelevel' => $learningSuboutcomeLevel->id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded flex items-center justify-center text-xs w-full">
