@@ -25,7 +25,7 @@ class LearningSuboutcomeLevelFactory extends Factory
             //'period_id' => Period::factory(),
             'learning_suboutcome_id' => LearningSuboutcome::all()->random()->id,
             'learning_level_id' => LearningLevel::all()->random()->id,
-            'period_id' => Period::all()->random()->id,
+            'description' => $this->faker->sentence(),
         ];
     }
 }

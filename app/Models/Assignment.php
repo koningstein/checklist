@@ -34,8 +34,8 @@ class Assignment extends Model
         return $this->hasMany(StudentAssignment::class);
     }
 
-    public function learningSuboutcomesAssignments(): HasMany
+    public function learningSuboutcomeLevelAssignments(): HasMany
     {
-        return $this->hasMany(LearningSuboutcomeAssignment::class);
+        return $this->hasMany(LearningSuboutcomeLevelAssignment::class);
     }
 }

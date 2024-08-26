@@ -26,9 +26,9 @@
         <div class="card-body">
             <p>Weet je zeker dat je dit learning suboutcome level wilt verwijderen?</p>
             <ul>
-                <li>Leeruitkomst: {{ $learningSuboutcomeLevel->learningSuboutcome->name }}</li>
-                <li>Niveau: {{ $learningSuboutcomeLevel->learningLevel->name }}</li>
-                <li>Periode: {{ $learningSuboutcomeLevel->period ? $learningSuboutcomeLevel->period->period : 'Geen' }}</li>
+                <li><strong>Leeruitkomst:</strong> {{ $learningSuboutcomeLevel->learningSuboutcome->name }}</li>
+                <li><strong>Niveau:</strong> {{ $learningSuboutcomeLevel->learningLevel->name }}</li>
+                <li><strong>Beschrijving:</strong> {{ $learningSuboutcomeLevel->description }}</li>
             </ul>
 
             <form action="{{ route('admin.learningsuboutcomelevels.destroy', ['learningsuboutcomelevel' => $learningSuboutcomeLevel->id]) }}" method="POST">

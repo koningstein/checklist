@@ -4,15 +4,16 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\LearningSuboutcomeAssignment;
+use App\Models\LearningSuboutcomeLevelAssignment;
 
-class LearningSuboutcomeAssignmentSearch extends Component
+class LearningSuboutcomeLevelAssignmentSearch extends Component
 {
     use WithPagination;
 
     public $searchSuboutcomeName = '';
     public $searchAssignmentName = '';
-    public $sortField = 'learning_suboutcome_id';
+    public $searchLevelName = '';  // Zoekveld voor Learning Level
+    public $sortField = 'learning_suboutcome_level_id'; // Standaard sorteerveld
     public $sortDirection = 'asc';
 
     protected $queryString = ['sortField', 'sortDirection'];
@@ -23,6 +24,11 @@ class LearningSuboutcomeAssignmentSearch extends Component
     }
 
     public function updatingSearchAssignmentName()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingSearchLevelName()
     {
         $this->resetPage();
     }
@@ -39,9 +45,9 @@ class LearningSuboutcomeAssignmentSearch extends Component
 
     public function render()
     {
-        $learningSuboutcomeAssignments = LearningSuboutcomeAssignment::query()
+        $learningSuboutcomeLevelAssignments = LearningSuboutcomeLevelAssignment::query()
             ->when($this->searchSuboutcomeName, function ($query) {
-                $query->whereHas('learningSuboutcome', function ($query) {
+                $query->whereHas('learningSuboutcomeLevel.learningSuboutcome', function ($query) {
                     $query->where('name', 'like', '%'.$this->searchSuboutcomeName.'%');
                 });
             })
@@ -50,11 +56,17 @@ class LearningSuboutcomeAssignmentSearch extends Component
                     $query->where('name', 'like', '%'.$this->searchAssignmentName.'%');
                 });
             })
+            ->when($this->searchLevelName, function ($query) {
+                $query->whereHas('learningSuboutcomeLevel.learningLevel', function ($query) {
+                    $query->where('name', 'like', '%'.$this->searchLevelName.'%');
+                });
+            })
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate(10);
 
-        return view('livewire.learning-suboutcome-assignment-search', [
-            'learningSuboutcomeAssignments' => $learningSuboutcomeAssignments,
+        return view('livewire.learning-suboutcome-level-assignment-search', [
+            'lSuboutcomeLevelAssignments' => $learningSuboutcomeLevelAssignments,
         ]);
     }
+
 }
