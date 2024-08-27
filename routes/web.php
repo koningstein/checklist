@@ -128,9 +128,9 @@ Route::group(['middleware' => ['role:teacher|keyteacher|admin']], function (){
         Route::get('learningsuboutcometechniques/{learningsuboutcometechnique}/delete', [Admin\LearningSuboutcomeTechniqueController::class, 'delete'])
             ->name('learningsuboutcometechniques.delete');
 
-        Route::resource('learningsuboutcomeassignments', Admin\LearningSuboutcomeAssignmentController::class);
-        Route::get('learningsuboutcomeassignments/{learningsuboutcomeassignment}/delete', [Admin\LearningSuboutcomeAssignmentController::class, 'delete'])
-            ->name('learningsuboutcomeassignments.delete');
+        Route::resource('lsuboutcomelevelassignments', Admin\LearningSuboutcomeLevelAssignmentController::class);
+        Route::get('lsuboutcomelevelassignments/{lsuboutcomelevelassignment}/delete', [Admin\LearningSuboutcomeLevelAssignmentController::class, 'delete'])
+            ->name('lsuboutcomelevelassignments.delete');
 
         Route::get('class-results', [Admin\PDFController::class, 'showClassResultsForm'])->name('class-results.form');
         Route::post('class-results/generate', [Admin\PDFController::class, 'generateClassResultsPDF'])->name('class-results.generate');

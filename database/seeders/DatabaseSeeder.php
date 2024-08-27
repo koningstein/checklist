@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
             LearningSuboutcomeSeeder::class,
             LearningSuboutcomeLevelSeeder::class,
             LearningSuboutcomeTechniqueSeeder::class,
-            LearningSuboutcomeAssignmentSeeder::class,
+            LearningSuboutcomeLevelAssignmentSeeder::class,
             NewsSeeder::class,
             CommentSeeder::class,
             ContactMessageSeeder::class,

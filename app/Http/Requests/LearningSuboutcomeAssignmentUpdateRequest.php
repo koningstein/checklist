@@ -22,7 +22,7 @@ class LearningSuboutcomeAssignmentUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'learning_suboutcome_id' => 'required|exists:learning_suboutcomes,id',
+            'learning_suboutcome_level_id' => 'required|exists:learning_suboutcome_levels,id',
             'assignment_id' => 'required|exists:assignments,id',
         ];
     }
@@ -30,10 +30,10 @@ class LearningSuboutcomeAssignmentUpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'learning_suboutcome_id.required' => 'Het leeruitkomst-ID is verplicht.',
-            'learning_suboutcome_id.exists' => 'Het geselecteerde leeruitkomst-ID is ongeldig.',
-            'assignment_id.required' => 'Het assignment-ID is verplicht.',
-            'assignment_id.exists' => 'Het geselecteerde assignment-ID is ongeldig.',
+            'learning_suboutcome_level_id.required' => 'Het leeruitkomst niveau-ID is verplicht.',
+            'learning_suboutcome_level_id.exists' => 'Het geselecteerde leeruitkomst niveau-ID is ongeldig.',
+            'assignment_id.required' => 'Het opdracht-ID is verplicht.',
+            'assignment_id.exists' => 'Het geselecteerde opdracht-ID is ongeldig.',
         ];
     }
 }

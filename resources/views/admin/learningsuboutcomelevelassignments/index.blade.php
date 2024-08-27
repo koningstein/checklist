@@ -7,8 +7,8 @@
                 <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                     <div class="sm:block sm:ml-6">
                         <div class="flex space-x-4">
-                            <a href="{{ route('admin.learningsuboutcomeassignments.index') }}" class="text-gray-800 px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Overzicht Learning Suboutcome Assignments</a>
-                            <a href="{{ route('admin.learningsuboutcomeassignments.create') }}" class="text-gray-800 hover:text-teal-600 transition ease-in-out duration-500 px-3 py-2 rounded-md text-sm font-medium">Learning Suboutcome Assignment Toevoegen</a>
+                            <a href="{{ route('admin.lsuboutcomelevelassignments.index') }}" class="text-gray-800 px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Overzicht Learning Suboutcome Level Assignments</a>
+                            <a href="{{ route('admin.lsuboutcomelevelassignments.create') }}" class="text-gray-800 hover:text-teal-600 transition ease-in-out duration-500 px-3 py-2 rounded-md text-sm font-medium">Learning Suboutcome Level Assignment Toevoegen</a>
                         </div>
                     </div>
                 </div>
@@ -20,7 +20,7 @@
 @section('content')
     <div class="card mt-6">
         <div class="card-header flex flex-row justify-between">
-            <h1 class="h6">Learning Suboutcome Assignments</h1>
+            <h1 class="h6">Leeruitkomsten met niveau koppeling met opdrachten</h1>
         </div>
 
         <div class="card-body grid grid-cols-1 gap-6 lg:grid-cols-1">
@@ -29,7 +29,7 @@
                     {{ session('status') }}
                 </div>
             @endif
-            @livewire('learning-suboutcome-assignment-search')
+            @livewire('learning-suboutcome-level-assignment-search')
         </div>
     </div>
 @endsection

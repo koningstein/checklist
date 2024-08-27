@@ -37,7 +37,7 @@ class LearningSuboutcomeLevelController extends Controller implements HasMiddlew
      */
     public function index(): View
     {
-        $learningsuboutcomelevels = LearningSuboutcomeLevel::with(['learningSuboutcome', 'learningLevel', 'period'])->paginate(15);
+        $learningsuboutcomelevels = LearningSuboutcomeLevel::with(['learningSuboutcome', 'learningLevel'])->paginate(15);
         return view('admin.learningsuboutcomelevels.index', ['learningsuboutcomelevels' => $learningsuboutcomelevels]);
     }
 
@@ -49,8 +49,7 @@ class LearningSuboutcomeLevelController extends Controller implements HasMiddlew
     {
         $learningsuboutcomes = LearningSuboutcome::all();
         $learninglevels = LearningLevel::all();
-        $periods = Period::all();
-        return view('admin.learningsuboutcomelevels.create', ['learningsuboutcomes' => $learningsuboutcomes, 'learninglevels' => $learninglevels, 'periods' => $periods]);
+        return view('admin.learningsuboutcomelevels.create', ['learningsuboutcomes' => $learningsuboutcomes, 'learninglevels' => $learninglevels]);
     }
 
     /**
@@ -63,7 +62,7 @@ class LearningSuboutcomeLevelController extends Controller implements HasMiddlew
         $learningsuboutcomelevel = new LearningSuboutcomeLevel();
         $learningsuboutcomelevel->learning_suboutcome_id = $request->learning_suboutcome_id;
         $learningsuboutcomelevel->learning_level_id = $request->learning_level_id;
-        $learningsuboutcomelevel->period_id = $request->period_id;
+        $learningsuboutcomelevel->description = $request->description;
         $learningsuboutcomelevel->save();
 
         return to_route('admin.learningsuboutcomelevels.index')->with('status', 'Learning Suboutcome Level created successfully.');
@@ -76,7 +75,7 @@ class LearningSuboutcomeLevelController extends Controller implements HasMiddlew
      */
     public function show(LearningSuboutcomeLevel $learningsuboutcomelevel): View
     {
-        return view('admin.learningsuboutcomelevels.show', ['learningsuboutcomelevel' => $learningsuboutcomelevel]);
+        return view('admin.learningsuboutcomelevels.show', ['learningSuboutcomeLevel' => $learningsuboutcomelevel]);
     }
 
     /**
@@ -88,12 +87,10 @@ class LearningSuboutcomeLevelController extends Controller implements HasMiddlew
     {
         $learningsuboutcomes = LearningSuboutcome::all();
         $learninglevels = LearningLevel::all();
-        $periods = Period::all();
         return view('admin.learningsuboutcomelevels.edit', [
             'learningSuboutcomeLevel' => $learningsuboutcomelevel,
             'learningSuboutcomes' => $learningsuboutcomes,
             'learningLevels' => $learninglevels,
-            'periods' => $periods,
         ]);
     }
 
@@ -107,7 +104,7 @@ class LearningSuboutcomeLevelController extends Controller implements HasMiddlew
     {
         $learningsuboutcomelevel->learning_suboutcome_id = $request->learning_suboutcome_id;
         $learningsuboutcomelevel->learning_level_id = $request->learning_level_id;
-        $learningsuboutcomelevel->period_id = $request->period_id;
+        $learningsuboutcomelevel->description = $request->description;
         $learningsuboutcomelevel->save();
 
         return to_route('admin.learningsuboutcomelevels.index')->with('status', 'Learning Suboutcome Level updated successfully.');

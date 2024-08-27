@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('learning_suboutcome_id')->constrained('learning_suboutcomes')->onDelete('cascade');
             $table->foreignId('learning_level_id')->constrained('learning_levels')->onDelete('cascade');
-            $table->foreignId('period_id')->nullable()->constrained()->onDelete('cascade');
+            $table->mediumText('description');
             $table->timestamps();
         });
     }

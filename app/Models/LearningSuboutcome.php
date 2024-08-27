@@ -32,9 +32,4 @@ class LearningSuboutcome extends Model
     {
         return $this->hasMany(LearningSuboutcomeTechnique::class);
     }
-
-    public function learningSuboutcomeAssignments(): HasMany
-    {
-        return $this->hasMany(LearningSuboutcomeAssignment::class);
-    }
 }

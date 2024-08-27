@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class LearningSuboutcomeLevel extends Model
 {
@@ -14,7 +15,7 @@ class LearningSuboutcomeLevel extends Model
     protected $fillable = [
         'learning_suboutcome_id',
         'learning_level_id',
-        'period_id',
+        'description',
     ];
 
     public function learningSuboutcome(): BelongsTo
@@ -27,8 +28,8 @@ class LearningSuboutcomeLevel extends Model
         return $this->belongsTo(LearningLevel::class);
     }
 
-    public function period(): BelongsTo
+    public function learningSuboutcomeLevelAssignments(): HasMany
     {
-        return $this->belongsTo(Period::class);
+        return $this->HasMany(LearningSuboutcomeLevelAssignment::class);
     }
 }

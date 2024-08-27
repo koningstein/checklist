@@ -419,7 +419,7 @@
                 duration-500">Subleeruitkomst Level admin</a>
                         <a href="{{ route('admin.learningsuboutcometechniques.index') }}" class="mb-3  font-medium text-sm hover:text-teal-600 transition ease-in-out
                 duration-500">Subleeruitkomst Techniek admin</a>
-                        <a href="{{ route('admin.learningsuboutcomeassignments.index') }}" class="mb-3  font-medium text-sm hover:text-teal-600 transition ease-in-out
+                        <a href="{{ route('admin.lsuboutcomelevelassignments.index') }}" class="mb-3  font-medium text-sm hover:text-teal-600 transition ease-in-out
                 duration-500">Subleeruitkomst Opdracht admin</a>
 
 

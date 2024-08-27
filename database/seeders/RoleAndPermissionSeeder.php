@@ -18,7 +18,7 @@ class RoleAndPermissionSeeder extends Seeder
         // Define permissions for each ADMIN
         $resources = ['period', 'cohort', 'crebo', 'course', 'module', 'assignment', 'schoolclass',
             'student', 'enrolment', 'enrolmentstatus', 'schoolyear', 'classyear', 'classassignment', 'assignmentstatus', 'studentassignment',
-            'enrolmentclass', 'learningoutcome', 'learninglevel', 'learningrelatedtechnique', 'learningsuboutcome', 'learningsuboutcomeassignment',
+            'enrolmentclass', 'learningoutcome', 'learninglevel', 'learningrelatedtechnique', 'learningsuboutcome', 'learningsuboutcomelevelassignment',
             'learningsuboutcomelevel', 'learningsuboutcometechnique', 'news', 'comment', 'guardian', 'contactmessage'];
 
         foreach ($resources as $resource) {

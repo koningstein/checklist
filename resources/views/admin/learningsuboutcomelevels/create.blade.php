@@ -54,13 +54,8 @@
                         </select>
                     </label>
                     <label class="block text-sm">
-                        <span class="text-gray-700">Periode</span>
-                        <select name="period_id" class="bg-gray-200 block rounded w-full p-2 mt-1 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-select">
-                            <option value="">Geen</option>
-                            @foreach($periods as $period)
-                                <option value="{{ $period->id }}">{{ $period->period }}</option>
-                            @endforeach
-                        </select>
+                        <span class="text-gray-700">Beschrijving</span>
+                        <textarea name="description" class="bg-gray-200 block rounded w-full p-2 mt-1 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-textarea" required>{{ old('description') }}</textarea>
                     </label>
                     <button class="mt-2 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">Toevoegen</button>
                 </form>

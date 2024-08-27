@@ -12,7 +12,7 @@ class LearningSuboutcomeLevelSearch extends Component
 
     public $searchSuboutcomeName = '';
     public $searchLevelName = '';
-    public $searchPeriodName = '';
+
     public $sortField = 'learning_suboutcome_id';
     public $sortDirection = 'asc';
 
@@ -28,10 +28,6 @@ class LearningSuboutcomeLevelSearch extends Component
         $this->resetPage();
     }
 
-    public function updatingSearchPeriodName()
-    {
-        $this->resetPage();
-    }
 
     public function sortBy($field): void
     {
@@ -54,11 +50,6 @@ class LearningSuboutcomeLevelSearch extends Component
             ->when($this->searchLevelName, function ($query) {
                 $query->whereHas('learningLevel', function ($query) {
                     $query->where('name', 'like', '%'.$this->searchLevelName.'%');
-                });
-            })
-            ->when($this->searchPeriodName, function ($query) {
-                $query->whereHas('period', function ($query) {
-                    $query->where('name', 'like', '%'.$this->searchPeriodName.'%');
                 });
             })
             ->orderBy($this->sortField, $this->sortDirection)
