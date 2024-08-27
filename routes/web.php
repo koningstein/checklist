@@ -159,6 +159,8 @@ Route::group(['middleware' => ['role:student']], function (){
     Route::prefix('student')->name('student.')->group(function() {
         Route::get('/voortgang', [Open\StudentController::class, 'showOwnResults'])->name('results');
         Route::get('/module/{moduleId}', [Open\StudentController::class, 'showModuleDetails'])->name('module.details');
+        Route::get('/learning-outcome-overview', [Open\LearningOutcomeController::class, 'index'])->name('learning-outcome.index');
+
     });
 });
 

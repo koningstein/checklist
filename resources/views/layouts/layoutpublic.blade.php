@@ -15,6 +15,9 @@
         .bg-orange-500 {
             background-color: #f59e0b;
         }
+        .bg-orange-200 {
+            background-color: #fed7aa;
+        }
     </style>
     <!-- Alpine.js -->
 {{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.2/alpine.js" defer></script>--}}
@@ -132,6 +135,7 @@
             <a href="{{ route('page.contact') }}" class="px-2 md:pl-0 md:mr-3 md:pr-3 text-gray-700 no-underline md:border-r border-gray-300">Contact</a>
             @hasanyrole('student')
             <a href="{{ route('student.results') }}" class="px-2 md:pl-0 md:mr-3 md:pr-3 text-gray-700 no-underline md:border-r border-gray-300">Studie voortgang</a>
+            <a href="{{ route('student.learning-outcome.index') }}" class="px-2 md:pl-0 md:mr-3 md:pr-3 text-gray-700 no-underline md:border-r border-gray-300">Leeruitkomsten</a>
             @endhasanyrole
             @hasanyrole('guardian')
             <a href="{{ route('guardian.dashboard') }}" class="px-2 md:pl-0 md:mr-3 md:pr-3 text-gray-700 no-underline md:border-r border-gray-300">Dashboard</a>
