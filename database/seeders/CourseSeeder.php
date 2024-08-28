@@ -27,7 +27,8 @@ class CourseSeeder extends Seeder
             ['name' => 'IT Skills 1', 'description' => 'Basisvaardigheden in IT, zoals netwerken en systeembeheer.'],
             ['name' => 'IT Skills 2', 'description' => 'Vervolg op IT Skills 1, met focus op geavanceerde IT-vaardigheden zoals cybersecurity.'],
             ['name' => 'IT Skills 3', 'description' => 'Geavanceerde IT-vaardigheden, inclusief complexe netwerkconfiguraties en systeemoptimalisatie.'],
-            ['name' => 'Project', 'description' => 'Een projectgebaseerde cursus waar studenten werken aan een real-world probleem of opdracht om hun vaardigheden toe te passen.']
+            ['name' => 'Project', 'description' => 'Een projectgebaseerde cursus waar studenten werken aan een real-world probleem of opdracht om hun vaardigheden toe te passen.'],
+            ['name' => 'BPV', 'description' => 'De beroeps praktijk vorming, ofwel stage, om bij een bedrijf ervaring op te doen.']
         ];
 
         foreach ($courses as $course) {

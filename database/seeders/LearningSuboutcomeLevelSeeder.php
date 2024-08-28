@@ -13,6 +13,6 @@ class LearningSuboutcomeLevelSeeder extends Seeder
      */
     public function run(): void
     {
-        LearningSuboutcomeLevel::factory()->count(20)->create();
+        LearningSuboutcomeLevel::factory()->count(600)->create();
     }
 }
