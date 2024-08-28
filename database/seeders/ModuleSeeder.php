@@ -80,17 +80,23 @@ class ModuleSeeder extends Seeder
             ['course_name' => 'Programmeren 3', 'period' => 'Periode 12', 'name' => 'Feature test 2', 'description' => 'Geavanceerde concepten in feature testen.'],
 
             // Project
-            ['course_name' => 'Project', 'period' => 'Periode 01', 'name' => 'Html & CSS', 'description' => 'Projecttoepassingen met HTML en CSS.'],
-            ['course_name' => 'Project', 'period' => 'Periode 02', 'name' => 'Javascript', 'description' => 'Projecttoepassingen met JavaScript.'],
-            ['course_name' => 'Project', 'period' => 'Periode 03', 'name' => 'Php & Javascript', 'description' => 'Gecombineerde projecttoepassingen met PHP en JavaScript.'],
-            ['course_name' => 'Project', 'period' => 'Periode 04', 'name' => 'Php & SQL', 'description' => 'Gecombineerde projecttoepassingen met PHP en SQL.'],
-            ['course_name' => 'Project', 'period' => 'Periode 05', 'name' => 'Php, Javascript & SQL', 'description' => 'Geavanceerde projecttoepassingen met PHP, JavaScript en SQL.'],
-            ['course_name' => 'Project', 'period' => 'Periode 06', 'name' => 'OOP Basis', 'description' => 'Projecten met basisconcepten in Object Oriented Programming.'],
-            ['course_name' => 'Project', 'period' => 'Periode 07', 'name' => 'OOP Adv', 'description' => 'Geavanceerde projecten in Object Oriented Programming.'],
-            ['course_name' => 'Project', 'period' => 'Periode 08', 'name' => 'OOP DB', 'description' => 'Projecten die OOP integreren met databases.'],
-            ['course_name' => 'Project', 'period' => 'Periode 11', 'name' => 'Design Pattern Basis', 'description' => 'Projecten met basis software design patterns.'],
-            ['course_name' => 'Project', 'period' => 'Periode 12', 'name' => 'Design Pattern Adv', 'description' => 'Geavanceerde projecten met software design patterns.'],
-            ['course_name' => 'Project', 'period' => 'Periode 12', 'name' => 'Open Project', 'description' => 'Vrije projecten voor creatief en innovatief denken.'],
+            ['course_name' => 'Project', 'period' => 'Periode 01', 'name' => 'Project Html & CSS', 'description' => 'Projecttoepassingen met HTML en CSS.'],
+            ['course_name' => 'Project', 'period' => 'Periode 02', 'name' => 'Project Javascript', 'description' => 'Projecttoepassingen met JavaScript.'],
+            ['course_name' => 'Project', 'period' => 'Periode 03', 'name' => 'Project Php & Javascript', 'description' => 'Gecombineerde projecttoepassingen met PHP en JavaScript.'],
+            ['course_name' => 'Project', 'period' => 'Periode 04', 'name' => 'Project Php & SQL', 'description' => 'Gecombineerde projecttoepassingen met PHP en SQL.'],
+            ['course_name' => 'Project', 'period' => 'Periode 05', 'name' => 'Project Php, Javascript & SQL', 'description' => 'Geavanceerde projecttoepassingen met PHP, JavaScript en SQL.'],
+            ['course_name' => 'Project', 'period' => 'Periode 06', 'name' => 'Project OOP Basis', 'description' => 'Projecten met basisconcepten in Object Oriented Programming.'],
+            ['course_name' => 'Project', 'period' => 'Periode 07', 'name' => 'Project OOP Adv', 'description' => 'Geavanceerde projecten in Object Oriented Programming.'],
+            ['course_name' => 'Project', 'period' => 'Periode 08', 'name' => 'Project OOP DB', 'description' => 'Projecten die OOP integreren met databases.'],
+            ['course_name' => 'Project', 'period' => 'Periode 11', 'name' => 'Project Design Pattern Basis', 'description' => 'Projecten met basis software design patterns.'],
+            ['course_name' => 'Project', 'period' => 'Periode 12', 'name' => 'Project Design Pattern Adv', 'description' => 'Geavanceerde projecten met software design patterns.'],
+            ['course_name' => 'Project', 'period' => 'Periode 13', 'name' => 'Project Open Project', 'description' => 'Vrije projecten voor creatief en innovatief denken.'],
+
+            ['course_name' => 'BPV', 'period' => 'Periode 09', 'name' => 'BPV 1', 'description' => 'Orienterende stage.'],
+            ['course_name' => 'BPV', 'period' => 'Periode 10', 'name' => 'BPV 1', 'description' => 'Orienterende stage.'],
+            ['course_name' => 'BPV', 'period' => 'Periode 14', 'name' => 'BPV 2', 'description' => 'Eind stage.'],
+            ['course_name' => 'BPV', 'period' => 'Periode 15', 'name' => 'BPV 2', 'description' => 'Eind stage.'],
+            ['course_name' => 'BPV', 'period' => 'Periode 16', 'name' => 'BPV 2', 'description' => 'Eind stage.'],
         ];
 
         foreach ($modules as $module) {
