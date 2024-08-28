@@ -63,12 +63,15 @@ class LearningSuboutcomeLevelAssignmentController extends Controller implements 
      */
     public function store(LearningSuboutcomeAssignmentStoreRequest $request): RedirectResponse
     {
-        $learningSuboutcomeAssignment = new LearningSuboutcomeLevelAssignment();
-        $learningSuboutcomeAssignment->learning_suboutcome_level_id = $request->learning_suboutcome_level_id;
-        $learningSuboutcomeAssignment->assignment_id = $request->assignment_id;
-        $learningSuboutcomeAssignment->save();
+        foreach ($request->learning_suboutcome_level_ids as $suboutcomeLevelId) {
+            // Maak voor elk geselecteerd suboutcome level een nieuwe toewijzing aan
+            $learningSuboutcomeAssignment = new LearningSuboutcomeLevelAssignment();
+            $learningSuboutcomeAssignment->learning_suboutcome_level_id = $suboutcomeLevelId;
+            $learningSuboutcomeAssignment->assignment_id = $request->assignment_id;
+            $learningSuboutcomeAssignment->save();
+        }
 
-        return to_route('admin.lsuboutcomelevelassignments.index')->with('status', 'Learning Suboutcome Assignment created successfully.');
+        return to_route('admin.lsuboutcomelevelassignments.index')->with('status', 'Learning Suboutcome Level Assignment(s) created successfully..');
     }
 
     /**
