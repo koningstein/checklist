@@ -26,7 +26,7 @@
         <div class="py-4 px-6">
             <h2 class="text-sm font-semibold text-gray-800">Details van het Nieuwsbericht</h2>
             <p class="py-2 text-sm text-gray-700">Titel: {{ $news->title }}</p>
-            <p class="py-2 text-sm text-gray-700">Inhoud: {{ $news->content }}</p>
+            <p class="py-2 text-sm text-gray-700">Inhoud: {{ $news->news }}</p>
             <p class="py-2 text-sm text-gray-700">Auteur: {{ $news->user->name }}</p>
             <p class="py-2 text-sm text-gray-700">Gepubliceerd op: {{ $news->created_at->format('d-m-Y H:i') }}</p>
         </div>

@@ -51,7 +51,7 @@ class NewsController extends Controller implements HasMiddleware
     {
         $news = new News();
         $news->title = $request->title;
-        $news->content = $request->content;
+        $news->news = $request->news;
         $news->user_id = auth()->id();
         $news->save();
 
@@ -80,7 +80,7 @@ class NewsController extends Controller implements HasMiddleware
     public function update(NewsUpdateRequest $request, News $news)
     {
         $news->title = $request->title;
-        $news->content = $request->content;
+        $news->news = $request->news;
         $news->user_id = auth()->id();
         $news->save();
 

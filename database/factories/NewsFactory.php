@@ -19,7 +19,7 @@ class NewsFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(),
-            'content' => $this->faker->paragraphs(3, true),
+            'news' => $this->faker->paragraphs(3, true),
             'user_id' => User::all()->random()->id,
         ];
     }

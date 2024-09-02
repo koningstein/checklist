@@ -3,14 +3,14 @@
         <div class="max-w-full px-2 sm:px-6 lg:px-8 mb-3">
             <div class="flex space-x-2">
                 <input type="text" wire:model.live="searchTitle" placeholder="Zoek op Titel..." class="form-control mb-3 w-full px-3 py-2 border rounded-md bg-gray-200" />
-                <input type="text" wire:model.live="searchContent" placeholder="Zoek op Inhoud..." class="form-control mb-3 w-full px-3 py-2 border rounded-md bg-gray-200" />
+                <input type="text" wire:model.live="searchNews" placeholder="Zoek op Inhoud..." class="form-control mb-3 w-full px-3 py-2 border rounded-md bg-gray-200" />
             </div>
         </div>
 
         <x-table>
             <x-slot name="head">
                 <x-table.heading sortable wire:click="sortBy('title')" :direction="$sortField === 'title' ? $sortDirection : null" class="w-2/12">Titel</x-table.heading>
-                <x-table.heading sortable wire:click="sortBy('content')" :direction="$sortField === 'content' ? $sortDirection : null" class="w-4/12">Inhoud</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('news')" :direction="$sortField === 'news' ? $sortDirection : null" class="w-4/12">Inhoud</x-table.heading>
                 <x-table.heading sortable wire:click="sortBy('created_at')" :direction="$sortField === 'created_at' ? $sortDirection : null" class="w-1/12">Datum</x-table.heading>
                 <x-table.heading class="w-1/12">Details</x-table.heading>
                 <x-table.heading class="w-1/12">Edit</x-table.heading>
@@ -21,7 +21,7 @@
                 @forelse($newsItems as $newsItem)
                     <x-table.row>
                         <x-table.cell class="w-2/12">{{ Str::limit($newsItem->title, 50) }}</x-table.cell>
-                        <x-table.cell class="w-4/12">{{ Str::limit($newsItem->content, 50) }}</x-table.cell> <!-- Beperk de lengte van de inhoud -->
+                        <x-table.cell class="w-4/12">{{ Str::limit($newsItem->news, 50) }}</x-table.cell> <!-- Beperk de lengte van de inhoud -->
                         <x-table.cell class="w-1/12">{{ $newsItem->created_at->format('d-m-Y H:i') }}</x-table.cell>
                         <x-table.cell class="w-1/12">
                             <a href="{{ route('admin.news.show', ['news' => $newsItem->id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded flex items-center justify-center text-xs w-full">

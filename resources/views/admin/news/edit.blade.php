@@ -49,8 +49,8 @@
                         <span class="text-gray-700">Inhoud</span>
                         <textarea
                                 class="bg-gray-200 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight
-                            focus:outline-none focus:shadow-outline" name="content"
-                                id="content" rows="7">{{ old('content', $news->content) }}</textarea>
+                            focus:outline-none focus:shadow-outline" name="news"
+                                id="news" rows="7">{{ old('news', $news->news) }}</textarea>
                     </label>
 
                     <button class="mt-2 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150

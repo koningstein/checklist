@@ -49,8 +49,8 @@
                         <span class="text-gray-700">Inhoud</span>
                         <textarea
                             class="bg-gray-200 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight
-                            focus:outline-none focus:shadow-outline" name="content"
-                            id="content" rows="7" disabled>{{ $news->content }}</textarea>
+                            focus:outline-none focus:shadow-outline" name="news"
+                            id="news" rows="7" disabled>{{ $news->news }}</textarea>
                     </label>
                     <label class="block text-sm">
                         <span class="text-gray-700">Auteur</span>

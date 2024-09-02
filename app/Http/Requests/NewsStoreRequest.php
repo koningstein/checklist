@@ -23,7 +23,7 @@ class NewsStoreRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'content' => 'required|string|min:10',
+            'news' => 'required|string|min:10',
         ];
     }
 }

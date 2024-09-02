@@ -11,7 +11,7 @@ class NewsSearch extends Component
     use WithPagination;
 
     public $searchTitle = '';
-    public $searchContent = '';
+    public $searchNews = '';
     public $sortField = 'created_at';
     public $sortDirection = 'desc';
 
@@ -22,7 +22,7 @@ class NewsSearch extends Component
         $this->resetPage();
     }
 
-    public function updatingSearchContent()
+    public function updatingSearchNews()
     {
         $this->resetPage();
     }
@@ -43,8 +43,8 @@ class NewsSearch extends Component
             ->when($this->searchTitle, function ($query) {
                 $query->where('title', 'like', '%'.$this->searchTitle.'%');
             })
-            ->when($this->searchContent, function ($query) {
-                $query->where('content', 'like', '%'.$this->searchContent.'%');
+            ->when($this->searchNews, function ($query) {
+                $query->where('news', 'like', '%'.$this->searchNews.'%');
             })
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate(10);
